@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 쪽지 병 방명록: 누구나 읽기 / 형식이 맞는 쪽지만 넣기 / 수정·삭제는 콘솔에서만
+    match /guestbook/{entryId} {
+      allow read: if true;
+
+      allow create: if
+        request.resource.data.keys().hasAll(['name', 'message', 'createdAt']) &&
+        request.resource.data.keys().hasOnly(['name', 'message', 'createdAt', 'avatar', 'shape', 'color', 'font']) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 12 &&
+        request.resource.data.message is string &&
+        request.resource.data.message.size() > 0 && request.resource.data.message.size() <= 200 &&
+        request.resource.data.createdAt == request.time &&
+        (!('shape' in request.resource.data) ||
+          request.resource.data.shape in ['crane', 'star', 'heart', 'scroll', 'letter', 'boat']) &&
+        (!('color' in request.resource.data) ||
+          (request.resource.data.color is string && request.resource.data.color.matches('^#[0-9a-f]{6}$'))) &&
+        (!('font' in request.resource.data) ||
+          request.resource.data.font in ['Handletter', 'KyoboHandwriting2020A', 'MaruBuri-Regular', 'Galmuri11', 'NeoDunggeunmo', 'Pretendard-Regular']) &&
+        (!('avatar' in request.resource.data) ||
+          (request.resource.data.avatar is string &&
+           request.resource.data.avatar.size() <= 2600 &&
+           request.resource.data.avatar.matches('^v1:.*')));
+
+      allow update, delete: if false;
+    }
+  }
+}

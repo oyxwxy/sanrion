@@ -1,0 +1,13 @@
+/* =========================================================
+   FONTS — 눈누(noonnu) 무료 폰트 · jsDelivr npm 미러
+   ========================================================= */
+@import url("https://cdn.jsdelivr.net/npm/galmuri@2.40.3/dist/galmuri.css");
+
+@font-face { font-family: "NeoDunggeunmo"; src: url("https://cdn.jsdelivr.net/npm/@noonnu/neo-dunggeunmo@0.1.0/fonts/neodunggeunmo-normal.woff") format("woff"); font-display: swap; }
+@font-face { font-family: "양진체"; src: url("https://cdn.jsdelivr.net/npm/@noonnu/yangjinche@0.1.0/fonts/-normal.woff") format("woff"); font-display: swap; }
+@font-face { font-family: "Pretendard-Regular"; src: url("https://cdn.jsdelivr.net/npm/@noonnu/pretendard-regular@0.1.0/fonts/pretendard-regular-400.woff") format("woff"); font-display: swap; }
+@font-face { font-family: "MaruBuri-Regular"; src: url("https://cdn.jsdelivr.net/npm/@noonnu/maru-buri-regular@0.1.0/fonts/maruburi-regular-normal.woff") format("woff"); font-display: swap; }
+@font-face { font-family: "Handletter"; src: url("https://cdn.jsdelivr.net/npm/@noonnu/handletter@0.1.0/fonts/handletter-normal.woff") format("woff"); font-display: swap; }
+@font-face { font-family: "KyoboHandwriting2020A"; src: url("https://cdn.jsdelivr.net/npm/@noonnu/kyobo-handwriting2020-a@0.1.0/fonts/kyobohandwriting2020a-normal.woff") format("woff"); font-display: swap; }
+@font-face { font-family: "YdestreetB"; src: url("https://cdn.jsdelivr.net/npm/@noonnu/ydestreet-b@0.1.0/fonts/ydestreetb-normal.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "dalmoori"; src: url("https://cdn.jsdelivr.net/npm/@noonnu/dalmoori@0.1.0/fonts/dalmoori-normal.woff") format("woff"); font-display: swap; }

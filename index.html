@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SANTA ♥ ORION · 1ST ANNIVERSARY</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="px-app">
+  <div class="decor" aria-hidden="true"></div>
+
+  <!-- 입장 인트로 -->
+  <div class="intro" role="button" aria-label="입장하기">
+    <div class="intro-frame">
+      <canvas class="intro-cv" width="256" height="144"></canvas>
+      <div class="intro-title">
+        <span class="it-kicker">SANTA <i class="hrt"></i> ORION</span>
+        <strong class="it-main">산리온</strong>
+        <span class="it-sub">1ST ANNIVERSARY · SINCE 2025.11.28</span>
+      </div>
+      <p class="intro-start">PRESS START</p>
+    </div>
+    <button type="button" class="intro-skip">SKIP ▶▶</button>
+    <p class="intro-hint">클릭하거나 ENTER를 눌러 입장</p>
+  </div>
+
+  <div class="marquee" aria-hidden="true"><span></span></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text"><b><span class="c-p1">산타</span><i class="hrt"></i><span class="c-p2">오리온</span></b><small>1ST ANNIVERSARY · <span data-site-name></span></small></span>
+    </div>
+    <button type="button" class="sound-btn" aria-label="소리 끄기"><i></i></button>
+  </header>
+
+  <nav class="stages" role="tablist">
+    <button type="button" class="stage-tab is-on" data-go="1" role="tab"><span>1</span>세이브</button>
+    <i class="stage-path"></i>
+    <button type="button" class="stage-tab" data-go="2" role="tab"><span>2</span>게임</button>
+    <i class="stage-path"></i>
+    <button type="button" class="stage-tab" data-go="3" role="tab"><span>3</span>캐릭터</button>
+    <i class="stage-path"></i>
+    <button type="button" class="stage-tab" data-go="4" role="tab"><span>4</span>폴라로이드</button>
+    <i class="stage-path"></i>
+    <button type="button" class="stage-tab" data-go="5" role="tab"><span>5</span>쪽지병</button>
+  </nav>
+
+  <main>
+    <!-- STAGE 1 -->
+    <section class="stage is-active" data-stage="1">
+      <div class="stage-title"><em>STAGE 1</em><h2>SANRION SAVE FILE</h2><span class="st-big" aria-hidden="true">SAVE</span></div>
+      <div class="scene px-frame"><canvas class="scene-canvas" width="192" height="108"></canvas></div>
+      <div class="dlg px-box">
+        <div class="dlg-speaker"></div>
+        <button type="button" class="dlg-skip">SKIP</button>
+        <p class="dlg-text"></p>
+        <div class="dlg-foot"><span class="dlg-count"></span><span class="dlg-arrow"></span></div>
+      </div>
+      <div class="sub-title"><span>PLAYER DATA</span></div>
+      <div class="profiles"></div>
+      <div class="stage-actions"><button type="button" class="px-btn dlg-next" data-next="2">STAGE 2 게임하러 가기 ▶</button></div>
+    </section>
+
+    <!-- STAGE 2 -->
+    <section class="stage" data-stage="2">
+      <div class="stage-title"><em>STAGE 2</em><h2>BONUS GAME</h2><span class="st-big" aria-hidden="true">PLAY</span></div>
+      <div class="handheld">
+        <div class="hh-left">
+          <div class="dpad">
+            <button type="button" class="d-up" data-btn="up" aria-label="위"></button>
+            <button type="button" class="d-left" data-btn="left" aria-label="왼쪽"></button>
+            <span class="d-mid"></span>
+            <button type="button" class="d-right" data-btn="right" aria-label="오른쪽"></button>
+            <button type="button" class="d-down" data-btn="down" aria-label="아래"></button>
+          </div>
+          <div class="hh-dots"><i class="p1"></i><i></i><i class="p2"></i><i></i><i class="p1"></i><i></i></div>
+          <div class="ss-row">
+            <div class="ss"><button type="button" data-btn="select"></button><small>SELECT</small></div>
+            <div class="ss"><button type="button" data-btn="start"></button><small>START</small></div>
+          </div>
+        </div>
+        <div class="hh-center">
+          <div class="hh-top"><span class="hh-led"></span><span>POWER</span><span class="hh-label" data-console-label></span><span class="hh-p p1">P1</span><span class="hh-p p2">P2</span></div>
+          <div class="hh-bezel"><canvas class="gb-canvas" width="256" height="144"></canvas></div>
+        </div>
+        <div class="hh-right">
+          <div class="ab">
+            <button type="button" class="btn-b" data-btn="b"><span>B</span></button>
+            <button type="button" class="btn-a" data-btn="a"><span>A</span></button>
+          </div>
+          <div class="hh-coin"><small>GAME START</small><i></i></div>
+          <div class="grill"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="game-side">
+        <div class="game-help px-box"><b></b><p></p></div>
+        <div class="keys px-box">
+          <div><kbd>←↑→↓</kbd><kbd>WASD</kbd><span>이동 · 선택</span></div>
+          <div><kbd>Z</kbd><kbd>SPACE</kbd><span>A 버튼</span></div>
+          <div><kbd>X</kbd><span>B 버튼 (A와 같음)</span></div>
+          <div><kbd>ENTER</kbd><span>START · 일시정지</span></div>
+          <div><kbd>SHIFT</kbd><span>SELECT · 게임 선택으로</span></div>
+        </div>
+      </div>
+      <div class="stage-actions"><button type="button" class="px-btn" data-next="3">STAGE 3 캐릭터 만들기 ▶</button></div>
+    </section>
+
+    <!-- STAGE 3 -->
+    <section class="stage" data-stage="3">
+      <div class="stage-title"><em>STAGE 3</em><h2>PLAYER MAKER</h2><span class="st-big" aria-hidden="true">MAKE</span></div>
+      <div class="maker"></div>
+      <div class="stage-actions"><button type="button" class="px-btn" data-next="4">STAGE 4 폴라로이드 꾸미기 ▶</button></div>
+    </section>
+
+    <!-- STAGE 4 -->
+    <section class="stage" data-stage="4">
+      <div class="stage-title"><em>STAGE 4</em><h2>POLAROID</h2><span class="st-big" aria-hidden="true">SNAP</span></div>
+      <div class="pola"></div>
+      <div class="stage-actions"><button type="button" class="px-btn" data-next="5">STAGE 5 쪽지 남기러 가기 ▶</button></div>
+    </section>
+
+    <!-- STAGE 5 -->
+    <section class="stage" data-stage="5">
+      <div class="stage-title"><em>STAGE 5</em><h2>NOTES IN A BOTTLE</h2><span class="st-big" aria-hidden="true">NOTE</span></div>
+      <div class="bt">
+        <div class="bt-left">
+          <div class="bt-jar-wrap"><canvas class="bt-jar" width="180" height="220"></canvas></div>
+          <div class="bt-ctrl">
+            <button type="button" class="tool-s bt-prev" aria-label="이전 병">◀</button>
+            <span class="bt-tag"></span>
+            <button type="button" class="tool-s bt-next" aria-label="다음 병">▶</button>
+          </div>
+          <p class="bt-status"></p>
+          <p class="mk-note bt-hint">병 속 쪽지를 누르면 펼쳐서 읽을 수 있어요.</p>
+        </div>
+        <form class="bt-form px-box" autocomplete="off">
+          <div class="bt-form-head"><span>NEW NOTE</span><div class="bt-fold"></div></div>
+          <div class="mk-row"><div class="mk-label">이름</div><input class="px-input" name="name" maxlength="12" placeholder="이름 (12자)" required></div>
+          <div class="bt-paper"><textarea name="message" maxlength="200" rows="5" placeholder="산타와 오리온에게 1주년 축하 쪽지를 써 주세요 (Ctrl+Enter로 넣기)" required></textarea></div>
+          <div class="bt-count">0/200</div>
+          <div class="mk-row"><div class="mk-label">접는 모양</div><div class="bt-shapes"></div></div>
+          <div class="mk-row"><div class="mk-label">종이 색</div><div class="mk-swatches bt-colors"></div></div>
+          <div class="mk-row"><div class="mk-label">글씨체</div><div class="bt-fontslot"></div></div>
+          <div class="mk-row"><div class="mk-label">내 캐릭터</div>
+            <div class="bt-me"><div class="bt-av"></div><button type="button" class="chip bt-attach">쪽지에 붙이기</button><button type="button" class="link-btn bt-edit">캐릭터 수정</button></div></div>
+          <div class="bt-form-foot"><button type="submit" class="px-btn bt-submit">쪽지 접어서 병에 넣기</button></div>
+        </form>
+      </div>
+      <button type="button" class="px-btn ghost bt-listbtn">쪽지 목록 펼치기</button>
+      <div class="bt-list" hidden></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>THANK YOU FOR PLAYING</span>
+    <span>SANTA <i class="hrt"></i> ORION · 1ST ANNIVERSARY</span>
+  </footer>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/core.js"></script>
+<script src="js/widgets.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/maker.js"></script>
+<script src="js/intro.js"></script>
+<script src="js/games.js"></script>
+<script src="js/polaroid.js"></script>
+<script src="js/bottle.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
