@@ -32,8 +32,8 @@
       "....o....", "...oao...", "oooawaooo", "oaaaaaaao", ".oaaaaao.", "..oaaao..", ".oaaoaao.", ".oao.oao.", ".oo...oo."] },
     { id: "ribbon", name: "리본", pal: { o: "#8e2550", a: "#e0578a", A: "#b83a6b", w: "#f8bfd3" }, rows: [
       "oo.....oo", "owoo.ooao", "oaaaoaaao", "oaaAAAaao", "oaaoAoaao", "oo.oAo.oo", "..oAoAo..", ".oAo.oAo.", ".oo...oo."] },
-    { id: "mintchoco", name: "민트초코", pal: { o: "#3a1d2e", m: "#9fe0cf", M: "#6fc2ad", c: "#5a3324", y: "#e9b872", Y: "#c48b45" }, rows: [
-      "..oooo..", ".ommmmo.", "omcmmmMo", "ommmcmMo", "omcmmmMo", "oooooooo", ".oyYyyo.", ".oyyYyo.", "..oYyo..", "..oyYo..", "...oo..."] },
+    { id: "cake", name: "케이크", pal: { o: "#3a1d2e", w: "#ffffff", p: "#f28fb3", s: "#f6d79b", r: "#c8323f", R: "#ff8a9a" }, rows: [
+      ".......rr.", "......oRro", "....ooww.o", "..oowwwwwo", "oowwwwwwwo", "oppppppppo", "osssssssso", "oppppppppo", "oooooooooo"] },
     { id: "hotchoco", name: "핫초코", pal: { o: "#3a1d2e", w: "#ffffff", W: "#f1e3e8", m: "#f8bfd3", M: "#e0578a", h: "#c8323f" }, rows: [
       "...w..w....", "..w..w.....", "ooooooooo..", "owwWwwWwo..", "ommmmmmmooo", "ommmmmmmo.o", "ommmhmmmo.o", "ommhhhmmooo", ".ommhmmMo..", "..ooooo...."] },
     { id: "snow", name: "눈꽃", pal: { o: "#7fb2e0", a: "#e8f4ff" }, rows: [

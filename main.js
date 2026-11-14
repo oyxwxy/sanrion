@@ -4,11 +4,12 @@
 (function () {
   const PX = window.PX, CFG = window.SITE_CONFIG;
   const GAME_HELP = {
-    runner: { t: "1 · JUMP RUN", d: "블록을 뛰어넘으며 멀리 달려요. 시작 전 ←→로 산타·오리온을 고를 수 있어요. A를 길게 누르면 더 높이, 공중에서 ↓를 누르면 빨리 내려와요." },
-    catch: { t: "2 · SWEET CATCH", d: "둘 다 좋아하는 민트초코와 핫초코를 받아요(+10), 하트는 +30. 오리온이 못 먹는 매운 고추와 산타가 태운 토스트는 피하세요! A를 누르고 있으면 빨리 움직여요." },
-    stack: { t: "3 · CAKE STACK", d: "좌우로 움직이는 케이크 층을 A로 떨어뜨려 쌓아요. PERFECT를 3번 이어서 내면 층이 다시 넓어져요. 끝나면 꼭대기에 하트 토퍼가 꽂혀요." },
-    brick: { t: "4 · BRICK BREAK", d: "←→로 받침대를 움직이고 A로 공을 발사해요. 받침대 끝에 맞을수록 공이 크게 꺾여요. 하트 → 1 → 격자 순서로 판이 바뀌어요." }
+    runner: { t: "1 · JUMP RUN", d: "시작 전 ←→로 산타·오리온을 골라요. 블록을 넘으며 끝까지 달리면 상대가 기다리고 있어요. A를 길게 누르면 더 높이, 공중에서 ↓를 누르면 빨리 내려와요." },
+    catch: { t: "2 · SWEET CATCH", d: "60초 동안 핫초코와 케이크(+10), 하트(+30)를 받아요. 산타가 못 마시는 쓴 커피와 산타가 태운 토스트는 피하세요! 목숨 3개로 버티면 엔딩." },
+    stack: { t: "3 · CAKE STACK", d: "움직이는 케이크 층을 A로 떨어뜨려 15층 웨딩 케이크를 완성해요. PERFECT 3연속이면 층이 다시 넓어져요." },
+    brick: { t: "4 · BRICK BREAK", d: "←→로 받침대, A로 발사. 하트 → 1 → 격자 → 마지막 판까지 4판을 모두 깨면 엔딩이에요." }
   };
+
 
   let cur = 1;
   PX.goStage = function (n) {
@@ -67,6 +68,12 @@
     PX.$$("[data-console-label]").forEach((e) => (e.textContent = CFG.consoleLabel));
     PX.$$(".stage-tab").forEach((b) => b.addEventListener("click", () => PX.goStage(+b.dataset.go)));
     PX.$$("[data-next]").forEach((b) => b.addEventListener("click", () => PX.goStage(+b.dataset.next)));
+    // BGM
+    const bgmBtn = PX.$(".bgm-btn"), bgmTitle = PX.$(".bgm-title");
+    const paintBgm = () => { const on = PX.music.isPlaying(); bgmBtn.classList.toggle("is-on", on); bgmTitle.textContent = on ? PX.music.title() : "BGM OFF"; };
+    PX.music.onChange(paintBgm); paintBgm();
+    bgmBtn.addEventListener("click", () => { PX.music.setEnabled(!PX.music.isPlaying()); paintBgm(); });
+    PX.$(".bgm-next").addEventListener("click", () => { if (!PX.music.isPlaying()) PX.music.setEnabled(true); else PX.music.next(); paintBgm(); });
     const snd = PX.$(".sound-btn");
     const paintSnd = () => { snd.classList.toggle("is-off", PX.muted); snd.title = PX.muted ? "소리 켜기" : "소리 끄기"; snd.setAttribute("aria-label", snd.title); };
     snd.addEventListener("click", () => { PX.muted = !PX.muted; PX.store.set("muted", PX.muted); paintSnd(); PX.unlockAudio(); PX.sfx("blip"); });
@@ -85,7 +92,8 @@
 
     autoHeight();
     PX.intro.show();
-    PX.entryIntro(PX.$(".intro"), () => PX.intro.start());
+    const shelf = PX.$(".awards"); PX.cert.renderShelf(shelf); PX.cert.onChange(() => PX.cert.renderShelf(shelf));
+    PX.entryIntro(PX.$(".intro"), () => { PX.intro.start(); PX.music.startIfEnabled(); });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

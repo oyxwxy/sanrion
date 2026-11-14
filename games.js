@@ -29,6 +29,12 @@
     if (overT > 35) txt("A: RETRY", W / 2, y + 9, 2, 1, "center");
   }
 
+  function progress(k) {
+    const x0 = 74, w = W - 148; k = PX.clamp(k, 0, 1);
+    rect(x0, 4, w, 5, 3); rect(x0 + 1, 5, w - 2, 3, 0); rect(x0 + 1, 5, Math.round((w - 2) * k), 3, 2);
+    sprite([".33.33.", "3223223", "3222223", ".32223.", "..323..", "...3..."], x0 + w + 2, 3);
+  }
+
   /* 산타 / 오리온 미니 스프라이트 */
   const SANTA_HEAD = ["...333333...", "..33303333..", ".3330333333.", ".3303333333.", "330000000033", "300300003003", "300000000003", "300002200003", ".3000000003."];
   const SANTA_BODY = [".3332223333.", "333330333333"];
@@ -39,17 +45,17 @@
   let hero = PX.store.get("hero", 0);
   const GEM = [".3.3.", "30303", "30003", ".303.", "..3.."];
   const ITEMS = {
-    mint: { rows: ["..3333..", ".301103.", "31131113", "31111313", "33333333", ".322223.", "..3223..", "...33..."], pts: 10 },
+    cake: { rows: ["......33", "....3003", "..300003", "30000003", "31111113", "32222223", "31111113", "33333333"], pts: 10 },
     cocoa: { rows: ["..1..1...", ".1..1....", "3333333..", "3000003..", "311111333", "3131113.3", "311111333", ".33333..."], pts: 10 },
     heart: { rows: [".33.33.", "3113113", "3111113", ".31113.", "..313..", "...3..."], pts: 30 },
-    chili: { rows: ["....33", "...33.", ".3223.", "32223.", "3223..", "323...", ".3...."], bad: true },
+    coffee: { rows: ["..1..1...", ".1..1....", "3333333..", "3222223..", "322222333", "3222223.3", "322222333", ".33333..."], bad: true },
     toast: { rows: [".333333.", "33333333", "32323233", "33232323", "32323233", "33333333"], bad: true }
   };
 
   /* ---------- 메뉴 ---------- */
   const GAMES = [
     { id: "runner", title: "JUMP RUN", sub: "JUMP!" },
-    { id: "catch", title: "SWEET CATCH", sub: "MINT+COCOA" },
+    { id: "catch", title: "SWEET CATCH", sub: "COCOA+CAKE" },
     { id: "stack", title: "CAKE STACK", sub: "STACK IT" },
     { id: "brick", title: "BRICK BREAK", sub: "BREAK IT" }
   ];
@@ -90,7 +96,7 @@
   };
 
   /* ---------- 1. 점프 런 ---------- */
-  const GY = 116;
+  const GY = 116, RUN_GOAL = 6000;
   const runner = {
     enter() { Object.assign(this, { x: 36, y: GY - 12, vy: 0, ground: true, dist: 0, bonus: 0, obs: [], gems: [], parts: [], nextObs: 120, over: false, overT: 0, coyote: 0, buffer: 0, newBest: false, t: 0, started: false, speed: 1.8 }); },
     update() {
@@ -110,8 +116,9 @@
       if (I.down.down && !this.ground) this.vy += 0.3;
       this.y += this.vy;
       if (this.y >= GY - 12) { this.y = GY - 12; this.vy = 0; this.ground = true; } else this.ground = false;
+      if (this.dist >= RUN_GOAL) { toEnding("runner", this.score()); return; }
       this.nextObs -= this.speed;
-      if (this.nextObs <= 0) {
+      if (this.nextObs <= 0 && this.dist < RUN_GOAL - 500) {
         const kind = this.dist > 900 && Math.random() < 0.25 ? "double" : "block";
         const h = PX.pick([8, 10, 12, 14]), w = kind === "double" ? 18 : PX.pick([8, 10]);
         this.obs.push({ x: W + 4, w, h, kind });
@@ -142,14 +149,16 @@
       if (!(this.over && this.overT < 20 && Math.floor(this.overT / 3) % 2)) sprite(spr, this.x, this.y);
       this.parts.forEach((p) => p.txt && txt(p.txt, p.x - 4, p.y - 6, 3));
       txt("SCORE " + pad(this.score()), 4, 4); txt("HI " + pad(best("runner")), W - 4, 4, 2, 1, "right");
+      progress(this.dist / RUN_GOAL);
       if (!this.started) { panel(W / 2 - 56, 34, 112, 42); txt("JUMP RUN", W / 2, 40, 3, 1, "center"); txt("< " + HEROES[hero].name + " >", W / 2, 52, Math.floor(t / 20) % 2 ? 3 : 2, 1, "center"); txt("PRESS A TO JUMP", W / 2, 64, 2, 1, "center"); }
       if (this.over && this.overT > 20) overBox("GAME OVER", ["SCORE " + pad(this.score())], this.overT, this.newBest, "runner");
     }
   };
 
-  /* ---------- 2. 스위트 캐치 (민트초코·핫초코 받기, 고추·탄토스트 피하기) ---------- */
+  /* ---------- 2. 스위트 캐치 (핫초코·케이크 받기, 커피·탄토스트 피하기) ---------- */
+  const CATCH_TIME = 60 * 60;
   const caught = {
-    enter() { Object.assign(this, { x: W / 2 - 6, items: [], score: 0, lives: 3, t: 0, over: false, overT: 0, newBest: false, spawn: 40, parts: [], started: false, flash: 0 }); },
+    enter() { Object.assign(this, { x: W / 2 - 6, items: [], score: 0, lives: 3, t: 0, time: 0, over: false, overT: 0, newBest: false, spawn: 40, parts: [], started: false, flash: 0 }); },
     update() {
       this.t++;
       this.parts.forEach((p) => { p.t++; p.y -= 0.5; }); this.parts = this.parts.filter((p) => p.t < 35);
@@ -159,13 +168,14 @@
         if (I.pressed.up || I.pressed.down) { hero = 1 - hero; PX.store.set("hero", hero); PX.sfx("move"); }
         if (I.pressed.a) this.started = true; else return;
       }
+      if (++this.time >= CATCH_TIME) { toEnding("catch", this.score); return; }
       const sp = I.down.a || I.down.b ? 3.6 : 2.4;
       if (I.down.left) this.x -= sp; if (I.down.right) this.x += sp;
       this.x = PX.clamp(this.x, 0, W - 12);
       const lvl = Math.min(1, this.t / 3600);
-      if (--this.spawn <= 0) {
+      if (--this.spawn <= 0 && this.time < CATCH_TIME - 120) {
         const r = Math.random();
-        const kind = r < 0.36 ? "mint" : r < 0.7 ? "cocoa" : r < 0.78 ? "heart" : r < 0.9 ? "chili" : "toast";
+        const kind = r < 0.36 ? "cake" : r < 0.7 ? "cocoa" : r < 0.78 ? "heart" : r < 0.9 ? "coffee" : "toast";
         this.items.push({ kind, x: PX.rand(4, W - 14), y: -10, vy: PX.rand(0.7, 1.1) + lvl * 1.4 });
         this.spawn = Math.max(14, 46 - lvl * 30 + PX.rand(-6, 6));
       }
@@ -174,7 +184,7 @@
         it.y += it.vy;
         if (!it.done && it.y + 6 > py && it.y < py + 10 && it.x + 7 > px && it.x < px + 12) {
           it.done = true;
-          if (ITEMS[it.kind].bad) { this.lives--; this.flash = 20; PX.sfx("hit"); this.parts.push({ x: it.x, y: it.y, t: 0, txt: it.kind === "chili" ? "HOT!" : "BURNT" }); if (this.lives <= 0) { this.over = true; this.overT = 0; this.newBest = setBest("catch", this.score); setTimeout(() => PX.sfx("lose"), 300); } }
+          if (ITEMS[it.kind].bad) { this.lives--; this.flash = 20; PX.sfx("hit"); this.parts.push({ x: it.x, y: it.y, t: 0, txt: it.kind === "coffee" ? "BITTER" : "BURNT" }); if (this.lives <= 0) { this.over = true; this.overT = 0; this.newBest = setBest("catch", this.score); setTimeout(() => PX.sfx("lose"), 300); } }
           else { const p = ITEMS[it.kind].pts; this.score += p; PX.sfx(p > 10 ? "perfect" : "coin"); this.parts.push({ x: it.x, y: it.y, t: 0, txt: "+" + p }); }
         }
       });
@@ -191,13 +201,14 @@
       if (!(this.flash && Math.floor(this.flash / 3) % 2)) sprite(moving ? (Math.floor(t / 6) % 2 ? HS.a : HS.b) : HS.a, this.x, GY - 12, I.down.left);
       this.parts.forEach((p) => txt(p.txt, p.x - 4, p.y - 6, 3));
       txt("SCORE " + pad(this.score), 4, 4);
+      if (this.started) txt("TIME " + String(Math.ceil((CATCH_TIME - this.time) / 60)).padStart(2, "0"), W / 2, 4, 3, 1, "center");
       for (let i = 0; i < 3; i++) txt("*", W - 10 - i * 7, 4, i < this.lives ? 3 : 1);
       if (!this.started) {
         panel(W / 2 - 70, 26, 140, 66);
         txt("SWEET CATCH", W / 2, 32, 3, 1, "center");
-        sprite(ITEMS.mint.rows, W / 2 - 52, 44); sprite(ITEMS.cocoa.rows, W / 2 - 40, 44); sprite(ITEMS.heart.rows, W / 2 - 26, 45);
+        sprite(ITEMS.cake.rows, W / 2 - 52, 44); sprite(ITEMS.cocoa.rows, W / 2 - 40, 44); sprite(ITEMS.heart.rows, W / 2 - 26, 45);
         txt("CATCH!", W / 2 + 2, 46, 2);
-        sprite(ITEMS.chili.rows, W / 2 - 50, 58); sprite(ITEMS.toast.rows, W / 2 - 38, 58);
+        sprite(ITEMS.coffee.rows, W / 2 - 50, 58); sprite(ITEMS.toast.rows, W / 2 - 38, 58);
         txt("AVOID!", W / 2 + 2, 60, 2);
         txt("^ " + HEROES[hero].name + " v   A: START", W / 2, 78, Math.floor(t / 20) % 2 ? 3 : 2, 1, "center");
       }
@@ -206,9 +217,9 @@
   };
 
   /* ---------- 3. 케이크 쌓기 ---------- */
-  const LH = 8, BASE_Y = 128, MAXW = 84;
+  const LH = 8, BASE_Y = 128, MAXW = 84, STACK_GOAL = 15;
   const stack = {
-    enter() { Object.assign(this, { layers: [{ x: (W - MAXW) / 2, w: MAXW }], cur: null, fall: [], cam: 0, over: false, overT: 0, combo: 0, t: 0, flash: 0, newBest: false, msg: null }); this.spawn(); },
+    enter() { Object.assign(this, { win: 0, layers: [{ x: (W - MAXW) / 2, w: MAXW }], cur: null, fall: [], cam: 0, over: false, overT: 0, combo: 0, t: 0, flash: 0, newBest: false, msg: null }); this.spawn(); },
     spawn() { const top = this.layers[this.layers.length - 1], n = this.layers.length; const fromLeft = n % 2 === 1; this.cur = { x: fromLeft ? 0 : W - top.w, w: top.w, dir: fromLeft ? 1 : -1, speed: Math.min(3.8, 1.1 + n * 0.08) }; },
     layerY(i) { return BASE_Y - (i + 1) * LH; },
     update() {
@@ -217,6 +228,7 @@
       this.fall.forEach((f) => { f.vy += 0.25; f.y += f.vy; f.x += f.vx; }); this.fall = this.fall.filter((f) => f.y < H + this.cam + 40);
       if (this.flash) this.flash--; if (this.msg && ++this.msg.t > 40) this.msg = null;
       if (this.over) { this.overT++; if (this.overT > 40 && (I.pressed.a || I.pressed.start)) { PX.sfx("select"); this.enter(); } return; }
+      if (this.win) { if (++this.win > 70) toEnding("stack", this.layers.length - 1); return; }
       const c = this.cur; c.x += c.dir * c.speed;
       if (c.x > W - c.w + 20 && c.dir > 0) c.dir = -1; if (c.x < -20 && c.dir < 0) c.dir = 1;
       if (I.pressed.a || I.pressed.down) this.drop();
@@ -235,6 +247,7 @@
         if (c.x + c.w > r) this.fall.push({ x: r, y, w: c.x + c.w - r, vy: 0, vx: 0.5, i: this.layers.length - 1 });
         PX.sfx("drop");
       }
+      if (this.layers.length - 1 >= STACK_GOAL) { this.win = 1; this.cur = null; setBest("stack", this.layers.length - 1); PX.sfx("clear"); return; }
       this.spawn();
     },
     drawLayer(x, y, w, i) {
@@ -251,12 +264,13 @@
       if (this.flash) { const L = this.layers[this.layers.length - 1], y = this.layerY(this.layers.length - 1) + this.cam; rect(L.x - 2, y - 1, L.w + 4, 1, 3); rect(L.x - 2, y + LH, L.w + 4, 1, 3); }
       if (this.cur) this.drawLayer(this.cur.x, this.layerY(this.layers.length), this.cur.w, this.layers.length);
       this.fall.forEach((f) => this.drawLayer(f.x, f.y, f.w, f.i));
+      if (this.win) { const L = this.layers[this.layers.length - 1], y = Math.round(this.layerY(this.layers.length - 1) + this.cam); sprite(HEROES[0].spr.a, L.x + L.w / 2 - 13, y - 12); sprite(HEROES[1].spr.a, L.x + L.w / 2 + 1, y - 12, true); txt("COMPLETE!", W / 2, 24, 3, 1, "center"); }
       if (this.over && this.layers.length > 1) {
         const L = this.layers[this.layers.length - 1], cx = Math.round(L.x + L.w / 2 - 1), cy = Math.round(this.layerY(this.layers.length - 1) + this.cam - 9);
         rect(cx + 1, cy + 2, 1, 7, 3); sprite([".33.33.", "3223223", "3222223", ".32223.", "..323..", "...3..."], cx - 2, cy - 5 - (Math.floor(this.t / 20) % 2));
       }
       rect(0, 0, W, 12, 0); rect(0, 12, W, 1, 3);
-      txt("LAYERS " + pad(this.layers.length - 1, 3), 4, 4); txt("HI " + pad(best("stack"), 3), W - 4, 4, 2, 1, "right");
+      txt("LAYERS " + (this.layers.length - 1) + "/" + STACK_GOAL, 4, 4); txt("HI " + pad(best("stack"), 3), W - 4, 4, 2, 1, "right");
       if (this.msg) txt(this.msg.s, W / 2, 20 - Math.min(4, this.msg.t / 4), 3, 1, "center");
       if (this.layers.length === 1 && !this.over) txt("A: DROP", W / 2, 24, 2, 1, "center");
       if (this.over && this.overT > 25) overBox("TOWER DONE", [(this.layers.length - 1) + " LAYERS"], this.overT, this.newBest, "stack");
@@ -282,7 +296,7 @@
       this.t++;
       this.parts.forEach((p) => { p.x += p.vx; p.y += p.vy; p.vy += 0.1; p.t++; }); this.parts = this.parts.filter((p) => p.t < 30);
       if (this.over) { this.overT++; if (this.overT > 40 && (I.pressed.a || I.pressed.start)) { PX.sfx("select"); this.enter(); } return; }
-      if (this.win) { if (--this.win === 0) { this.level++; this.load(); } return; }
+      if (this.win) { if (--this.win === 0) { if (this.level >= LEVELS.length - 1) { setBest("brick", this.score); toEnding("brick", this.score); return; } this.level++; this.load(); } return; }
       const p = this.pad, b = this.ball;
       if (I.down.left) p.x -= 3.4; if (I.down.right) p.x += 3.4; p.x = PX.clamp(p.x, 0, W - p.w);
       if (b.stuck) { b.x = p.x + p.w / 2 - 1; b.y = 128; if (I.pressed.a || I.pressed.up) { const a = PX.rand(-0.5, 0.5); Object.assign(b, { vx: Math.sin(a) * this.baseSpeed, vy: -Math.cos(a) * this.baseSpeed, stuck: false }); PX.sfx("paddle"); } return; }
@@ -315,7 +329,7 @@
     draw() {
       rect(0, 0, W, H, 0);
       for (let y = 14; y < H; y += 2) for (let x = (y / 2) % 2 ? 1 : 0; x < W; x += 8) rect(x, y, 1, 1, 1);
-      rect(0, 0, W, 12, 3); txt("SCORE " + pad(this.score), 4, 4, 0); txt("LV" + (this.level + 1), W / 2, 4, 1, 1, "center");
+      rect(0, 0, W, 12, 3); txt("SCORE " + pad(this.score), 4, 4, 0); txt("LV " + (this.level + 1) + "/" + LEVELS.length, W / 2, 4, 1, 1, "center");
       for (let i = 0; i < this.lives; i++) txt("*", W - 8 - i * 6, 4, 0);
       this.bricks.forEach((k) => { rect(k.x, k.y, k.w, k.h, 3); rect(k.x + 1, k.y + 1, k.w - 2, k.h - 2, k.hp > 1 ? 1 : 2); rect(k.x + 1, k.y + 1, k.w - 2, 1, k.hp > 1 ? 0 : 1); });
       this.parts.forEach((p) => rect(p.x, p.y, 1, 1, 3));
@@ -327,12 +341,49 @@
     }
   };
 
-  const SCENES = { menu, runner, catch: caught, stack, brick };
+  /* ---------- 엔딩 ---------- */
+  const END_TEXT = { runner: ["RAN ALL THE WAY", "TO SEE YOU!"], catch: ["SHARING SWEETS", "WITH YOU!"], stack: ["OUR WEDDING CAKE", "IS DONE!"], brick: ["NO MORE WALLS", "BETWEEN US!"] };
+  const HEART_S = [".33.33.", "3223223", "3222223", ".32223.", "..323..", "...3..."];
+  const ending = {
+    enter() { this.t = 0; this.hx = -16; PX.sfx("clear"); if (PX.cert) PX.cert.mark(this.game, this.score); },
+    update() {
+      this.t++;
+      const tx = W / 2 - 22;
+      if (this.hx < tx) this.hx = Math.min(tx, this.hx + 1.7);
+      if (this.hx >= tx && !this.met) { this.met = this.t; PX.sfx("perfect"); }
+      if (this.t > 170 && (I.pressed.a || I.pressed.start)) { PX.sfx("select"); const g = this.game, sc = this.score; go(menu); PX.cert && PX.cert.open(g, sc, HEROES[hero].name); }
+    },
+    draw() {
+      const t = this.t;
+      rect(0, 0, W, H, 0);
+      for (let y = 6; y < GY; y += 12) for (let x = (y / 12) % 2 ? 6 : 0; x < W; x += 12) rect(x + 2, y, 2, 2, 1);
+      rect(0, GY, W, 1, 3); rect(0, GY + 1, W, H - GY - 1, 2);
+      for (let x = 0; x < W; x += 8) rect(x, GY + 4 + ((x / 8) % 2) * 4, 4, 1, 1);
+      const me = HEROES[hero], you = HEROES[1 - hero], arrived = this.hx >= W / 2 - 22;
+      sprite(arrived ? (Math.floor(t / 20) % 2 ? me.spr.a : me.spr.j) : (Math.floor(t / 6) % 2 ? me.spr.a : me.spr.b), this.hx, GY - 12 - (arrived && Math.floor(t / 20) % 2 ? 2 : 0));
+      sprite(Math.floor(t / 30) % 2 ? you.spr.a : you.spr.b, W / 2 + 10, GY - 12, true);
+      if (this.game === "catch") { sprite(ITEMS.cocoa.rows, W / 2 - 5, GY - 26); }
+      if (this.game === "stack") { rect(W / 2 - 6, GY - 8, 12, 8, 3); rect(W / 2 - 5, GY - 7, 10, 2, 0); rect(W / 2 - 4, GY - 14, 8, 6, 3); rect(W / 2 - 3, GY - 13, 6, 2, 0); }
+      if (this.met) {
+        const k = t - this.met;
+        for (let i = 0; i < 6; i++) { const hy = GY - 30 - ((k * 0.6 + i * 18) % 70), hx2 = W / 2 - 3 + Math.round(Math.sin((k + i * 40) / 14) * 16); if (hy > 20) sprite(HEART_S, hx2, hy); }
+        panel(W / 2 - 66, 18, 132, 42);
+        txt(me.name + " * " + you.name, W / 2, 24, 3, 1, "center");
+        txt(END_TEXT[this.game][0], W / 2, 34, 3, 1, "center");
+        txt(END_TEXT[this.game][1], W / 2, 42, 3, 1, "center");
+        txt("SCORE " + pad(this.score), W / 2, 51, 2, 1, "center");
+      } else txt("MISSION CLEAR!", W / 2, 24, 3, 1, "center");
+      if (t > 170 && Math.floor(t / 25) % 2) txt("A: GET YOUR AWARD", W / 2, 70, 3, 1, "center");
+    }
+  };
+  function toEnding(game, score) { ending.game = game; ending.score = Math.floor(score); ending.met = 0; setBest(game, score); go(ending); }
+
+  const SCENES = { menu, runner, catch: caught, stack, brick, ending };
   function go(s) { scene = s; paused = false; s.enter(); I.reset(); }
   function step() {
     if (scene !== menu) {
-      if (I.pressed.select) { PX.sfx("back"); go(menu); I.endFrame(); return; }
-      if (I.pressed.start && !scene.over && (scene.started !== false)) { paused = !paused; PX.sfx("blip"); I.endFrame(); return; }
+      if (I.pressed.select && scene !== ending) { PX.sfx("back"); go(menu); I.endFrame(); return; }
+      if (I.pressed.start && scene !== ending && !scene.over && (scene.started !== false)) { paused = !paused; PX.sfx("blip"); I.endFrame(); return; }
       if (I.pressed.b) I.pressed.a = true;
     }
     if (!paused) scene.update();
@@ -360,7 +411,8 @@
       if (on && !raf) { lastT = performance.now(); acc = 0; raf = requestAnimationFrame(loop); }
       if (!on && scene && scene !== menu && !scene.over) paused = true;
     },
-    onSelect(fn) { onSelectCbs.push(fn); }
+    onSelect(fn) { onSelectCbs.push(fn); },
+    toEnding
   };
   document.addEventListener("visibilitychange", () => { if (document.hidden && scene && scene !== menu && !scene.over) paused = true; });
 })();

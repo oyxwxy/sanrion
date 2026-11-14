@@ -4,7 +4,10 @@
 &lt;meta charset=&quot;UTF-8&quot;&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
 &lt;title&gt;SANTA ♥ ORION · 1ST ANNIVERSARY&lt;/title&gt;
-&lt;style&gt;html,body{margin:0;padding:0;background:#fbe6ef}&lt;/style&gt;
+&lt;style&gt;html,body{margin:0;padding:0;background:#fbe6ef}
+::-webkit-scrollbar{width:14px;height:14px}::-webkit-scrollbar-track{background:#fdf1f6;background-image:linear-gradient(90deg,transparent 5px,#f8bfd3 5px 9px,transparent 9px)}
+::-webkit-scrollbar-thumb{background:#e0578a;box-shadow:inset 0 0 0 2px #3a1d2e,inset 0 -4px 0 2px #b83a6b,inset 0 3px 0 2px #f08cb0;border:2px solid #fdf1f6}::-webkit-scrollbar-button{display:none}
+@supports not selector(::-webkit-scrollbar){html{scrollbar-color:#e0578a #fdf1f6}}&lt;/style&gt;
 &lt;style&gt;
 /* =========================================================
    FONTS — 눈누(noonnu) 무료 폰트 · jsDelivr npm 미러
@@ -223,7 +226,7 @@
 .xm-ctrl i { width: 16px; height: 16px; background: #fff; box-shadow: inset 0 0 0 2px var(--ink); opacity: .6; }
 .xm-close { width: 20px; height: 20px; border: 0; padding: 0; background: #fff; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); font: 14px/20px var(--font-h); }
 .xm-close:hover { background: var(--ink); color: #fff; }
-.xm-body { padding: 18px 20px 20px; max-height: none; }
+.xm-body { padding: 18px 20px 20px; overflow-y: auto; overscroll-behavior: contain; }
 
 .doc { --pc: var(--pink); }
 .doc-head { display: flex; gap: 14px; align-items: center; padding-bottom: 14px; border-bottom: 2px dashed var(--line); }
@@ -235,7 +238,9 @@
 .doc-by em { font-style: normal; color: var(--pink-d); }
 .doc-sec { margin-top: 18px; }
 .doc-sec h4 { margin: 0 0 8px; display: inline-block; font: 12px var(--font-h); letter-spacing: .06em; color: #fff; background: var(--ink); padding: 2px 8px; }
-.doc-title { margin: 0; padding: 14px 16px; font: 20px/1.6 var(--font-serif); color: var(--pc); background: var(--paper2); border-left: 4px solid var(--pc); word-break: keep-all; }
+.doc-title { position: relative; margin: 22px 0 6px; padding: 0 4px 14px; font: 400 25px/1.55 var(--font-serif); color: var(--pc); word-break: keep-all; text-align: center; }
+.doc-title::before { content: &quot;“&quot;; display: block; font: 400 46px/0.6 var(--font-serif); color: var(--pink-l); margin-bottom: 6px; }
+.doc-title::after { content: &quot;&quot;; display: block; width: 60px; height: 4px; margin: 14px auto 0; background: repeating-linear-gradient(90deg, var(--pc) 0 4px, transparent 4px 8px); }
 .doc-pers p { margin: 0 0 10px; font: 15px/1.85 var(--font-read); word-break: keep-all; }
 .doc-letter { position: relative; padding: 16px 18px; background: #fff;
   background-image: repeating-linear-gradient(transparent 0 31px, var(--line) 31px 32px); box-shadow: var(--ring2), 5px 7px 0 0 var(--pink-l); margin: 4px; }
@@ -325,6 +330,7 @@
 .grill { display: grid; grid-template-columns: repeat(4, 5px); gap: 6px; }
 .grill i { width: 5px; height: 5px; border-radius: 50%; background: var(--pink-l); }
 .game-side { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; }
+.awards { grid-column: 1 / -1; padding: 12px 16px 14px; }
 .game-help { padding: 14px 16px; }
 .game-help b { display: block; font: 400 17px var(--font-h); margin-bottom: 6px; color: var(--pink-d); }
 .game-help p { margin: 0; font: 14px/1.7 var(--font-read); word-break: keep-all; }
@@ -479,6 +485,49 @@ kbd { font: 10px var(--font); padding: 1px 6px 2px; margin: 2px; background: var
   .st-big { display: none; }
 }
 
+/* ---------- 스크롤바 (픽셀) ---------- */
+.px-app ::-webkit-scrollbar { width: 14px; height: 14px; }
+.px-app ::-webkit-scrollbar-track { background: var(--paper2); background-image: linear-gradient(90deg, transparent 5px, var(--pink-l) 5px 9px, transparent 9px); }
+.px-app ::-webkit-scrollbar-thumb { background: var(--pink); box-shadow: inset 0 0 0 2px var(--ink), inset 0 -4px 0 2px var(--pink-d), inset 0 3px 0 2px #f08cb0; border: 2px solid var(--paper2); }
+.px-app ::-webkit-scrollbar-thumb:hover { background: #e66b97; }
+.px-app ::-webkit-scrollbar-corner { background: var(--paper2); }
+.px-app ::-webkit-scrollbar-button { display: none; }
+@supports not selector(::-webkit-scrollbar) { .px-app, .px-app * { scrollbar-color: var(--pink) var(--paper2); scrollbar-width: thin; } }
+
+/* ---------- BGM ---------- */
+.top-ctrl { display: flex; align-items: center; gap: 10px; }
+.bgm { display: flex; align-items: stretch; box-shadow: var(--ring3); background: #fff; margin: 3px; }
+.bgm-btn { display: flex; align-items: center; gap: 8px; border: 0; padding: 0 10px; height: 36px; background: #fff; font: 11px var(--font-h); letter-spacing: .06em; color: var(--mute); max-width: 210px; }
+.bgm-btn.is-on { color: var(--pink-d); }
+.bgm-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bgm-btn.is-on .bgm-title { animation: none; }
+.bgm-ico { flex: none; width: 14px; height: 14px; background: currentColor; clip-path: polygon(40% 0, 100% 0, 100% 22%, 55% 22%, 55% 80%, 45% 100%, 10% 100%, 0 82%, 10% 64%, 40% 62%); }
+.bgm-btn.is-on .bgm-ico { animation: hop .5s steps(2) infinite; }
+.bgm-next { border: 0; padding: 0 8px; background: var(--paper2); font: 10px var(--font-h); color: var(--ink2); box-shadow: inset 2px 0 0 var(--line); }
+.bgm-next:hover { background: var(--pink-l); }
+
+/* ---------- 수상 진열장 / 상장 ---------- */
+.shelf-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.shelf-head b { font: 400 15px var(--font-h); color: var(--pink-d); letter-spacing: .06em; }
+.shelf-head span { font: 12px var(--font-h); color: var(--mute); }
+.shelf { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.award { display: flex; flex-direction: column; align-items: center; gap: 6px; border: 0; padding: 10px 6px 8px; margin: 2px; background: var(--paper2); box-shadow: 0 0 0 2px var(--line); font-size: 11px; color: var(--mute); word-break: keep-all; text-align: center; }
+.award i { width: 28px; height: 34px; background:
+  linear-gradient(var(--line), var(--line)) 8px 0 / 4px 10px no-repeat, linear-gradient(var(--line), var(--line)) 16px 0 / 4px 10px no-repeat,
+  radial-gradient(circle at 14px 22px, var(--line) 10px, transparent 11px); }
+.award.got { background: #fff; color: var(--ink); box-shadow: var(--ring2), 3px 4px 0 0 var(--pink-l); }
+.award.got i { background:
+  linear-gradient(var(--p1), var(--p1)) 8px 0 / 4px 12px no-repeat, linear-gradient(var(--p2), var(--p2)) 16px 0 / 4px 12px no-repeat,
+  radial-gradient(circle at 14px 22px, #fff2c4 3px, var(--gold) 4px, var(--gold) 9px, #a8742a 10px, transparent 11px); }
+.award.got:hover { transform: translateY(-2px); }
+.cert-modal .xm-win { width: min(820px, 100%); }
+.cert-msg { margin: 0 0 12px; font: 15px var(--font-read); }
+.cert-msg b { color: var(--pink-d); font-weight: 400; }
+.cert-cv { width: 100%; height: auto; aspect-ratio: 760/540; box-shadow: 0 0 0 2px var(--ink); image-rendering: auto; }
+.cert-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; margin-top: 14px; }
+.cert-row .mk-label { padding: 0; }
+@media (max-width: 640px) { .shelf { grid-template-columns: repeat(2, 1fr); } .bgm-btn { max-width: 120px; } .bgm-title { font-size: 9px; } }
+
 &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -507,7 +556,13 @@ kbd { font: 10px var(--font); padding: 1px 6px 2px; margin: 2px; background: var
       &lt;span class=&quot;brand-mark&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
       &lt;span class=&quot;brand-text&quot;&gt;&lt;b&gt;&lt;span class=&quot;c-p1&quot;&gt;산타&lt;/span&gt;&lt;i class=&quot;hrt&quot;&gt;&lt;/i&gt;&lt;span class=&quot;c-p2&quot;&gt;오리온&lt;/span&gt;&lt;/b&gt;&lt;small&gt;1ST ANNIVERSARY · &lt;span data-site-name&gt;&lt;/span&gt;&lt;/small&gt;&lt;/span&gt;
     &lt;/div&gt;
-    &lt;button type=&quot;button&quot; class=&quot;sound-btn&quot; aria-label=&quot;소리 끄기&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;div class=&quot;top-ctrl&quot;&gt;
+      &lt;div class=&quot;bgm&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;bgm-btn&quot; title=&quot;배경음악 켜기/끄기&quot;&gt;&lt;i class=&quot;bgm-ico&quot;&gt;&lt;/i&gt;&lt;span class=&quot;bgm-title&quot;&gt;BGM&lt;/span&gt;&lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;bgm-next&quot; title=&quot;다음 곡&quot; aria-label=&quot;다음 곡&quot;&gt;▶▶&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;button type=&quot;button&quot; class=&quot;sound-btn&quot; aria-label=&quot;효과음 끄기&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;/div&gt;
   &lt;/header&gt;
 
   &lt;nav class=&quot;stages&quot; role=&quot;tablist&quot;&gt;
@@ -529,7 +584,6 @@ kbd { font: 10px var(--font); padding: 1px 6px 2px; margin: 2px; background: var
       &lt;div class=&quot;scene px-frame&quot;&gt;&lt;canvas class=&quot;scene-canvas&quot; width=&quot;192&quot; height=&quot;108&quot;&gt;&lt;/canvas&gt;&lt;/div&gt;
       &lt;div class=&quot;dlg px-box&quot;&gt;
         &lt;div class=&quot;dlg-speaker&quot;&gt;&lt;/div&gt;
-        &lt;button type=&quot;button&quot; class=&quot;dlg-skip&quot;&gt;SKIP&lt;/button&gt;
         &lt;p class=&quot;dlg-text&quot;&gt;&lt;/p&gt;
         &lt;div class=&quot;dlg-foot&quot;&gt;&lt;span class=&quot;dlg-count&quot;&gt;&lt;/span&gt;&lt;span class=&quot;dlg-arrow&quot;&gt;&lt;/span&gt;&lt;/div&gt;
       &lt;/div&gt;
@@ -578,6 +632,7 @@ kbd { font: 10px var(--font); padding: 1px 6px 2px; margin: 2px; background: var
           &lt;div&gt;&lt;kbd&gt;ENTER&lt;/kbd&gt;&lt;span&gt;START · 일시정지&lt;/span&gt;&lt;/div&gt;
           &lt;div&gt;&lt;kbd&gt;SHIFT&lt;/kbd&gt;&lt;span&gt;SELECT · 게임 선택으로&lt;/span&gt;&lt;/div&gt;
         &lt;/div&gt;
+        &lt;div class=&quot;awards px-box&quot;&gt;&lt;/div&gt;
       &lt;/div&gt;
       &lt;div class=&quot;stage-actions&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;px-btn&quot; data-next=&quot;3&quot;&gt;STAGE 3 캐릭터 만들기 ▶&lt;/button&gt;&lt;/div&gt;
     &lt;/section&gt;
@@ -654,12 +709,12 @@ window.SITE_CONFIG = {
         title: &quot;세상에서 제일 차가운 얼음을 두르고 있지만, 사실 누구보다 뜨겁고 손 많이 가는 내 전용 대형견 남편.&quot;,
         personality: [
           &quot;남들은 이름만 들어도 벌벌 떠는 &#x27;얼음의 군주&#x27;라는데, 막상 같이 살아보면 그냥 덩치만 산만 한 스물넷짜리 사고뭉치다. 입만 열면 천상천하 유아독존에 싸가지 없게 구는 척하지만, 속은 너무 단순하고 투명해서 무슨 생각을 하는지 얼굴에 다 쓰여 있다. 조금만 칭찬해 주거나 머리를 쓰다듬어 주면 귀끝부터 목덜미까지 새빨개져서 어쩔 줄 몰라 하는 걸 보면 웃음이 안 나올 수가 없다.&quot;,
-          &quot;겉으로는 불같고 다혈질이어도 내 앞에서는 꼼짝도 못 하는 완벽한 종이호랑이. 프라이팬 앞에서는 계란 하나 못 구워서 무릎 꿇고 요리만은 살려달라고 애원하는 허당이다. 술도 못 마시고 커피도 못 마시면서 달콤한 핫초코랑 민트초코만 찾는 영락없는 초딩 입맛. 하지만 나를 사랑하는 마음 하나만큼은 그 어떤 불꽃보다 무겁고 진실하다. 자기가 상처 입는 것보다 내가 외로워질까 봐 먼저 겁을 내고 울 줄 아는, 바보 같을 정도로 순정파인 내 남자. 추위를 타서 하루 종일 내 품에 파고들어 체온을 찾는 껌딱지지만, 이제는 이 무거운 온기가 없으면 내가 잠이 안 올 지경이다.&quot;
+          &quot;겉으로는 불같고 다혈질이어도 내 앞에서는 꼼짝도 못 하는 완벽한 종이호랑이. 프라이팬 앞에서는 계란 하나 못 구워서 무릎 꿇고 요리만은 살려달라고 애원하는 허당이다. 술도 못 마시고 커피도 못 마시면서 달콤한 핫초코만 찾는 영락없는 초딩 입맛. 하지만 나를 사랑하는 마음 하나만큼은 그 어떤 불꽃보다 무겁고 진실하다. 자기가 상처 입는 것보다 내가 외로워질까 봐 먼저 겁을 내고 울 줄 아는, 바보 같을 정도로 순정파인 내 남자. 추위를 타서 하루 종일 내 품에 파고들어 체온을 찾는 껌딱지지만, 이제는 이 무거운 온기가 없으면 내가 잠이 안 올 지경이다.&quot;
         ],
         keywords: [&quot;얼음군주_아니고_대형견&quot;, &quot;핫초코_러버&quot;, &quot;요리_파괴자&quot;, &quot;귀_빨개지는_남편&quot;, &quot;껌딱지_인간에어컨&quot;, &quot;평생_내_책임&quot;],
         toOthers: [
           &quot;소개할게요. 아크 프리마 산타… 라고 하면 다들 도망가려나? 그냥 제 남편, 이태양이에요. 보시다시피 키도 크고 인상도 좀 사납게 생겼죠? 특히 웃을 때 뾰족한 송곳니가 보여서 처음엔 저도 한 성깔 하는 맹수인 줄 알았거든요. 실제로 첫 만남 때는 다짜고짜 자기 난로 하라고 협박까지 했다니까요.&quot;,
-          &quot;그런데 겁먹을 필요 전혀 없어요. 저한테만 시선 고정하고 있어서 남들한테는 관심도 없거든요. 혹시라도 이 사람이 미간을 찌푸리고 무섭게 굴면, 따뜻한 핫초코 한 잔이나 민트초코 아이스크림 하나 쥐여주고 &#x27;군주님 최고&#x27; 한마디만 해주세요. 금방 꼬리 흔들면서 풀릴 거예요. 아, 절대 주방 근처에는 못 가게 막아주시고요! 토스트도 숯덩이로 만드는 재주가 있거든요.&quot;,
+          &quot;그런데 겁먹을 필요 전혀 없어요. 저한테만 시선 고정하고 있어서 남들한테는 관심도 없거든요. 혹시라도 이 사람이 미간을 찌푸리고 무섭게 굴면, 따뜻한 핫초코 한 잔 쥐여주고 &#x27;군주님 최고&#x27; 한마디만 해주세요. 금방 꼬리 흔들면서 풀릴 거예요. 아, 절대 주방 근처에는 못 가게 막아주시고요! 토스트도 숯덩이로 만드는 재주가 있거든요.&quot;,
           &quot;오랜 시간 혼자 시린 겨울을 견뎌온 사람이지만, 이제는 저랑 봄여름가을겨울 다 함께 보낼 아주 든든하고 귀여운 남편이랍니다. 가끔 너무 제 옆에만 붙어 있어서 떼어놓기 힘들 때도 있지만… 뭐 어쩌겠어요. 평생 제가 책임지기로 약속했으니까, 예쁘게 봐주세요.&quot;
         ]
       }
@@ -672,9 +727,9 @@ window.SITE_CONFIG = {
         title: &quot;내 지독했던 겨울을 영원히 끝내버린, 세상에 단 하나뿐인 나의 봄이자 내 전부.&quot;,
         personality: [
           &quot;처음 봤을 땐 겁도 없이 아크 프리마인 내 앞을 가로막고 할 말 다 하는 당돌하고 건방진 녀석인 줄 알았다. 조그만 체구로 내 성질을 다 받아내면서도 눈 하나 깜짝 안 하고 양말 뒤집어 놓지 말라고 잔소리할 때는 솔직히 기가 찼지. 강자에게 절대 안 굽히고, 일 처리는 귀신같이 빠르면서 정작 집구석에만 박혀 있고 싶어 하는 기 빨리는 집순이.&quot;,
-          &quot;근데… 알면 알수록 이 여자만큼 다정하고 따뜻한 사람은 세상에 없다. 입은 거칠게 놀리고 장난치면서 나를 쥐락펴락하는데, 내가 악몽을 꾸거나 불안해할 때마다 아무 말 없이 품을 내어주고 머리를 쓰다듬어 준다. 편식은 또 어찌나 심한지 매운 것도 못 먹고 고기는 소금만 찍어 먹는 까다로운 입맛이면서, 민트초코나 달달한 디저트 앞에서는 눈이 반짝거리는 게 미치도록 귀엽다. 내가 평생 이길 수 없는 유일한 약점이자, 나를 사람으로 만들어준 구원자. 그냥 머리부터 발끝까지 다 내 거다.&quot;
+          &quot;근데… 알면 알수록 이 여자만큼 다정하고 따뜻한 사람은 세상에 없다. 입은 거칠게 놀리고 장난치면서 나를 쥐락펴락하는데, 내가 악몽을 꾸거나 불안해할 때마다 아무 말 없이 품을 내어주고 머리를 쓰다듬어 준다. 까다로운 입맛이면서, 달달한 디저트 앞에서는 눈이 반짝거리는 게 미치도록 귀엽다. 내가 평생 이길 수 없는 유일한 약점이자, 나를 사람으로 만들어준 구원자. 그냥 머리부터 발끝까지 다 내 거다.&quot;
         ],
-        keywords: [&quot;나의_유일한_봄&quot;, &quot;인간_난로_아니고_내_아내&quot;, &quot;민초단_동지&quot;, &quot;강강약약_조련사&quot;, &quot;시트러스향_중독&quot;, &quot;절대_안_놔줌&quot;],
+        keywords: [&quot;나의_유일한_봄&quot;, &quot;인간_난로_아니고_내_아내&quot;, &quot;강강약약_조련사&quot;, &quot;시트러스향&quot;, &quot;절대_안_놔줌&quot;],
         toOthers: [
           &quot;야, 똑똑히 봐둬. 여긴 내 아내, 한새벽이다. 코드네임 오리온? 그런 딱딱한 이름으로 부르지 마. 이제 아크의 누구도 이 여자한테 함부로 명령 못 해. 내 허락 없이는 털끝 하나 못 건드린다는 뜻이야.&quot;,
           &quot;얼음의 군주인 내가 왜 지긋지긋한 동면을 깨고 사계절 내내 눈을 뜨고 있는지 알아? 전부 이 여자 때문이야. 내 폭주도, 내 시린 심장도 전부 이 조그만 손길 하나로 다 잠재웠거든. 솔직히 말해서 내가 일방적으로 매달리고 사는 거 맞는데, 뭐 어쩌라고. 불만 있어? 예쁘고, 똑똑하고, 싸움도 잘하고, 내 성질머리까지 다 받아주는 여자는 온 우주에 한새벽 하나뿐인데 당연한 거 아니냐?&quot;,
@@ -1077,7 +1132,6 @@ window.SITE_CONFIG = {
         &lt;div class=&quot;cp-prev&quot;&gt;&lt;i class=&quot;cp-old&quot;&gt;&lt;/i&gt;&lt;i class=&quot;cp-new&quot;&gt;&lt;/i&gt;&lt;/div&gt;
         &lt;label class=&quot;cp-hex&quot;&gt;&lt;span&gt;#&lt;/span&gt;&lt;input maxlength=&quot;6&quot; spellcheck=&quot;false&quot;&gt;&lt;/label&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;cp-rgb&quot;&gt;&lt;/div&gt;
       &lt;div class=&quot;cp-label&quot;&gt;테마 색&lt;/div&gt;&lt;div class=&quot;cp-sw cp-theme&quot;&gt;&lt;/div&gt;
       &lt;div class=&quot;cp-label&quot;&gt;최근 색&lt;/div&gt;&lt;div class=&quot;cp-sw cp-recent&quot;&gt;&lt;/div&gt;
       &lt;div class=&quot;cp-btns&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;px-btn sm ghost cp-cancel&quot;&gt;취소 (Esc)&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;px-btn sm cp-ok&quot;&gt;적용 (Enter)&lt;/button&gt;&lt;/div&gt;`;
@@ -1095,14 +1149,6 @@ window.SITE_CONFIG = {
       const orig = (value || &quot;#ffffff&quot;).toLowerCase();
       let [r, g, b] = PX.hexToRgb(orig);
       let [h, s, v] = rgb2hsv(r, g, b);
-      const rgbBox = el.querySelector(&quot;.cp-rgb&quot;);
-      const steps = [&quot;R&quot;, &quot;G&quot;, &quot;B&quot;].map((lab, i) =&gt; {
-        const w = document.createElement(&quot;label&quot;); w.className = &quot;cp-ch&quot;; w.innerHTML = `&lt;span&gt;${lab}&lt;/span&gt;`;
-        const st = ui.stepper({ value: [r, g, b][i], min: 0, max: 255, step: 1, big: 16, width: 34, onChange: (n) =&gt; {
-          const a = [r, g, b]; a[i] = n; [r, g, b] = a; [h, s, v] = rgb2hsv(r, g, b); update(true, &quot;rgb&quot;);
-        } });
-        w.appendChild(st); rgbBox.appendChild(w); return st;
-      });
       const hexOf = () =&gt; PX.rgbToHex(r, g, b);
       function drawHue() {
         for (let x = 0; x &lt; 168; x++) { const [rr, gg, bb] = hsv2rgb((x / 168) * 360, 1, 1); hx.fillStyle = `rgb(${rr},${gg},${bb})`; hx.fillRect(x, 0, 1, 12); }
@@ -1124,7 +1170,6 @@ window.SITE_CONFIG = {
         drawHue(); drawSV();
         const hex = hexOf();
         if (from !== &quot;hex&quot;) hexIn.value = hex.slice(1);
-        if (from !== &quot;rgb&quot;) steps.forEach((st, i) =&gt; st.setValue([r, g, b][i]));
         el.querySelector(&quot;.cp-new&quot;).style.background = hex;
         if (fire &amp;&amp; onInput) onInput(hex);
       }
@@ -1217,7 +1262,9 @@ window.SITE_CONFIG = {
     app.appendChild(wrap);
     // 모달이 화면 안에 보이도록
     const win = wrap.querySelector(&quot;.xm-win&quot;);
-    const vy = PX.viewport().top + 20;
+    const vp = PX.viewport();
+    bd.style.maxHeight = Math.max(280, Math.min(640, vp.h - 120)) + &quot;px&quot;;
+    const vy = vp.top + Math.max(20, (vp.h - Math.min(win.offsetHeight, vp.h)) / 2);
     win.style.marginTop = Math.min(vy, Math.max(20, app.offsetHeight - win.offsetHeight - 20)) + &quot;px&quot;;
     PX.sfx(&quot;select&quot;);
     return { el: wrap, body: bd, close };
@@ -1260,8 +1307,8 @@ window.SITE_CONFIG = {
       &quot;....o....&quot;, &quot;...oao...&quot;, &quot;oooawaooo&quot;, &quot;oaaaaaaao&quot;, &quot;.oaaaaao.&quot;, &quot;..oaaao..&quot;, &quot;.oaaoaao.&quot;, &quot;.oao.oao.&quot;, &quot;.oo...oo.&quot;] },
     { id: &quot;ribbon&quot;, name: &quot;리본&quot;, pal: { o: &quot;#8e2550&quot;, a: &quot;#e0578a&quot;, A: &quot;#b83a6b&quot;, w: &quot;#f8bfd3&quot; }, rows: [
       &quot;oo.....oo&quot;, &quot;owoo.ooao&quot;, &quot;oaaaoaaao&quot;, &quot;oaaAAAaao&quot;, &quot;oaaoAoaao&quot;, &quot;oo.oAo.oo&quot;, &quot;..oAoAo..&quot;, &quot;.oAo.oAo.&quot;, &quot;.oo...oo.&quot;] },
-    { id: &quot;mintchoco&quot;, name: &quot;민트초코&quot;, pal: { o: &quot;#3a1d2e&quot;, m: &quot;#9fe0cf&quot;, M: &quot;#6fc2ad&quot;, c: &quot;#5a3324&quot;, y: &quot;#e9b872&quot;, Y: &quot;#c48b45&quot; }, rows: [
-      &quot;..oooo..&quot;, &quot;.ommmmo.&quot;, &quot;omcmmmMo&quot;, &quot;ommmcmMo&quot;, &quot;omcmmmMo&quot;, &quot;oooooooo&quot;, &quot;.oyYyyo.&quot;, &quot;.oyyYyo.&quot;, &quot;..oYyo..&quot;, &quot;..oyYo..&quot;, &quot;...oo...&quot;] },
+    { id: &quot;cake&quot;, name: &quot;케이크&quot;, pal: { o: &quot;#3a1d2e&quot;, w: &quot;#ffffff&quot;, p: &quot;#f28fb3&quot;, s: &quot;#f6d79b&quot;, r: &quot;#c8323f&quot;, R: &quot;#ff8a9a&quot; }, rows: [
+      &quot;.......rr.&quot;, &quot;......oRro&quot;, &quot;....ooww.o&quot;, &quot;..oowwwwwo&quot;, &quot;oowwwwwwwo&quot;, &quot;oppppppppo&quot;, &quot;osssssssso&quot;, &quot;oppppppppo&quot;, &quot;oooooooooo&quot;] },
     { id: &quot;hotchoco&quot;, name: &quot;핫초코&quot;, pal: { o: &quot;#3a1d2e&quot;, w: &quot;#ffffff&quot;, W: &quot;#f1e3e8&quot;, m: &quot;#f8bfd3&quot;, M: &quot;#e0578a&quot;, h: &quot;#c8323f&quot; }, rows: [
       &quot;...w..w....&quot;, &quot;..w..w.....&quot;, &quot;ooooooooo..&quot;, &quot;owwWwwWwo..&quot;, &quot;ommmmmmmooo&quot;, &quot;ommmmmmmo.o&quot;, &quot;ommmhmmmo.o&quot;, &quot;ommhhhmmooo&quot;, &quot;.ommhmmMo..&quot;, &quot;..ooooo....&quot;] },
     { id: &quot;snow&quot;, name: &quot;눈꽃&quot;, pal: { o: &quot;#7fb2e0&quot;, a: &quot;#e8f4ff&quot; }, rows: [
@@ -1395,6 +1442,7 @@ window.SITE_CONFIG = {
     { name: &quot;송곳니&quot;, p: [P(14, 16, [&quot;EEEE&quot;, &quot;wmmw&quot;, &quot;.EE.&quot;])] },
     { name: &quot;씨익&quot;, p: [P(15, 16, [&quot;..E&quot;, &quot;EE.&quot;])] }
   ];
+  const EARS = [P(7, 12, [&quot;.s&quot;, &quot;sS&quot;, &quot;ss&quot;]), P(23, 12, [&quot;s.&quot;, &quot;Ss&quot;, &quot;ss&quot;])];
   const BLUSH = [P(10, 16, [&quot;kk&quot;]), P(20, 16, [&quot;kk&quot;])];
   const DARK = [P(12, 15, [&quot;dd&quot;]), P(18, 15, [&quot;dd&quot;])];
   const NOSE = [P(15, 15, [&quot;kk&quot;])];
@@ -1404,7 +1452,7 @@ window.SITE_CONFIG = {
     { name: &quot;티셔츠&quot;, r: [&quot;......SSSS......&quot;, &quot;....cccccccc....&quot;, &quot;...cccccccccc...&quot;, &quot;..ccCccccccCcc..&quot;, &quot;..ccCccccccCcc..&quot;, &quot;..ssCccccccCss..&quot;] },
     { name: &quot;줄무늬&quot;, r: [&quot;......SSSS......&quot;, &quot;....cccccccc....&quot;, &quot;...wwwwwwwwww...&quot;, &quot;..ccCccccccCcc..&quot;, &quot;..wwCwwwwwwCww..&quot;, &quot;..ssCccccccCss..&quot;] },
     { name: &quot;후드&quot;, r: [&quot;....cCSSSSCc....&quot;, &quot;....ccwccwcc....&quot;, &quot;...cccwccwccc...&quot;, &quot;..ccCccccccCcc..&quot;, &quot;..ccCcCCCCcCcc..&quot;, &quot;..ssCccccccCss..&quot;] },
-    { name: &quot;셔츠+넥타이&quot;, r: [&quot;......SSSS......&quot;, &quot;....ccCttCcc....&quot;, &quot;...ccccttcccc...&quot;, &quot;..ccCccttccCcc..&quot;, &quot;..ccCccttccCcc..&quot;, &quot;..ssCccttccCss..&quot;] },
+    { name: &quot;셔츠+넥타이&quot;, r: [&quot;......SSSS......&quot;, &quot;....ccCtCccc....&quot;, &quot;...cccctccccc...&quot;, &quot;..ccCcctcccCcc..&quot;, &quot;..ccCccTcccCcc..&quot;, &quot;..ssCccccccCss..&quot;] },
     { name: &quot;터틀넥&quot;, r: [&quot;......cccc......&quot;, &quot;....cCcccccc....&quot;, &quot;...cccccccccc...&quot;, &quot;..ccCccccccCcc..&quot;, &quot;..ccCccccccCcc..&quot;, &quot;..ssCccccccCss..&quot;] },
     { name: &quot;민소매&quot;, r: [&quot;......SSSS......&quot;, &quot;....cccccccc....&quot;, &quot;...cccccccccc...&quot;, &quot;..sSccccccccSs..&quot;, &quot;..sSccccccccSs..&quot;, &quot;..ssccccccccss..&quot;] },
     { name: &quot;멜빵&quot;, r: [&quot;......SSSS......&quot;, &quot;....cpccccpc....&quot;, &quot;...ccpccccpcc...&quot;, &quot;..ccCppppppCcc..&quot;, &quot;..ccCpwppwpCcc..&quot;, &quot;..ssPppppppPss..&quot;] }
@@ -1449,19 +1497,18 @@ window.SITE_CONFIG = {
   ];
   const FACE_ACC = [
     { name: &quot;없음&quot;, p: [] },
-    { name: &quot;안경&quot;, p: [P(11, 12, [&quot;aaaa..aaaa&quot;, &quot;a..aaaa..a&quot;, &quot;aaaa..aaaa&quot;])] },
+    { name: &quot;동그란안경&quot;, p: [P(10, 11, [&quot;.aaa....aaa.&quot;, &quot;a...aaaa...a&quot;, &quot;a...a..a...a&quot;, &quot;a...a..a...a&quot;, &quot;.aaa....aaa.&quot;])] },
     { name: &quot;선글라스&quot;, p: [P(11, 12, [&quot;EEEE..EEEE&quot;, &quot;EwEEEEEwEE&quot;, &quot;EEEE..EEEE&quot;])] },
     { name: &quot;반창고&quot;, p: [P(19, 15, [&quot;www&quot;, &quot;wWw&quot;])] },
-    { name: &quot;점&quot;, p: [P(20, 16, [&quot;E&quot;])] },
     { name: &quot;하트스티커&quot;, p: [P(10, 15, [&quot;a.a&quot;, &quot;aaa&quot;, &quot;.a.&quot;])] },
     { name: &quot;별스티커&quot;, p: [P(10, 15, [&quot;.a.&quot;, &quot;aaa&quot;, &quot;.a.&quot;])] }
   ];
   const EAR_ACC = [
     { name: &quot;없음&quot;, p: [] },
-    { name: &quot;피어싱&quot;, p: [P(8, 12, [&quot;y&quot;]), P(8, 14, [&quot;y&quot;]), P(23, 13, [&quot;y&quot;])] },
-    { name: &quot;귀걸이&quot;, p: [P(8, 14, [&quot;y&quot;, &quot;a&quot;]), P(23, 14, [&quot;y&quot;, &quot;a&quot;])] }
+    { name: &quot;피어싱&quot;, p: [P(7, 12, [&quot;y&quot;]), P(7, 14, [&quot;y&quot;]), P(24, 13, [&quot;y&quot;])] },
+    { name: &quot;귀걸이&quot;, p: [P(7, 15, [&quot;y&quot;, &quot;a&quot;]), P(24, 15, [&quot;y&quot;, &quot;a&quot;])] }
   ];
-  const BG_PATTERNS = [&quot;투명&quot;, &quot;단색&quot;, &quot;체크&quot;, &quot;도트&quot;, &quot;줄무늬&quot;, &quot;별&quot;, &quot;하트&quot;, &quot;눈&quot;];
+  const BG_PATTERNS = [&quot;투명&quot;, &quot;단색&quot;, &quot;깅엄&quot;, &quot;도트&quot;, &quot;캔디&quot;, &quot;반짝&quot;, &quot;하트&quot;, &quot;눈&quot;, &quot;레이스&quot;, &quot;하프톤&quot;];
 
   const SW = {
     skin: [&quot;#fdeee6&quot;, &quot;#f6e2d8&quot;, &quot;#f6d0b1&quot;, &quot;#e8b48c&quot;, &quot;#c98e66&quot;, &quot;#8d5a3b&quot;, &quot;#5e3b2a&quot;, &quot;#e6e1ea&quot;],
@@ -1480,11 +1527,11 @@ window.SITE_CONFIG = {
       outer: &quot;#f7f5f9&quot;, cape: &quot;#e0578a&quot;, bottom: &quot;#4a6a9a&quot;, shoe: &quot;#f7f5f9&quot;, acc: &quot;#e0578a&quot;, bg: &quot;#fde8f0&quot; }
   };
   const PRESETS = {
-    santa: { front: 2, back: 3, streak: true, eyes: 7, brow: 2, mouth: 7, blush: false, dark: false, nose: true,
+    santa: { front: 2, back: 3, streak: true, eyes: 7, brow: 2, mouth: 7, blush: false, dark: false, nose: false,
       top: 3, outer: 0, cape: 1, epaulet: true, bottom: 1, shoe: 0, headAcc: 0, faceAcc: 0, earAcc: 0, bgPat: 2,
       colors: { skin: &quot;#f6e2d8&quot;, hair: &quot;#1f1c24&quot;, streak: &quot;#f4f2f6&quot;, eye: &quot;#6b4636&quot;, top: &quot;#f7f5f9&quot;, point: &quot;#1d1b22&quot;,
         outer: &quot;#1d1b22&quot;, cape: &quot;#26222c&quot;, bottom: &quot;#34303a&quot;, shoe: &quot;#1d1b22&quot;, acc: &quot;#c8323f&quot;, bg: &quot;#f6d3d8&quot; } },
-    orion: { front: 1, back: 1, streak: false, eyes: 4, brow: 0, mouth: 3, blush: true, dark: true, nose: false,
+    orion: { front: 1, back: 1, streak: false, eyes: 4, brow: 0, mouth: 0, blush: true, dark: false, nose: false,
       top: 4, outer: 2, cape: 1, epaulet: true, bottom: 1, shoe: 3, headAcc: 0, faceAcc: 0, earAcc: 1, bgPat: 3,
       colors: { skin: &quot;#fdeee6&quot;, hair: &quot;#1c1b22&quot;, streak: &quot;#f4f2f6&quot;, eye: &quot;#2fa36f&quot;, top: &quot;#1d1b22&quot;, point: &quot;#1d1b22&quot;,
         outer: &quot;#f7f5f9&quot;, cape: &quot;#f7f5f9&quot;, bottom: &quot;#f1eef4&quot;, shoe: &quot;#ffffff&quot;, acc: &quot;#e04a5f&quot;, bg: &quot;#d3f0e6&quot; } }
@@ -1535,6 +1582,7 @@ window.SITE_CONFIG = {
     if (s.outer) stamp(g, P8(21, at(OUTERS, s.outer).r), cm);
     at(CAPES, s.cape).p.forEach((p) =&gt; stamp(g, p, cm));
     if (s.epaulet) stamp(g, EPAULET, cm);
+    EARS.forEach((p) =&gt; stamp(g, p, cm));
     stamp(g, HEAD, cm);
     if (s.dark) DARK.forEach((p) =&gt; stamp(g, p, cm));
     if (s.blush) BLUSH.forEach((p) =&gt; stamp(g, p, cm));
@@ -1566,19 +1614,51 @@ window.SITE_CONFIG = {
   function drawBg(ctx, s, size, scale) {
     const pat = s.bgPat, c = s.colors.bg;
     if (!pat) return;
-    const c2 = PX.shade(c, 0.07), c3 = PX.tint(c, 0.5);
-    ctx.fillStyle = c; ctx.fillRect(0, 0, size * scale, size * scale);
-    const HEARTS = [[5, 6], [24, 4], [27, 20], [4, 22], [16, 1], [14, 27]];
-    for (let y = 0; y &lt; size; y++) for (let x = 0; x &lt; size; x++) {
+    const T = (k) =&gt; PX.tint(c, k);
+    const [hh, ss, vv] = PX.ui.rgb2hsv(...PX.hexToRgb(c));
+    const D = (k) =&gt; PX.rgbToHex(...PX.ui.hsv2rgb(hh, Math.min(1, ss + k * 1.1), Math.max(0, vv - k * 0.55)));
+    const px = (x, y, col) =&gt; { ctx.fillStyle = col; ctx.fillRect(x * scale, y * scale, scale, scale); };
+    const W = size, dark = PX.hexToRgb(c).reduce((a, b) =&gt; a + b, 0) &lt; 260;
+    // 위가 밝은 계단식 그라데이션
+    for (let y = 0; y &lt; W; y++) { let col; if (pat === 7) col = D(0.34 - Math.floor(y / 4) * 0.035); else { const k = Math.max(0, 0.3 - Math.floor(y / 4) * 0.05); col = k ? T(k) : c; } ctx.fillStyle = col; ctx.fillRect(0, y * scale, W * scale, scale); }
+    const HEART = [&quot;.#.#.&quot;, &quot;#####&quot;, &quot;#####&quot;, &quot;.###.&quot;, &quot;..#..&quot;];
+    for (let y = 0; y &lt; W; y++) for (let x = 0; x &lt; W; x++) {
       let col = null;
-      if (pat === 2 &amp;&amp; ((x &gt;&gt; 2) + (y &gt;&gt; 2)) % 2) col = c2;
-      if (pat === 3 &amp;&amp; x % 4 === 1 &amp;&amp; y % 4 === 1 &amp;&amp; ((x &gt;&gt; 2) + (y &gt;&gt; 2)) % 2 === 0) col = c3;
-      if (pat === 4 &amp;&amp; (x + y) % 6 &lt; 2) col = c2;
-      if (pat === 5) [[4, 5], [26, 4], [6, 25], [27, 22], [16, 2], [2, 15], [29, 13]].forEach(([sx, sy]) =&gt; { if ((x === sx &amp;&amp; Math.abs(y - sy) &lt;= 1) || (y === sy &amp;&amp; Math.abs(x - sx) &lt;= 1)) col = c3; });
-      if (pat === 6) HEARTS.forEach(([hx, hy]) =&gt; { const dx = x - hx, dy = y - hy; if ((dy === 0 &amp;&amp; (dx === 0 || dx === 2)) || (dy === 1 &amp;&amp; dx &gt;= 0 &amp;&amp; dx &lt;= 2) || (dy === 2 &amp;&amp; dx === 1)) col = c2; });
-      if (pat === 7 &amp;&amp; ((x * 7 + y * 13) % 23 === 0 || (x * 11 + y * 5) % 31 === 0)) col = &quot;#ffffff&quot;;
-      if (col) { ctx.fillStyle = col; ctx.fillRect(x * scale, y * scale, scale, scale); }
+      if (pat === 2) { const a = (x &gt;&gt; 2) % 2, b = (y &gt;&gt; 2) % 2; if (a &amp;&amp; b) col = D(0.22); else if (a || b) col = D(0.1); }
+      if (pat === 3) { const ox = (Math.floor(y / 8) % 2) * 4, lx = (x + ox) % 8, ly = y % 8; if (lx &gt;= 2 &amp;&amp; lx &lt;= 3 &amp;&amp; ly &gt;= 2 &amp;&amp; ly &lt;= 3) col = lx === 2 &amp;&amp; ly === 2 ? &quot;#ffffff&quot; : D(0.16); }
+      if (pat === 4) { const k = (x + y) % 8; if (k &lt; 3) col = D(0.12); else if (k === 3) col = D(0.06); }
+      if (pat === 6) { const ox = (Math.floor(y / 8) % 2) * 4, lx = (x + ox) % 8, ly = y % 8; if (lx &lt; 5 &amp;&amp; ly &lt; 5 &amp;&amp; HEART[ly][lx] === &quot;#&quot;) col = lx === 1 &amp;&amp; ly === 1 ? T(0.5) : D(0.18); }
+      if (pat === 9) { const r = Math.hypot(x - 30, y - 1) / 34, cell = (x % 3 === 1 &amp;&amp; y % 3 === 1); if (cell &amp;&amp; r &lt; 0.95) col = r &lt; 0.5 ? D(0.26) : D(0.14); if (r &lt; 0.35 &amp;&amp; (x % 3 === 2 &amp;&amp; y % 3 === 1)) col = D(0.26); }
+      if (col) px(x, y, col);
     }
+    if (pat === 5) {
+      [[4, 5, 2], [26, 4, 2], [7, 24, 1], [27, 19, 2], [16, 2, 1], [2, 14, 1], [29, 11, 1], [21, 8, 1], [11, 9, 1]].forEach(([sx, sy, r]) =&gt; {
+        px(sx, sy, &quot;#ffffff&quot;);
+        for (let i = 1; i &lt;= r; i++) { const cc = i === r ? D(0.2) : &quot;#ffffff&quot;; px(sx + i, sy, cc); px(sx - i, sy, cc); px(sx, sy + i, cc); px(sx, sy - i, cc); }
+      });
+      [[9, 3], [20, 13], [3, 28], [24, 26], [13, 18]].forEach(([sx, sy]) =&gt; px(sx, sy, D(0.2)));
+    }
+    if (pat === 7) {
+      for (let i = 0; i &lt; 26; i++) { const x = (i * 11 + 3) % W, y = (i * 7 + (i % 3) * 5) % 26; px(x, y, i % 4 ? &quot;#ffffff&quot; : T(0.6)); if (i % 6 === 0) { px(x + 1, y, &quot;#ffffff&quot;); px(x - 1, y, &quot;#ffffff&quot;); px(x, y + 1, &quot;#ffffff&quot;); px(x, y - 1, &quot;#ffffff&quot;); } }
+      for (let x = 0; x &lt; W; x++) { const top = 27 + Math.round(Math.sin(x / 3.2) * 1.2); for (let y = top; y &lt; W; y++) px(x, y, y === top ? &quot;#ffffff&quot; : &quot;#eef1f8&quot;); }
+    }
+    if (pat === 8) {
+      const L = &quot;#ffffff&quot;, LS = D(0.22);
+      for (let i = 0; i &lt; W; i++) {
+        const sc = i % 4;
+        [0, 1].forEach((d) =&gt; { px(i, d, L); px(i, W - 1 - d, L); px(d, i, L); px(W - 1 - d, i, L); });
+        if (sc === 1 || sc === 2) { px(i, 2, L); px(i, W - 3, L); px(2, i, L); px(W - 3, i, L); }
+        if (sc === 0) { px(i, 1, LS); px(i, W - 2, LS); px(1, i, LS); px(W - 2, i, LS); }
+        if (sc === 3) { px(i, 3, LS); px(i, W - 4, LS); px(3, i, LS); px(W - 4, i, LS); }
+      }
+    }
+    // 바닥 그림자
+    if (pat !== 7) {
+      const sh = dark ? T(0.12) : D(0.12);
+      for (let x = 9; x &lt;= 22; x++) px(x, 30, sh);
+      for (let x = 11; x &lt;= 20; x++) px(x, 31, sh);
+      for (let x = 7; x &lt;= 24; x++) if (x &lt; 9 || x &gt; 22) px(x, 30, D(0.06));
+    } else { for (let x = 10; x &lt;= 21; x++) px(x, 30, &quot;#d6dcea&quot;); }
   }
   function drawGrid(ctx, grid, ox, oy, scale, flip) {
     for (let i = 0; i &lt; grid.length; i++) {
@@ -2120,10 +2200,10 @@ window.SITE_CONFIG = {
           &lt;span class=&quot;doc-by&quot;&gt;WRITTEN BY &lt;em&gt;&lt;/em&gt;&lt;/span&gt;
         &lt;/div&gt;
       &lt;/header&gt;
-      &lt;section class=&quot;doc-sec&quot;&gt;&lt;h4&gt;대표 타이틀 한마디&lt;/h4&gt;&lt;blockquote class=&quot;doc-title&quot;&gt;&lt;/blockquote&gt;&lt;/section&gt;
+      &lt;h3 class=&quot;doc-title&quot;&gt;&lt;/h3&gt;
       &lt;section class=&quot;doc-sec&quot;&gt;&lt;h4&gt;내가 본 성격&lt;/h4&gt;&lt;div class=&quot;doc-pers&quot;&gt;&lt;/div&gt;&lt;/section&gt;
       &lt;section class=&quot;doc-sec&quot;&gt;&lt;h4&gt;대표 키워드&lt;/h4&gt;&lt;div class=&quot;kw-list&quot;&gt;&lt;/div&gt;&lt;/section&gt;
-      &lt;section class=&quot;doc-sec&quot;&gt;&lt;h4&gt;제3자에게 소개하는 글&lt;/h4&gt;&lt;div class=&quot;doc-letter&quot;&gt;&lt;/div&gt;&lt;/section&gt;
+      &lt;section class=&quot;doc-sec&quot;&gt;&lt;h4&gt;소개하는 글&lt;/h4&gt;&lt;div class=&quot;doc-letter&quot;&gt;&lt;/div&gt;&lt;/section&gt;
       &lt;nav class=&quot;doc-nav&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;px-btn sm ghost doc-other&quot;&gt;&lt;/button&gt;&lt;/nav&gt;`;
     body.querySelector(&quot;.doc-av&quot;).appendChild(avatarCanvas(k));
     body.querySelector(&quot;.doc-code&quot;).textContent = p.code;
@@ -2179,7 +2259,7 @@ window.SITE_CONFIG = {
     PX.$(&quot;.dlg-count&quot;).textContent = `${li + 1}/${lines.length}`;
   }
   function finishLine() { clearInterval(typingTimer); typingTimer = null; textEl.textContent = lines[li]; arrowEl.classList.add(&quot;show&quot;); if (li === lines.length - 1) nextBtn.classList.add(&quot;show&quot;); }
-  function advance() { if (typingTimer) return finishLine(); if (li &lt; lines.length - 1) { li++; showLine(); } else { nextBtn.classList.add(&quot;pulse&quot;); setTimeout(() =&gt; nextBtn.classList.remove(&quot;pulse&quot;), 600); } }
+  function advance() { if (typingTimer) return finishLine(); li = (li + 1) % lines.length; showLine(); }
 
   PX.intro = {
     prepare() { grids = CFG.players.map((p) =&gt; PX.maker.composePreset(p.preset)); },
@@ -2191,12 +2271,11 @@ window.SITE_CONFIG = {
       for (let i = 0; i &lt; 26; i++) confetti.push({ x: PX.rand(0, W), y: PX.rand(-H, GROUND), vy: PX.rand(0.15, 0.4), o: PX.rand(0, 100), w: PX.pick([1, 2]), h: PX.pick([1, 2]), c: PX.pick([RED, GREEN, &quot;#fff&quot;, PINK, C.gold]) });
       buildProfiles(PX.$(&quot;.profiles&quot;, el));
       PX.$(&quot;.dlg&quot;, el).addEventListener(&quot;click&quot;, (e) =&gt; { if (!e.target.closest(&quot;.dlg-next&quot;)) { PX.unlockAudio(); advance(); } });
-      PX.$(&quot;.dlg-skip&quot;, el).addEventListener(&quot;click&quot;, (e) =&gt; { e.stopPropagation(); li = lines.length - 1; showLine(); finishLine(); });
       scv.addEventListener(&quot;click&quot;, (e) =&gt; { const r = scv.getBoundingClientRect(), k = ((e.clientX - r.left) / r.width) * W &lt; W / 2 - 10 ? 0 : 1; if (hop[k] &lt; 0) { hop[k] = 0; PX.sfx(&quot;jump&quot;); } });
       window.addEventListener(&quot;keydown&quot;, (e) =&gt; {
         if (!el.classList.contains(&quot;is-active&quot;) || PX.$(&quot;.intro&quot;) || PX.$(&quot;.xmodal&quot;)) return;
         const t = e.target; if (t &amp;&amp; (t.tagName === &quot;INPUT&quot; || t.tagName === &quot;TEXTAREA&quot; || t.tagName === &quot;BUTTON&quot;)) return;
-        if ([&quot;Space&quot;, &quot;Enter&quot;, &quot;KeyZ&quot;].includes(e.code)) { e.preventDefault(); if (li === lines.length - 1 &amp;&amp; !typingTimer &amp;&amp; e.code === &quot;Enter&quot;) nextBtn.click(); else advance(); }
+        if ([&quot;Space&quot;, &quot;Enter&quot;, &quot;KeyZ&quot;].includes(e.code)) { e.preventDefault(); advance(); }
       });
     },
     start() { li = 0; showLine(); },
@@ -2239,6 +2318,12 @@ window.SITE_CONFIG = {
     if (overT &gt; 35) txt(&quot;A: RETRY&quot;, W / 2, y + 9, 2, 1, &quot;center&quot;);
   }
 
+  function progress(k) {
+    const x0 = 74, w = W - 148; k = PX.clamp(k, 0, 1);
+    rect(x0, 4, w, 5, 3); rect(x0 + 1, 5, w - 2, 3, 0); rect(x0 + 1, 5, Math.round((w - 2) * k), 3, 2);
+    sprite([&quot;.33.33.&quot;, &quot;3223223&quot;, &quot;3222223&quot;, &quot;.32223.&quot;, &quot;..323..&quot;, &quot;...3...&quot;], x0 + w + 2, 3);
+  }
+
   /* 산타 / 오리온 미니 스프라이트 */
   const SANTA_HEAD = [&quot;...333333...&quot;, &quot;..33303333..&quot;, &quot;.3330333333.&quot;, &quot;.3303333333.&quot;, &quot;330000000033&quot;, &quot;300300003003&quot;, &quot;300000000003&quot;, &quot;300002200003&quot;, &quot;.3000000003.&quot;];
   const SANTA_BODY = [&quot;.3332223333.&quot;, &quot;333330333333&quot;];
@@ -2249,17 +2334,17 @@ window.SITE_CONFIG = {
   let hero = PX.store.get(&quot;hero&quot;, 0);
   const GEM = [&quot;.3.3.&quot;, &quot;30303&quot;, &quot;30003&quot;, &quot;.303.&quot;, &quot;..3..&quot;];
   const ITEMS = {
-    mint: { rows: [&quot;..3333..&quot;, &quot;.301103.&quot;, &quot;31131113&quot;, &quot;31111313&quot;, &quot;33333333&quot;, &quot;.322223.&quot;, &quot;..3223..&quot;, &quot;...33...&quot;], pts: 10 },
+    cake: { rows: [&quot;......33&quot;, &quot;....3003&quot;, &quot;..300003&quot;, &quot;30000003&quot;, &quot;31111113&quot;, &quot;32222223&quot;, &quot;31111113&quot;, &quot;33333333&quot;], pts: 10 },
     cocoa: { rows: [&quot;..1..1...&quot;, &quot;.1..1....&quot;, &quot;3333333..&quot;, &quot;3000003..&quot;, &quot;311111333&quot;, &quot;3131113.3&quot;, &quot;311111333&quot;, &quot;.33333...&quot;], pts: 10 },
     heart: { rows: [&quot;.33.33.&quot;, &quot;3113113&quot;, &quot;3111113&quot;, &quot;.31113.&quot;, &quot;..313..&quot;, &quot;...3...&quot;], pts: 30 },
-    chili: { rows: [&quot;....33&quot;, &quot;...33.&quot;, &quot;.3223.&quot;, &quot;32223.&quot;, &quot;3223..&quot;, &quot;323...&quot;, &quot;.3....&quot;], bad: true },
+    coffee: { rows: [&quot;..1..1...&quot;, &quot;.1..1....&quot;, &quot;3333333..&quot;, &quot;3222223..&quot;, &quot;322222333&quot;, &quot;3222223.3&quot;, &quot;322222333&quot;, &quot;.33333...&quot;], bad: true },
     toast: { rows: [&quot;.333333.&quot;, &quot;33333333&quot;, &quot;32323233&quot;, &quot;33232323&quot;, &quot;32323233&quot;, &quot;33333333&quot;], bad: true }
   };
 
   /* ---------- 메뉴 ---------- */
   const GAMES = [
     { id: &quot;runner&quot;, title: &quot;JUMP RUN&quot;, sub: &quot;JUMP!&quot; },
-    { id: &quot;catch&quot;, title: &quot;SWEET CATCH&quot;, sub: &quot;MINT+COCOA&quot; },
+    { id: &quot;catch&quot;, title: &quot;SWEET CATCH&quot;, sub: &quot;COCOA+CAKE&quot; },
     { id: &quot;stack&quot;, title: &quot;CAKE STACK&quot;, sub: &quot;STACK IT&quot; },
     { id: &quot;brick&quot;, title: &quot;BRICK BREAK&quot;, sub: &quot;BREAK IT&quot; }
   ];
@@ -2300,7 +2385,7 @@ window.SITE_CONFIG = {
   };
 
   /* ---------- 1. 점프 런 ---------- */
-  const GY = 116;
+  const GY = 116, RUN_GOAL = 6000;
   const runner = {
     enter() { Object.assign(this, { x: 36, y: GY - 12, vy: 0, ground: true, dist: 0, bonus: 0, obs: [], gems: [], parts: [], nextObs: 120, over: false, overT: 0, coyote: 0, buffer: 0, newBest: false, t: 0, started: false, speed: 1.8 }); },
     update() {
@@ -2320,8 +2405,9 @@ window.SITE_CONFIG = {
       if (I.down.down &amp;&amp; !this.ground) this.vy += 0.3;
       this.y += this.vy;
       if (this.y &gt;= GY - 12) { this.y = GY - 12; this.vy = 0; this.ground = true; } else this.ground = false;
+      if (this.dist &gt;= RUN_GOAL) { toEnding(&quot;runner&quot;, this.score()); return; }
       this.nextObs -= this.speed;
-      if (this.nextObs &lt;= 0) {
+      if (this.nextObs &lt;= 0 &amp;&amp; this.dist &lt; RUN_GOAL - 500) {
         const kind = this.dist &gt; 900 &amp;&amp; Math.random() &lt; 0.25 ? &quot;double&quot; : &quot;block&quot;;
         const h = PX.pick([8, 10, 12, 14]), w = kind === &quot;double&quot; ? 18 : PX.pick([8, 10]);
         this.obs.push({ x: W + 4, w, h, kind });
@@ -2352,14 +2438,16 @@ window.SITE_CONFIG = {
       if (!(this.over &amp;&amp; this.overT &lt; 20 &amp;&amp; Math.floor(this.overT / 3) % 2)) sprite(spr, this.x, this.y);
       this.parts.forEach((p) =&gt; p.txt &amp;&amp; txt(p.txt, p.x - 4, p.y - 6, 3));
       txt(&quot;SCORE &quot; + pad(this.score()), 4, 4); txt(&quot;HI &quot; + pad(best(&quot;runner&quot;)), W - 4, 4, 2, 1, &quot;right&quot;);
+      progress(this.dist / RUN_GOAL);
       if (!this.started) { panel(W / 2 - 56, 34, 112, 42); txt(&quot;JUMP RUN&quot;, W / 2, 40, 3, 1, &quot;center&quot;); txt(&quot;&lt; &quot; + HEROES[hero].name + &quot; &gt;&quot;, W / 2, 52, Math.floor(t / 20) % 2 ? 3 : 2, 1, &quot;center&quot;); txt(&quot;PRESS A TO JUMP&quot;, W / 2, 64, 2, 1, &quot;center&quot;); }
       if (this.over &amp;&amp; this.overT &gt; 20) overBox(&quot;GAME OVER&quot;, [&quot;SCORE &quot; + pad(this.score())], this.overT, this.newBest, &quot;runner&quot;);
     }
   };
 
-  /* ---------- 2. 스위트 캐치 (민트초코·핫초코 받기, 고추·탄토스트 피하기) ---------- */
+  /* ---------- 2. 스위트 캐치 (핫초코·케이크 받기, 커피·탄토스트 피하기) ---------- */
+  const CATCH_TIME = 60 * 60;
   const caught = {
-    enter() { Object.assign(this, { x: W / 2 - 6, items: [], score: 0, lives: 3, t: 0, over: false, overT: 0, newBest: false, spawn: 40, parts: [], started: false, flash: 0 }); },
+    enter() { Object.assign(this, { x: W / 2 - 6, items: [], score: 0, lives: 3, t: 0, time: 0, over: false, overT: 0, newBest: false, spawn: 40, parts: [], started: false, flash: 0 }); },
     update() {
       this.t++;
       this.parts.forEach((p) =&gt; { p.t++; p.y -= 0.5; }); this.parts = this.parts.filter((p) =&gt; p.t &lt; 35);
@@ -2369,13 +2457,14 @@ window.SITE_CONFIG = {
         if (I.pressed.up || I.pressed.down) { hero = 1 - hero; PX.store.set(&quot;hero&quot;, hero); PX.sfx(&quot;move&quot;); }
         if (I.pressed.a) this.started = true; else return;
       }
+      if (++this.time &gt;= CATCH_TIME) { toEnding(&quot;catch&quot;, this.score); return; }
       const sp = I.down.a || I.down.b ? 3.6 : 2.4;
       if (I.down.left) this.x -= sp; if (I.down.right) this.x += sp;
       this.x = PX.clamp(this.x, 0, W - 12);
       const lvl = Math.min(1, this.t / 3600);
-      if (--this.spawn &lt;= 0) {
+      if (--this.spawn &lt;= 0 &amp;&amp; this.time &lt; CATCH_TIME - 120) {
         const r = Math.random();
-        const kind = r &lt; 0.36 ? &quot;mint&quot; : r &lt; 0.7 ? &quot;cocoa&quot; : r &lt; 0.78 ? &quot;heart&quot; : r &lt; 0.9 ? &quot;chili&quot; : &quot;toast&quot;;
+        const kind = r &lt; 0.36 ? &quot;cake&quot; : r &lt; 0.7 ? &quot;cocoa&quot; : r &lt; 0.78 ? &quot;heart&quot; : r &lt; 0.9 ? &quot;coffee&quot; : &quot;toast&quot;;
         this.items.push({ kind, x: PX.rand(4, W - 14), y: -10, vy: PX.rand(0.7, 1.1) + lvl * 1.4 });
         this.spawn = Math.max(14, 46 - lvl * 30 + PX.rand(-6, 6));
       }
@@ -2384,7 +2473,7 @@ window.SITE_CONFIG = {
         it.y += it.vy;
         if (!it.done &amp;&amp; it.y + 6 &gt; py &amp;&amp; it.y &lt; py + 10 &amp;&amp; it.x + 7 &gt; px &amp;&amp; it.x &lt; px + 12) {
           it.done = true;
-          if (ITEMS[it.kind].bad) { this.lives--; this.flash = 20; PX.sfx(&quot;hit&quot;); this.parts.push({ x: it.x, y: it.y, t: 0, txt: it.kind === &quot;chili&quot; ? &quot;HOT!&quot; : &quot;BURNT&quot; }); if (this.lives &lt;= 0) { this.over = true; this.overT = 0; this.newBest = setBest(&quot;catch&quot;, this.score); setTimeout(() =&gt; PX.sfx(&quot;lose&quot;), 300); } }
+          if (ITEMS[it.kind].bad) { this.lives--; this.flash = 20; PX.sfx(&quot;hit&quot;); this.parts.push({ x: it.x, y: it.y, t: 0, txt: it.kind === &quot;coffee&quot; ? &quot;BITTER&quot; : &quot;BURNT&quot; }); if (this.lives &lt;= 0) { this.over = true; this.overT = 0; this.newBest = setBest(&quot;catch&quot;, this.score); setTimeout(() =&gt; PX.sfx(&quot;lose&quot;), 300); } }
           else { const p = ITEMS[it.kind].pts; this.score += p; PX.sfx(p &gt; 10 ? &quot;perfect&quot; : &quot;coin&quot;); this.parts.push({ x: it.x, y: it.y, t: 0, txt: &quot;+&quot; + p }); }
         }
       });
@@ -2401,13 +2490,14 @@ window.SITE_CONFIG = {
       if (!(this.flash &amp;&amp; Math.floor(this.flash / 3) % 2)) sprite(moving ? (Math.floor(t / 6) % 2 ? HS.a : HS.b) : HS.a, this.x, GY - 12, I.down.left);
       this.parts.forEach((p) =&gt; txt(p.txt, p.x - 4, p.y - 6, 3));
       txt(&quot;SCORE &quot; + pad(this.score), 4, 4);
+      if (this.started) txt(&quot;TIME &quot; + String(Math.ceil((CATCH_TIME - this.time) / 60)).padStart(2, &quot;0&quot;), W / 2, 4, 3, 1, &quot;center&quot;);
       for (let i = 0; i &lt; 3; i++) txt(&quot;*&quot;, W - 10 - i * 7, 4, i &lt; this.lives ? 3 : 1);
       if (!this.started) {
         panel(W / 2 - 70, 26, 140, 66);
         txt(&quot;SWEET CATCH&quot;, W / 2, 32, 3, 1, &quot;center&quot;);
-        sprite(ITEMS.mint.rows, W / 2 - 52, 44); sprite(ITEMS.cocoa.rows, W / 2 - 40, 44); sprite(ITEMS.heart.rows, W / 2 - 26, 45);
+        sprite(ITEMS.cake.rows, W / 2 - 52, 44); sprite(ITEMS.cocoa.rows, W / 2 - 40, 44); sprite(ITEMS.heart.rows, W / 2 - 26, 45);
         txt(&quot;CATCH!&quot;, W / 2 + 2, 46, 2);
-        sprite(ITEMS.chili.rows, W / 2 - 50, 58); sprite(ITEMS.toast.rows, W / 2 - 38, 58);
+        sprite(ITEMS.coffee.rows, W / 2 - 50, 58); sprite(ITEMS.toast.rows, W / 2 - 38, 58);
         txt(&quot;AVOID!&quot;, W / 2 + 2, 60, 2);
         txt(&quot;^ &quot; + HEROES[hero].name + &quot; v   A: START&quot;, W / 2, 78, Math.floor(t / 20) % 2 ? 3 : 2, 1, &quot;center&quot;);
       }
@@ -2416,9 +2506,9 @@ window.SITE_CONFIG = {
   };
 
   /* ---------- 3. 케이크 쌓기 ---------- */
-  const LH = 8, BASE_Y = 128, MAXW = 84;
+  const LH = 8, BASE_Y = 128, MAXW = 84, STACK_GOAL = 15;
   const stack = {
-    enter() { Object.assign(this, { layers: [{ x: (W - MAXW) / 2, w: MAXW }], cur: null, fall: [], cam: 0, over: false, overT: 0, combo: 0, t: 0, flash: 0, newBest: false, msg: null }); this.spawn(); },
+    enter() { Object.assign(this, { win: 0, layers: [{ x: (W - MAXW) / 2, w: MAXW }], cur: null, fall: [], cam: 0, over: false, overT: 0, combo: 0, t: 0, flash: 0, newBest: false, msg: null }); this.spawn(); },
     spawn() { const top = this.layers[this.layers.length - 1], n = this.layers.length; const fromLeft = n % 2 === 1; this.cur = { x: fromLeft ? 0 : W - top.w, w: top.w, dir: fromLeft ? 1 : -1, speed: Math.min(3.8, 1.1 + n * 0.08) }; },
     layerY(i) { return BASE_Y - (i + 1) * LH; },
     update() {
@@ -2427,6 +2517,7 @@ window.SITE_CONFIG = {
       this.fall.forEach((f) =&gt; { f.vy += 0.25; f.y += f.vy; f.x += f.vx; }); this.fall = this.fall.filter((f) =&gt; f.y &lt; H + this.cam + 40);
       if (this.flash) this.flash--; if (this.msg &amp;&amp; ++this.msg.t &gt; 40) this.msg = null;
       if (this.over) { this.overT++; if (this.overT &gt; 40 &amp;&amp; (I.pressed.a || I.pressed.start)) { PX.sfx(&quot;select&quot;); this.enter(); } return; }
+      if (this.win) { if (++this.win &gt; 70) toEnding(&quot;stack&quot;, this.layers.length - 1); return; }
       const c = this.cur; c.x += c.dir * c.speed;
       if (c.x &gt; W - c.w + 20 &amp;&amp; c.dir &gt; 0) c.dir = -1; if (c.x &lt; -20 &amp;&amp; c.dir &lt; 0) c.dir = 1;
       if (I.pressed.a || I.pressed.down) this.drop();
@@ -2445,6 +2536,7 @@ window.SITE_CONFIG = {
         if (c.x + c.w &gt; r) this.fall.push({ x: r, y, w: c.x + c.w - r, vy: 0, vx: 0.5, i: this.layers.length - 1 });
         PX.sfx(&quot;drop&quot;);
       }
+      if (this.layers.length - 1 &gt;= STACK_GOAL) { this.win = 1; this.cur = null; setBest(&quot;stack&quot;, this.layers.length - 1); PX.sfx(&quot;clear&quot;); return; }
       this.spawn();
     },
     drawLayer(x, y, w, i) {
@@ -2461,12 +2553,13 @@ window.SITE_CONFIG = {
       if (this.flash) { const L = this.layers[this.layers.length - 1], y = this.layerY(this.layers.length - 1) + this.cam; rect(L.x - 2, y - 1, L.w + 4, 1, 3); rect(L.x - 2, y + LH, L.w + 4, 1, 3); }
       if (this.cur) this.drawLayer(this.cur.x, this.layerY(this.layers.length), this.cur.w, this.layers.length);
       this.fall.forEach((f) =&gt; this.drawLayer(f.x, f.y, f.w, f.i));
+      if (this.win) { const L = this.layers[this.layers.length - 1], y = Math.round(this.layerY(this.layers.length - 1) + this.cam); sprite(HEROES[0].spr.a, L.x + L.w / 2 - 13, y - 12); sprite(HEROES[1].spr.a, L.x + L.w / 2 + 1, y - 12, true); txt(&quot;COMPLETE!&quot;, W / 2, 24, 3, 1, &quot;center&quot;); }
       if (this.over &amp;&amp; this.layers.length &gt; 1) {
         const L = this.layers[this.layers.length - 1], cx = Math.round(L.x + L.w / 2 - 1), cy = Math.round(this.layerY(this.layers.length - 1) + this.cam - 9);
         rect(cx + 1, cy + 2, 1, 7, 3); sprite([&quot;.33.33.&quot;, &quot;3223223&quot;, &quot;3222223&quot;, &quot;.32223.&quot;, &quot;..323..&quot;, &quot;...3...&quot;], cx - 2, cy - 5 - (Math.floor(this.t / 20) % 2));
       }
       rect(0, 0, W, 12, 0); rect(0, 12, W, 1, 3);
-      txt(&quot;LAYERS &quot; + pad(this.layers.length - 1, 3), 4, 4); txt(&quot;HI &quot; + pad(best(&quot;stack&quot;), 3), W - 4, 4, 2, 1, &quot;right&quot;);
+      txt(&quot;LAYERS &quot; + (this.layers.length - 1) + &quot;/&quot; + STACK_GOAL, 4, 4); txt(&quot;HI &quot; + pad(best(&quot;stack&quot;), 3), W - 4, 4, 2, 1, &quot;right&quot;);
       if (this.msg) txt(this.msg.s, W / 2, 20 - Math.min(4, this.msg.t / 4), 3, 1, &quot;center&quot;);
       if (this.layers.length === 1 &amp;&amp; !this.over) txt(&quot;A: DROP&quot;, W / 2, 24, 2, 1, &quot;center&quot;);
       if (this.over &amp;&amp; this.overT &gt; 25) overBox(&quot;TOWER DONE&quot;, [(this.layers.length - 1) + &quot; LAYERS&quot;], this.overT, this.newBest, &quot;stack&quot;);
@@ -2492,7 +2585,7 @@ window.SITE_CONFIG = {
       this.t++;
       this.parts.forEach((p) =&gt; { p.x += p.vx; p.y += p.vy; p.vy += 0.1; p.t++; }); this.parts = this.parts.filter((p) =&gt; p.t &lt; 30);
       if (this.over) { this.overT++; if (this.overT &gt; 40 &amp;&amp; (I.pressed.a || I.pressed.start)) { PX.sfx(&quot;select&quot;); this.enter(); } return; }
-      if (this.win) { if (--this.win === 0) { this.level++; this.load(); } return; }
+      if (this.win) { if (--this.win === 0) { if (this.level &gt;= LEVELS.length - 1) { setBest(&quot;brick&quot;, this.score); toEnding(&quot;brick&quot;, this.score); return; } this.level++; this.load(); } return; }
       const p = this.pad, b = this.ball;
       if (I.down.left) p.x -= 3.4; if (I.down.right) p.x += 3.4; p.x = PX.clamp(p.x, 0, W - p.w);
       if (b.stuck) { b.x = p.x + p.w / 2 - 1; b.y = 128; if (I.pressed.a || I.pressed.up) { const a = PX.rand(-0.5, 0.5); Object.assign(b, { vx: Math.sin(a) * this.baseSpeed, vy: -Math.cos(a) * this.baseSpeed, stuck: false }); PX.sfx(&quot;paddle&quot;); } return; }
@@ -2525,7 +2618,7 @@ window.SITE_CONFIG = {
     draw() {
       rect(0, 0, W, H, 0);
       for (let y = 14; y &lt; H; y += 2) for (let x = (y / 2) % 2 ? 1 : 0; x &lt; W; x += 8) rect(x, y, 1, 1, 1);
-      rect(0, 0, W, 12, 3); txt(&quot;SCORE &quot; + pad(this.score), 4, 4, 0); txt(&quot;LV&quot; + (this.level + 1), W / 2, 4, 1, 1, &quot;center&quot;);
+      rect(0, 0, W, 12, 3); txt(&quot;SCORE &quot; + pad(this.score), 4, 4, 0); txt(&quot;LV &quot; + (this.level + 1) + &quot;/&quot; + LEVELS.length, W / 2, 4, 1, 1, &quot;center&quot;);
       for (let i = 0; i &lt; this.lives; i++) txt(&quot;*&quot;, W - 8 - i * 6, 4, 0);
       this.bricks.forEach((k) =&gt; { rect(k.x, k.y, k.w, k.h, 3); rect(k.x + 1, k.y + 1, k.w - 2, k.h - 2, k.hp &gt; 1 ? 1 : 2); rect(k.x + 1, k.y + 1, k.w - 2, 1, k.hp &gt; 1 ? 0 : 1); });
       this.parts.forEach((p) =&gt; rect(p.x, p.y, 1, 1, 3));
@@ -2537,12 +2630,49 @@ window.SITE_CONFIG = {
     }
   };
 
-  const SCENES = { menu, runner, catch: caught, stack, brick };
+  /* ---------- 엔딩 ---------- */
+  const END_TEXT = { runner: [&quot;RAN ALL THE WAY&quot;, &quot;TO SEE YOU!&quot;], catch: [&quot;SHARING SWEETS&quot;, &quot;WITH YOU!&quot;], stack: [&quot;OUR WEDDING CAKE&quot;, &quot;IS DONE!&quot;], brick: [&quot;NO MORE WALLS&quot;, &quot;BETWEEN US!&quot;] };
+  const HEART_S = [&quot;.33.33.&quot;, &quot;3223223&quot;, &quot;3222223&quot;, &quot;.32223.&quot;, &quot;..323..&quot;, &quot;...3...&quot;];
+  const ending = {
+    enter() { this.t = 0; this.hx = -16; PX.sfx(&quot;clear&quot;); if (PX.cert) PX.cert.mark(this.game, this.score); },
+    update() {
+      this.t++;
+      const tx = W / 2 - 22;
+      if (this.hx &lt; tx) this.hx = Math.min(tx, this.hx + 1.7);
+      if (this.hx &gt;= tx &amp;&amp; !this.met) { this.met = this.t; PX.sfx(&quot;perfect&quot;); }
+      if (this.t &gt; 170 &amp;&amp; (I.pressed.a || I.pressed.start)) { PX.sfx(&quot;select&quot;); const g = this.game, sc = this.score; go(menu); PX.cert &amp;&amp; PX.cert.open(g, sc, HEROES[hero].name); }
+    },
+    draw() {
+      const t = this.t;
+      rect(0, 0, W, H, 0);
+      for (let y = 6; y &lt; GY; y += 12) for (let x = (y / 12) % 2 ? 6 : 0; x &lt; W; x += 12) rect(x + 2, y, 2, 2, 1);
+      rect(0, GY, W, 1, 3); rect(0, GY + 1, W, H - GY - 1, 2);
+      for (let x = 0; x &lt; W; x += 8) rect(x, GY + 4 + ((x / 8) % 2) * 4, 4, 1, 1);
+      const me = HEROES[hero], you = HEROES[1 - hero], arrived = this.hx &gt;= W / 2 - 22;
+      sprite(arrived ? (Math.floor(t / 20) % 2 ? me.spr.a : me.spr.j) : (Math.floor(t / 6) % 2 ? me.spr.a : me.spr.b), this.hx, GY - 12 - (arrived &amp;&amp; Math.floor(t / 20) % 2 ? 2 : 0));
+      sprite(Math.floor(t / 30) % 2 ? you.spr.a : you.spr.b, W / 2 + 10, GY - 12, true);
+      if (this.game === &quot;catch&quot;) { sprite(ITEMS.cocoa.rows, W / 2 - 5, GY - 26); }
+      if (this.game === &quot;stack&quot;) { rect(W / 2 - 6, GY - 8, 12, 8, 3); rect(W / 2 - 5, GY - 7, 10, 2, 0); rect(W / 2 - 4, GY - 14, 8, 6, 3); rect(W / 2 - 3, GY - 13, 6, 2, 0); }
+      if (this.met) {
+        const k = t - this.met;
+        for (let i = 0; i &lt; 6; i++) { const hy = GY - 30 - ((k * 0.6 + i * 18) % 70), hx2 = W / 2 - 3 + Math.round(Math.sin((k + i * 40) / 14) * 16); if (hy &gt; 20) sprite(HEART_S, hx2, hy); }
+        panel(W / 2 - 66, 18, 132, 42);
+        txt(me.name + &quot; * &quot; + you.name, W / 2, 24, 3, 1, &quot;center&quot;);
+        txt(END_TEXT[this.game][0], W / 2, 34, 3, 1, &quot;center&quot;);
+        txt(END_TEXT[this.game][1], W / 2, 42, 3, 1, &quot;center&quot;);
+        txt(&quot;SCORE &quot; + pad(this.score), W / 2, 51, 2, 1, &quot;center&quot;);
+      } else txt(&quot;MISSION CLEAR!&quot;, W / 2, 24, 3, 1, &quot;center&quot;);
+      if (t &gt; 170 &amp;&amp; Math.floor(t / 25) % 2) txt(&quot;A: GET YOUR AWARD&quot;, W / 2, 70, 3, 1, &quot;center&quot;);
+    }
+  };
+  function toEnding(game, score) { ending.game = game; ending.score = Math.floor(score); ending.met = 0; setBest(game, score); go(ending); }
+
+  const SCENES = { menu, runner, catch: caught, stack, brick, ending };
   function go(s) { scene = s; paused = false; s.enter(); I.reset(); }
   function step() {
     if (scene !== menu) {
-      if (I.pressed.select) { PX.sfx(&quot;back&quot;); go(menu); I.endFrame(); return; }
-      if (I.pressed.start &amp;&amp; !scene.over &amp;&amp; (scene.started !== false)) { paused = !paused; PX.sfx(&quot;blip&quot;); I.endFrame(); return; }
+      if (I.pressed.select &amp;&amp; scene !== ending) { PX.sfx(&quot;back&quot;); go(menu); I.endFrame(); return; }
+      if (I.pressed.start &amp;&amp; scene !== ending &amp;&amp; !scene.over &amp;&amp; (scene.started !== false)) { paused = !paused; PX.sfx(&quot;blip&quot;); I.endFrame(); return; }
       if (I.pressed.b) I.pressed.a = true;
     }
     if (!paused) scene.update();
@@ -2570,9 +2700,254 @@ window.SITE_CONFIG = {
       if (on &amp;&amp; !raf) { lastT = performance.now(); acc = 0; raf = requestAnimationFrame(loop); }
       if (!on &amp;&amp; scene &amp;&amp; scene !== menu &amp;&amp; !scene.over) paused = true;
     },
-    onSelect(fn) { onSelectCbs.push(fn); }
+    onSelect(fn) { onSelectCbs.push(fn); },
+    toEnding
   };
   document.addEventListener(&quot;visibilitychange&quot;, () =&gt; { if (document.hidden &amp;&amp; scene &amp;&amp; scene !== menu &amp;&amp; !scene.over) paused = true; });
+})();
+
+&lt;/script&gt;
+&lt;script&gt;
+/* =========================================================
+   CERT — 게임 클리어 상장 + 수상 기록
+   ========================================================= */
+(function () {
+  const PX = window.PX;
+  const AWARDS = {
+    runner: { name: &quot;보고 싶어 달려간 상&quot;, game: &quot;JUMP RUN&quot;, line: &quot;끝까지 달려 사랑하는 사람에게 닿았기에&quot; },
+    catch: { name: &quot;달콤함 나눔 상&quot;, game: &quot;SWEET CATCH&quot;, line: &quot;쓴 커피와 탄 토스트를 피해 달콤함만 모아 나눴기에&quot; },
+    stack: { name: &quot;웨딩 케이크 장인 상&quot;, game: &quot;CAKE STACK&quot;, line: &quot;흔들림 없이 열다섯 층의 케이크를 쌓아 올렸기에&quot; },
+    brick: { name: &quot;마음의 벽 허물기 상&quot;, game: &quot;BRICK BREAK&quot;, line: &quot;두 사람 사이의 모든 벽을 남김없이 허물었기에&quot; }
+  };
+  const ORDER = [&quot;runner&quot;, &quot;catch&quot;, &quot;stack&quot;, &quot;brick&quot;];
+  const listeners = [];
+  const getAll = () =&gt; PX.store.get(&quot;awards&quot;, {});
+
+  function mark(game, score) {
+    const all = getAll(), prev = all[game];
+    all[game] = { score: Math.max(score, (prev &amp;&amp; prev.score) || 0), date: Date.now() };
+    PX.store.set(&quot;awards&quot;, all);
+    listeners.forEach((f) =&gt; f());
+  }
+
+  /* ---------- 상장 그리기 ---------- */
+  const INK = &quot;#3a1d2e&quot;, PINK = &quot;#e0578a&quot;, GOLD = &quot;#d9a441&quot;;
+  function seal(x, cx, cy, color, label) {
+    // 픽셀 원형 도장
+    const R = 34;
+    for (let y = -R; y &lt;= R; y += 2) for (let xx = -R; xx &lt;= R; xx += 2) {
+      const d = Math.hypot(xx, y);
+      if (d &lt;= R &amp;&amp; (d &gt; R - 5 || d &lt; R - 9)) { x.fillStyle = d &gt; R - 5 ? color : color + &quot;22&quot;; x.fillRect(cx + xx, cy + y, 2, 2); }
+    }
+    x.fillStyle = color; x.textAlign = &quot;center&quot;; x.textBaseline = &quot;middle&quot;;
+    x.font = (label.length &gt; 2 ? &#x27;17px&#x27; : &#x27;22px&#x27;) + &#x27; &quot;NeoDunggeunmo&quot;, &quot;Galmuri11&quot;, monospace&#x27;; x.fillText(label, cx, cy + 1);
+  }
+  function medal(x, cx, cy) {
+    const R = [&quot;....oooo....&quot;, &quot;..oowwggoo..&quot;, &quot;.owwggggggo.&quot;, &quot;.owgggg1ggo.&quot;, &quot;oggggg11gggo&quot;, &quot;ogggggg1gggo&quot;, &quot;ogggggg1gggo&quot;, &quot;oggggg111ggo&quot;, &quot;.oggggggggo.&quot;, &quot;..oooooooo..&quot;];
+    const ribbon = [&quot;..rr....RR..&quot;, &quot;.rrrr..RRRR.&quot;, &quot;.rrrr..RRRR.&quot;, &quot;..rrr..RRR..&quot;, &quot;...rr..RR...&quot;, &quot;...r....R...&quot;];
+    PX.drawRows(x, ribbon, { r: &quot;#c8323f&quot;, R: &quot;#1f8f63&quot; }, cx - 24, cy + 36, 4);
+    PX.drawRows(x, R, { o: &quot;#a8742a&quot;, g: GOLD, w: &quot;#fff2c4&quot;, 1: &quot;#a8742a&quot; }, cx - 24, cy, 4);
+  }
+  async function draw(canvas, award, score, name, hero) {
+    try { await Promise.all([&#x27;30px &quot;MaruBuri-Regular&quot;&#x27;, &#x27;20px &quot;NeoDunggeunmo&quot;&#x27;, &#x27;20px &quot;Galmuri11&quot;&#x27;, &#x27;30px &quot;Handletter&quot;&#x27;].map((f) =&gt; document.fonts.load(f))); } catch (e) {}
+    const W = 760, H = 540, x = canvas.getContext(&quot;2d&quot;);
+    canvas.width = W; canvas.height = H; x.imageSmoothingEnabled = false;
+    x.fillStyle = &quot;#fdf1f6&quot;; x.fillRect(0, 0, W, H);
+    x.fillStyle = &quot;#f6d3df&quot;;
+    for (let yy = 0; yy &lt; H; yy += 8) for (let xx = (yy / 8) % 2 ? 4 : 0; xx &lt; W; xx += 8) x.fillRect(xx, yy, 2, 2);
+    // 테두리 (분홍 · 흰 · 잉크 · 금)
+    const frame = (m, c, w) =&gt; { x.fillStyle = c; x.fillRect(m, m, W - 2 * m, w); x.fillRect(m, H - m - w, W - 2 * m, w); x.fillRect(m, m, w, H - 2 * m); x.fillRect(W - m - w, m, w, H - 2 * m); };
+    x.fillStyle = &quot;#ffffff&quot;; x.fillRect(18, 18, W - 36, H - 36);
+    frame(18, PINK, 8); frame(30, GOLD, 3); frame(36, INK, 2);
+    // 모서리 하트
+    const HRT = [&quot;.oo.oo.&quot;, &quot;oaaoaao&quot;, &quot;oaaaaao&quot;, &quot;.oaaao.&quot;, &quot;..oao..&quot;, &quot;...o...&quot;];
+    [[44, 44], [W - 44 - 21, 44], [44, H - 44 - 18], [W - 44 - 21, H - 44 - 18]].forEach(([hx, hy]) =&gt; PX.drawRows(x, HRT, { o: INK, a: PINK }, hx, hy, 3));
+    // 레이스 상단
+    for (let i = 0; i &lt; W - 120; i += 16) { x.fillStyle = &quot;#f8bfd3&quot;; x.fillRect(60 + i, 48, 10, 4); x.fillRect(62 + i, 52, 6, 2); }
+    medal(x, 108, 70);
+    // 제목
+    x.textAlign = &quot;center&quot;; x.textBaseline = &quot;alphabetic&quot;;
+    x.fillStyle = INK; x.font = &#x27;62px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillText(&quot;상    장&quot;, W / 2, 136);
+    x.fillStyle = PINK; x.font = &#x27;22px &quot;NeoDunggeunmo&quot;, monospace&#x27;; x.fillText(&quot;SANRION 1ST ANNIVERSARY AWARD&quot;, W / 2, 170);
+    // 상 이름
+    x.fillStyle = INK; x.font = &#x27;30px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillText(award.name, W / 2, 228);
+    x.fillStyle = &quot;#f8bfd3&quot;; x.fillRect(W / 2 - 150, 240, 300, 3);
+    // 수상자
+    x.font = &#x27;22px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = &quot;#6e3d58&quot;; x.fillText(&quot;성명&quot;, W / 2 - 110, 290);
+    x.font = &#x27;40px &quot;Handletter&quot;, &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = INK; x.fillText(name || &quot;PLAYER&quot;, W / 2 + 20, 292);
+    x.fillStyle = INK; x.fillRect(W / 2 - 70, 300, 200, 2);
+    // 본문
+    x.font = &#x27;19px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = INK;
+    const lines = [
+      `위 사람은 산타와 오리온의 1주년 보너스 스테이지 「${award.game}」에서`,
+      `${award.line}`,
+      `SCORE ${score}점을 기록하고 ${hero} 플레이어로 엔딩을 보았으므로`,
+      &quot;그 다정함을 기려 이 상장을 수여합니다.&quot;
+    ];
+    lines.forEach((l, i) =&gt; x.fillText(l, W / 2, 346 + i * 30));
+    // 날짜 + 도장
+    const d = new Date();
+    x.font = &#x27;20px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = &quot;#6e3d58&quot;;
+    x.fillText(`${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`, W / 2, 484);
+    x.font = &#x27;16px &quot;Galmuri11&quot;, monospace&#x27;; x.fillStyle = PINK; x.fillText(&quot;SANRION 1주년 운영위원회&quot;, W / 2, 506);
+    seal(x, W / 2 - 230, 478, &quot;#c8323f&quot;, &quot;산타&quot;);
+    seal(x, W / 2 + 230, 478, &quot;#1f8f63&quot;, &quot;오리온&quot;);
+  }
+
+  function open(game, score, hero) {
+    const award = AWARDS[game]; if (!award) return;
+    const all = getAll(); if (score == null) score = (all[game] &amp;&amp; all[game].score) || 0;
+    hero = hero || &quot;SANTA&quot;;
+    const body = document.createElement(&quot;div&quot;); body.className = &quot;cert&quot;;
+    body.innerHTML = `
+      &lt;p class=&quot;cert-msg&quot;&gt;축하해요! &lt;b&gt;&lt;/b&gt;을(를) 받았어요.&lt;/p&gt;
+      &lt;canvas class=&quot;cert-cv&quot; width=&quot;760&quot; height=&quot;540&quot;&gt;&lt;/canvas&gt;
+      &lt;div class=&quot;cert-row&quot;&gt;&lt;span class=&quot;mk-label&quot;&gt;이름&lt;/span&gt;&lt;input class=&quot;px-input cert-name&quot; maxlength=&quot;12&quot; placeholder=&quot;상장에 들어갈 이름&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;px-btn sm cert-save&quot;&gt;PNG 저장&lt;/button&gt;&lt;/div&gt;`;
+    body.querySelector(&quot;.cert-msg b&quot;).textContent = &quot;‘&quot; + award.name + &quot;’&quot;;
+    const cv = body.querySelector(&quot;.cert-cv&quot;), inp = body.querySelector(&quot;.cert-name&quot;);
+    inp.value = PX.store.get(&quot;certName&quot;, PX.store.get(&quot;gbName&quot;, &quot;&quot;));
+    const redraw = () =&gt; draw(cv, award, score, inp.value.trim() || &quot;PLAYER&quot;, hero);
+    let tm; inp.oninput = () =&gt; { PX.store.set(&quot;certName&quot;, inp.value); clearTimeout(tm); tm = setTimeout(redraw, 150); };
+    inp.onkeydown = (e) =&gt; e.stopPropagation();
+    body.querySelector(&quot;.cert-save&quot;).onclick = () =&gt; { redraw().then(() =&gt; PX.download(cv, `sanrion-award-${game}.png`)); PX.sfx(&quot;select&quot;); };
+    PX.ui.modal({ title: &quot;AWARD.PNG — 상장 수여&quot;, body, cls: &quot;cert-modal&quot; });
+    redraw();
+  }
+
+  /* 수상 진열장 */
+  function renderShelf(el) {
+    const all = getAll();
+    el.innerHTML = `&lt;div class=&quot;shelf-head&quot;&gt;&lt;b&gt;MY AWARDS&lt;/b&gt;&lt;span&gt;${ORDER.filter((k) =&gt; all[k]).length} / ${ORDER.length}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;shelf&quot;&gt;&lt;/div&gt;`;
+    const shelf = el.querySelector(&quot;.shelf&quot;);
+    ORDER.forEach((k, i) =&gt; {
+      const got = !!all[k], b = document.createElement(&quot;button&quot;);
+      b.type = &quot;button&quot;; b.className = &quot;award&quot; + (got ? &quot; got&quot; : &quot;&quot;);
+      b.innerHTML = `&lt;i&gt;&lt;/i&gt;&lt;span&gt;&lt;/span&gt;`;
+      b.querySelector(&quot;span&quot;).textContent = got ? AWARDS[k].name : `${i + 1}. ${AWARDS[k].game}`;
+      b.title = got ? &quot;상장 다시 보기&quot; : &quot;클리어하면 상장을 받아요&quot;;
+      b.onclick = () =&gt; (got ? open(k, all[k].score, PX.store.get(&quot;hero&quot;, 0) ? &quot;ORION&quot; : &quot;SANTA&quot;) : PX.toast(`${AWARDS[k].game}을(를) 클리어하면 받을 수 있어요`));
+      shelf.appendChild(b);
+    });
+  }
+  PX.cert = { open, mark, AWARDS, renderShelf, onChange: (f) =&gt; listeners.push(f) };
+})();
+
+&lt;/script&gt;
+&lt;script&gt;
+/* =========================================================
+   MUSIC — 칩튠 캐롤 BGM (퍼블릭 도메인 곡, 멜로디·베이스만)
+   ========================================================= */
+(function () {
+  const PX = window.PX;
+  const SONGS = [
+    { title: &quot;JINGLE BELLS&quot;, bpm: 152, bar: 4, pattern: [[0, 0], [1, 7], [2, 0], [3, 7]],
+      mel: &quot;E4:1 E4:1 E4:2 | E4:1 E4:1 E4:2 | E4:1 G4:1 C4:1.5 D4:.5 | E4:4 | F4:1 F4:1 F4:1.5 F4:.5 | F4:1 E4:1 E4:1 E4:.5 E4:.5 | E4:1 D4:1 D4:1 E4:1 | D4:2 G4:2 | &quot; +
+           &quot;E4:1 E4:1 E4:2 | E4:1 E4:1 E4:2 | E4:1 G4:1 C4:1.5 D4:.5 | E4:4 | F4:1 F4:1 F4:1.5 F4:.5 | F4:1 E4:1 E4:1 E4:.5 E4:.5 | G4:1 G4:1 F4:1 D4:1 | C4:4&quot;,
+      bass: &quot;C3 C3 C3 C3 F2 C3 D3 G2 C3 C3 C3 C3 F2 C3 G2 C3&quot; },
+    { title: &quot;WE WISH YOU A MERRY CHRISTMAS&quot;, bpm: 168, bar: 3, pickup: 1, pattern: [[0, 0], [1, 7], [2, 7]],
+      mel: &quot;D4:1 | G4:1 G4:.5 A4:.5 G4:.5 F#4:.5 | E4:1 E4:1 E4:1 | A4:1 A4:.5 B4:.5 A4:.5 G4:.5 | F#4:1 D4:1 D4:1 | B4:1 B4:.5 C5:.5 B4:.5 A4:.5 | G4:1 E4:1 D4:.5 D4:.5 | E4:1 A4:1 F#4:1 | G4:2&quot;,
+      bass: &quot;G2 C3 A2 D3 E3 C3 D3 G2&quot; },
+    { title: &quot;DECK THE HALLS&quot;, bpm: 144, bar: 4, pattern: [[0, 0], [1, 7], [2, 0], [3, 7]],
+      mel: &quot;G4:1.5 F4:.5 E4:1 D4:1 | C4:1 D4:1 E4:1 C4:1 | D4:.5 E4:.5 F4:.5 D4:.5 E4:1.5 D4:.5 | C4:1 B3:1 C4:2 | &quot; +
+           &quot;G4:1.5 F4:.5 E4:1 D4:1 | C4:1 D4:1 E4:1 C4:1 | D4:.5 E4:.5 F4:.5 D4:.5 E4:1.5 D4:.5 | C4:1 B3:1 C4:2 | &quot; +
+           &quot;D4:1.5 E4:.5 F4:1 D4:1 | E4:1.5 F4:.5 G4:1 D4:1 | E4:.5 F#4:.5 G4:1 A4:.5 B4:.5 C5:1 | B4:1 A4:1 G4:2 | &quot; +
+           &quot;G4:1.5 F4:.5 E4:1 D4:1 | C4:1 D4:1 E4:1 C4:1 | D4:.5 E4:.5 F4:.5 D4:.5 E4:1.5 D4:.5 | C4:1 B3:1 C4:2&quot;,
+      bass: &quot;C3 C3 G2 C3 C3 C3 G2 C3 D3 C3 D3 G2 C3 C3 G2 C3&quot; },
+    { title: &quot;SILENT NIGHT&quot;, bpm: 104, bar: 3, pattern: [[0, 0], [1.5, 7]], soft: true,
+      mel: &quot;G4:1.5 A4:.5 G4:1 | E4:3 | G4:1.5 A4:.5 G4:1 | E4:3 | D5:2 D5:1 | B4:3 | C5:2 C5:1 | G4:3 | A4:2 A4:1 | C5:1.5 B4:.5 A4:1 | G4:1.5 A4:.5 G4:1 | E4:3 | &quot; +
+           &quot;A4:2 A4:1 | C5:1.5 B4:.5 A4:1 | G4:1.5 A4:.5 G4:1 | E4:3 | D5:2 D5:1 | F5:1.5 D5:.5 B4:1 | C5:3 | E5:3 | C5:1 G4:1 E4:1 | G4:1.5 F4:.5 D4:1 | C4:3 | R:3&quot;,
+      bass: &quot;C3 C3 C3 C3 G2 G2 C3 C3 F2 F2 C3 C3 F2 F2 C3 C3 G2 G2 C3 C3 C3 G2 C3 C3&quot; }
+  ];
+  const NOTE = { C: 0, &quot;C#&quot;: 1, D: 2, &quot;D#&quot;: 3, E: 4, F: 5, &quot;F#&quot;: 6, G: 7, &quot;G#&quot;: 8, A: 9, &quot;A#&quot;: 10, B: 11 };
+  const midi = (n) =&gt; { const m = n.match(/^([A-G]#?)(\d)$/); return 12 * (+m[2] + 1) + NOTE[m[1]]; };
+  const freq = (m) =&gt; 440 * Math.pow(2, (m - 69) / 12);
+
+  function compile(song) {
+    const ev = [];
+    let t = 0;
+    song.mel.replace(/\|/g, &quot; &quot;).trim().split(/\s+/).forEach((tok) =&gt; {
+      const [n, d] = tok.split(&quot;:&quot;); const dur = parseFloat(d);
+      if (n !== &quot;R&quot;) ev.push({ t, dur, f: freq(midi(n) + 12), kind: &quot;mel&quot; });
+      t += dur;
+    });
+    const total = t;
+    const start = song.pickup || 0;
+    song.bass.split(/\s+/).forEach((root, i) =&gt; {
+      const bt = start + i * song.bar, r = midi(root);
+      song.pattern.forEach(([off, iv]) =&gt; { if (bt + off &lt; total) ev.push({ t: bt + off, dur: song.bar === 3 &amp;&amp; song.pattern.length === 2 ? 1.4 : 0.9, f: freq(r + iv), kind: &quot;bass&quot; }); });
+    });
+    ev.sort((a, b) =&gt; a.t - b.t);
+    return { ev, total: total + song.bar };
+  }
+  const COMPILED = SONGS.map(compile);
+
+  let actx = null, master = null, playing = false, idx = PX.store.get(&quot;bgmTrack&quot;, 0) % SONGS.length, timer = null, songStart = 0, cursor = 0;
+  let enabled = PX.store.get(&quot;bgm&quot;, true);
+  const listeners = [];
+  function ctx() {
+    if (!actx) {
+      const C = window.AudioContext || window.webkitAudioContext; if (!C) return null;
+      actx = new C(); master = actx.createGain(); master.gain.value = 0.55; master.connect(actx.destination);
+    }
+    if (actx.state === &quot;suspended&quot;) actx.resume();
+    return actx;
+  }
+  function voice(e, when, spb, soft) {
+    const o = actx.createOscillator(), g = actx.createGain();
+    const len = Math.max(0.06, e.dur * spb * 0.92);
+    if (e.kind === &quot;mel&quot;) { o.type = soft ? &quot;triangle&quot; : &quot;square&quot;; } else { o.type = &quot;triangle&quot;; }
+    o.frequency.setValueAtTime(e.f, when);
+    const v = e.kind === &quot;mel&quot; ? (soft ? 0.09 : 0.032) : 0.07;
+    g.gain.setValueAtTime(0, when);
+    g.gain.linearRampToValueAtTime(v, when + 0.008);
+    g.gain.exponentialRampToValueAtTime(v * 0.45, when + Math.min(len, 0.25));
+    g.gain.setValueAtTime(v * 0.45, when + len - 0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001, when + len);
+    o.connect(g); g.connect(master);
+    o.start(when); o.stop(when + len + 0.02);
+  }
+  function tick() {
+    if (!playing) return;
+    const song = SONGS[idx], comp = COMPILED[idx], spb = 60 / song.bpm;
+    const now = actx.currentTime, ahead = now + 0.25;
+    while (cursor &lt; comp.ev.length &amp;&amp; songStart + comp.ev[cursor].t * spb &lt; ahead) {
+      const e = comp.ev[cursor];
+      voice(e, Math.max(now, songStart + e.t * spb), spb, song.soft);
+      cursor++;
+    }
+    if (now &gt; songStart + comp.total * spb) next(true);
+  }
+  function startSong() {
+    cursor = 0; songStart = actx.currentTime + 0.1;
+    PX.store.set(&quot;bgmTrack&quot;, idx);
+    listeners.forEach((f) =&gt; f());
+  }
+  function play() {
+    if (!ctx()) return;
+    if (playing) return;
+    playing = true; startSong();
+    timer = setInterval(tick, 40);
+  }
+  function stop() {
+    playing = false; clearInterval(timer); timer = null;
+    if (master &amp;&amp; actx) { const old = master; old.gain.setTargetAtTime(0, actx.currentTime, 0.05); setTimeout(() =&gt; old.disconnect(), 300); master = actx.createGain(); master.gain.value = 0.55; master.connect(actx.destination); }
+    listeners.forEach((f) =&gt; f());
+  }
+  function next(auto) {
+    idx = (idx + 1) % SONGS.length;
+    if (playing) { if (!auto &amp;&amp; master) { stop(); play(); } else startSong(); } else listeners.forEach((f) =&gt; f());
+  }
+  document.addEventListener(&quot;visibilitychange&quot;, () =&gt; { if (!actx) return; if (document.hidden) actx.suspend(); else if (playing) actx.resume(); });
+
+  PX.music = {
+    play, stop, next,
+    title: () =&gt; SONGS[idx].title,
+    isPlaying: () =&gt; playing,
+    enabled: () =&gt; enabled,
+    setEnabled(v) { enabled = v; PX.store.set(&quot;bgm&quot;, v); if (v) play(); else stop(); },
+    startIfEnabled() { if (enabled) play(); },
+    onChange: (f) =&gt; listeners.push(f)
+  };
 })();
 
 &lt;/script&gt;
@@ -3236,11 +3611,12 @@ window.SITE_CONFIG = {
 (function () {
   const PX = window.PX, CFG = window.SITE_CONFIG;
   const GAME_HELP = {
-    runner: { t: &quot;1 · JUMP RUN&quot;, d: &quot;블록을 뛰어넘으며 멀리 달려요. 시작 전 ←→로 산타·오리온을 고를 수 있어요. A를 길게 누르면 더 높이, 공중에서 ↓를 누르면 빨리 내려와요.&quot; },
-    catch: { t: &quot;2 · SWEET CATCH&quot;, d: &quot;둘 다 좋아하는 민트초코와 핫초코를 받아요(+10), 하트는 +30. 오리온이 못 먹는 매운 고추와 산타가 태운 토스트는 피하세요! A를 누르고 있으면 빨리 움직여요.&quot; },
-    stack: { t: &quot;3 · CAKE STACK&quot;, d: &quot;좌우로 움직이는 케이크 층을 A로 떨어뜨려 쌓아요. PERFECT를 3번 이어서 내면 층이 다시 넓어져요. 끝나면 꼭대기에 하트 토퍼가 꽂혀요.&quot; },
-    brick: { t: &quot;4 · BRICK BREAK&quot;, d: &quot;←→로 받침대를 움직이고 A로 공을 발사해요. 받침대 끝에 맞을수록 공이 크게 꺾여요. 하트 → 1 → 격자 순서로 판이 바뀌어요.&quot; }
+    runner: { t: &quot;1 · JUMP RUN&quot;, d: &quot;시작 전 ←→로 산타·오리온을 골라요. 블록을 넘으며 끝까지 달리면 상대가 기다리고 있어요. A를 길게 누르면 더 높이, 공중에서 ↓를 누르면 빨리 내려와요.&quot; },
+    catch: { t: &quot;2 · SWEET CATCH&quot;, d: &quot;60초 동안 핫초코와 케이크(+10), 하트(+30)를 받아요. 산타가 못 마시는 쓴 커피와 산타가 태운 토스트는 피하세요! 목숨 3개로 버티면 엔딩.&quot; },
+    stack: { t: &quot;3 · CAKE STACK&quot;, d: &quot;움직이는 케이크 층을 A로 떨어뜨려 15층 웨딩 케이크를 완성해요. PERFECT 3연속이면 층이 다시 넓어져요.&quot; },
+    brick: { t: &quot;4 · BRICK BREAK&quot;, d: &quot;←→로 받침대, A로 발사. 하트 → 1 → 격자 → 마지막 판까지 4판을 모두 깨면 엔딩이에요.&quot; }
   };
+
 
   let cur = 1;
   PX.goStage = function (n) {
@@ -3299,6 +3675,12 @@ window.SITE_CONFIG = {
     PX.$$(&quot;[data-console-label]&quot;).forEach((e) =&gt; (e.textContent = CFG.consoleLabel));
     PX.$$(&quot;.stage-tab&quot;).forEach((b) =&gt; b.addEventListener(&quot;click&quot;, () =&gt; PX.goStage(+b.dataset.go)));
     PX.$$(&quot;[data-next]&quot;).forEach((b) =&gt; b.addEventListener(&quot;click&quot;, () =&gt; PX.goStage(+b.dataset.next)));
+    // BGM
+    const bgmBtn = PX.$(&quot;.bgm-btn&quot;), bgmTitle = PX.$(&quot;.bgm-title&quot;);
+    const paintBgm = () =&gt; { const on = PX.music.isPlaying(); bgmBtn.classList.toggle(&quot;is-on&quot;, on); bgmTitle.textContent = on ? PX.music.title() : &quot;BGM OFF&quot;; };
+    PX.music.onChange(paintBgm); paintBgm();
+    bgmBtn.addEventListener(&quot;click&quot;, () =&gt; { PX.music.setEnabled(!PX.music.isPlaying()); paintBgm(); });
+    PX.$(&quot;.bgm-next&quot;).addEventListener(&quot;click&quot;, () =&gt; { if (!PX.music.isPlaying()) PX.music.setEnabled(true); else PX.music.next(); paintBgm(); });
     const snd = PX.$(&quot;.sound-btn&quot;);
     const paintSnd = () =&gt; { snd.classList.toggle(&quot;is-off&quot;, PX.muted); snd.title = PX.muted ? &quot;소리 켜기&quot; : &quot;소리 끄기&quot;; snd.setAttribute(&quot;aria-label&quot;, snd.title); };
     snd.addEventListener(&quot;click&quot;, () =&gt; { PX.muted = !PX.muted; PX.store.set(&quot;muted&quot;, PX.muted); paintSnd(); PX.unlockAudio(); PX.sfx(&quot;blip&quot;); });
@@ -3317,7 +3699,8 @@ window.SITE_CONFIG = {
 
     autoHeight();
     PX.intro.show();
-    PX.entryIntro(PX.$(&quot;.intro&quot;), () =&gt; PX.intro.start());
+    const shelf = PX.$(&quot;.awards&quot;); PX.cert.renderShelf(shelf); PX.cert.onChange(() =&gt; PX.cert.renderShelf(shelf));
+    PX.entryIntro(PX.$(&quot;.intro&quot;), () =&gt; { PX.intro.start(); PX.music.startIfEnabled(); });
   }
   if (document.readyState === &quot;loading&quot;) document.addEventListener(&quot;DOMContentLoaded&quot;, init); else init();
 })();

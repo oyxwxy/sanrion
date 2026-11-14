@@ -194,10 +194,10 @@
           <span class="doc-by">WRITTEN BY <em></em></span>
         </div>
       </header>
-      <section class="doc-sec"><h4>대표 타이틀 한마디</h4><blockquote class="doc-title"></blockquote></section>
+      <h3 class="doc-title"></h3>
       <section class="doc-sec"><h4>내가 본 성격</h4><div class="doc-pers"></div></section>
       <section class="doc-sec"><h4>대표 키워드</h4><div class="kw-list"></div></section>
-      <section class="doc-sec"><h4>제3자에게 소개하는 글</h4><div class="doc-letter"></div></section>
+      <section class="doc-sec"><h4>소개하는 글</h4><div class="doc-letter"></div></section>
       <nav class="doc-nav"><button type="button" class="px-btn sm ghost doc-other"></button></nav>`;
     body.querySelector(".doc-av").appendChild(avatarCanvas(k));
     body.querySelector(".doc-code").textContent = p.code;
@@ -253,7 +253,7 @@
     PX.$(".dlg-count").textContent = `${li + 1}/${lines.length}`;
   }
   function finishLine() { clearInterval(typingTimer); typingTimer = null; textEl.textContent = lines[li]; arrowEl.classList.add("show"); if (li === lines.length - 1) nextBtn.classList.add("show"); }
-  function advance() { if (typingTimer) return finishLine(); if (li < lines.length - 1) { li++; showLine(); } else { nextBtn.classList.add("pulse"); setTimeout(() => nextBtn.classList.remove("pulse"), 600); } }
+  function advance() { if (typingTimer) return finishLine(); li = (li + 1) % lines.length; showLine(); }
 
   PX.intro = {
     prepare() { grids = CFG.players.map((p) => PX.maker.composePreset(p.preset)); },
@@ -265,12 +265,11 @@
       for (let i = 0; i < 26; i++) confetti.push({ x: PX.rand(0, W), y: PX.rand(-H, GROUND), vy: PX.rand(0.15, 0.4), o: PX.rand(0, 100), w: PX.pick([1, 2]), h: PX.pick([1, 2]), c: PX.pick([RED, GREEN, "#fff", PINK, C.gold]) });
       buildProfiles(PX.$(".profiles", el));
       PX.$(".dlg", el).addEventListener("click", (e) => { if (!e.target.closest(".dlg-next")) { PX.unlockAudio(); advance(); } });
-      PX.$(".dlg-skip", el).addEventListener("click", (e) => { e.stopPropagation(); li = lines.length - 1; showLine(); finishLine(); });
       scv.addEventListener("click", (e) => { const r = scv.getBoundingClientRect(), k = ((e.clientX - r.left) / r.width) * W < W / 2 - 10 ? 0 : 1; if (hop[k] < 0) { hop[k] = 0; PX.sfx("jump"); } });
       window.addEventListener("keydown", (e) => {
         if (!el.classList.contains("is-active") || PX.$(".intro") || PX.$(".xmodal")) return;
         const t = e.target; if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "BUTTON")) return;
-        if (["Space", "Enter", "KeyZ"].includes(e.code)) { e.preventDefault(); if (li === lines.length - 1 && !typingTimer && e.code === "Enter") nextBtn.click(); else advance(); }
+        if (["Space", "Enter", "KeyZ"].includes(e.code)) { e.preventDefault(); advance(); }
       });
     },
     start() { li = 0; showLine(); },

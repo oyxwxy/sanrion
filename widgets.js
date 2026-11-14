@@ -128,7 +128,6 @@
         <div class="cp-prev"><i class="cp-old"></i><i class="cp-new"></i></div>
         <label class="cp-hex"><span>#</span><input maxlength="6" spellcheck="false"></label>
       </div>
-      <div class="cp-rgb"></div>
       <div class="cp-label">테마 색</div><div class="cp-sw cp-theme"></div>
       <div class="cp-label">최근 색</div><div class="cp-sw cp-recent"></div>
       <div class="cp-btns"><button type="button" class="px-btn sm ghost cp-cancel">취소 (Esc)</button><button type="button" class="px-btn sm cp-ok">적용 (Enter)</button></div>`;
@@ -146,14 +145,6 @@
       const orig = (value || "#ffffff").toLowerCase();
       let [r, g, b] = PX.hexToRgb(orig);
       let [h, s, v] = rgb2hsv(r, g, b);
-      const rgbBox = el.querySelector(".cp-rgb");
-      const steps = ["R", "G", "B"].map((lab, i) => {
-        const w = document.createElement("label"); w.className = "cp-ch"; w.innerHTML = `<span>${lab}</span>`;
-        const st = ui.stepper({ value: [r, g, b][i], min: 0, max: 255, step: 1, big: 16, width: 34, onChange: (n) => {
-          const a = [r, g, b]; a[i] = n; [r, g, b] = a; [h, s, v] = rgb2hsv(r, g, b); update(true, "rgb");
-        } });
-        w.appendChild(st); rgbBox.appendChild(w); return st;
-      });
       const hexOf = () => PX.rgbToHex(r, g, b);
       function drawHue() {
         for (let x = 0; x < 168; x++) { const [rr, gg, bb] = hsv2rgb((x / 168) * 360, 1, 1); hx.fillStyle = `rgb(${rr},${gg},${bb})`; hx.fillRect(x, 0, 1, 12); }
@@ -175,7 +166,6 @@
         drawHue(); drawSV();
         const hex = hexOf();
         if (from !== "hex") hexIn.value = hex.slice(1);
-        if (from !== "rgb") steps.forEach((st, i) => st.setValue([r, g, b][i]));
         el.querySelector(".cp-new").style.background = hex;
         if (fire && onInput) onInput(hex);
       }
@@ -268,7 +258,9 @@
     app.appendChild(wrap);
     // 모달이 화면 안에 보이도록
     const win = wrap.querySelector(".xm-win");
-    const vy = PX.viewport().top + 20;
+    const vp = PX.viewport();
+    bd.style.maxHeight = Math.max(280, Math.min(640, vp.h - 120)) + "px";
+    const vy = vp.top + Math.max(20, (vp.h - Math.min(win.offsetHeight, vp.h)) / 2);
     win.style.marginTop = Math.min(vy, Math.max(20, app.offsetHeight - win.offsetHeight - 20)) + "px";
     PX.sfx("select");
     return { el: wrap, body: bd, close };

@@ -70,6 +70,7 @@
     { name: "송곳니", p: [P(14, 16, ["EEEE", "wmmw", ".EE."])] },
     { name: "씨익", p: [P(15, 16, ["..E", "EE."])] }
   ];
+  const EARS = [P(7, 12, [".s", "sS", "ss"]), P(23, 12, ["s.", "Ss", "ss"])];
   const BLUSH = [P(10, 16, ["kk"]), P(20, 16, ["kk"])];
   const DARK = [P(12, 15, ["dd"]), P(18, 15, ["dd"])];
   const NOSE = [P(15, 15, ["kk"])];
@@ -79,7 +80,7 @@
     { name: "티셔츠", r: ["......SSSS......", "....cccccccc....", "...cccccccccc...", "..ccCccccccCcc..", "..ccCccccccCcc..", "..ssCccccccCss.."] },
     { name: "줄무늬", r: ["......SSSS......", "....cccccccc....", "...wwwwwwwwww...", "..ccCccccccCcc..", "..wwCwwwwwwCww..", "..ssCccccccCss.."] },
     { name: "후드", r: ["....cCSSSSCc....", "....ccwccwcc....", "...cccwccwccc...", "..ccCccccccCcc..", "..ccCcCCCCcCcc..", "..ssCccccccCss.."] },
-    { name: "셔츠+넥타이", r: ["......SSSS......", "....ccCttCcc....", "...ccccttcccc...", "..ccCccttccCcc..", "..ccCccttccCcc..", "..ssCccttccCss.."] },
+    { name: "셔츠+넥타이", r: ["......SSSS......", "....ccCtCccc....", "...cccctccccc...", "..ccCcctcccCcc..", "..ccCccTcccCcc..", "..ssCccccccCss.."] },
     { name: "터틀넥", r: ["......cccc......", "....cCcccccc....", "...cccccccccc...", "..ccCccccccCcc..", "..ccCccccccCcc..", "..ssCccccccCss.."] },
     { name: "민소매", r: ["......SSSS......", "....cccccccc....", "...cccccccccc...", "..sSccccccccSs..", "..sSccccccccSs..", "..ssccccccccss.."] },
     { name: "멜빵", r: ["......SSSS......", "....cpccccpc....", "...ccpccccpcc...", "..ccCppppppCcc..", "..ccCpwppwpCcc..", "..ssPppppppPss.."] }
@@ -124,19 +125,18 @@
   ];
   const FACE_ACC = [
     { name: "없음", p: [] },
-    { name: "안경", p: [P(11, 12, ["aaaa..aaaa", "a..aaaa..a", "aaaa..aaaa"])] },
+    { name: "동그란안경", p: [P(10, 11, [".aaa....aaa.", "a...aaaa...a", "a...a..a...a", "a...a..a...a", ".aaa....aaa."])] },
     { name: "선글라스", p: [P(11, 12, ["EEEE..EEEE", "EwEEEEEwEE", "EEEE..EEEE"])] },
     { name: "반창고", p: [P(19, 15, ["www", "wWw"])] },
-    { name: "점", p: [P(20, 16, ["E"])] },
     { name: "하트스티커", p: [P(10, 15, ["a.a", "aaa", ".a."])] },
     { name: "별스티커", p: [P(10, 15, [".a.", "aaa", ".a."])] }
   ];
   const EAR_ACC = [
     { name: "없음", p: [] },
-    { name: "피어싱", p: [P(8, 12, ["y"]), P(8, 14, ["y"]), P(23, 13, ["y"])] },
-    { name: "귀걸이", p: [P(8, 14, ["y", "a"]), P(23, 14, ["y", "a"])] }
+    { name: "피어싱", p: [P(7, 12, ["y"]), P(7, 14, ["y"]), P(24, 13, ["y"])] },
+    { name: "귀걸이", p: [P(7, 15, ["y", "a"]), P(24, 15, ["y", "a"])] }
   ];
-  const BG_PATTERNS = ["투명", "단색", "체크", "도트", "줄무늬", "별", "하트", "눈"];
+  const BG_PATTERNS = ["투명", "단색", "깅엄", "도트", "캔디", "반짝", "하트", "눈", "레이스", "하프톤"];
 
   const SW = {
     skin: ["#fdeee6", "#f6e2d8", "#f6d0b1", "#e8b48c", "#c98e66", "#8d5a3b", "#5e3b2a", "#e6e1ea"],
@@ -155,11 +155,11 @@
       outer: "#f7f5f9", cape: "#e0578a", bottom: "#4a6a9a", shoe: "#f7f5f9", acc: "#e0578a", bg: "#fde8f0" }
   };
   const PRESETS = {
-    santa: { front: 2, back: 3, streak: true, eyes: 7, brow: 2, mouth: 7, blush: false, dark: false, nose: true,
+    santa: { front: 2, back: 3, streak: true, eyes: 7, brow: 2, mouth: 7, blush: false, dark: false, nose: false,
       top: 3, outer: 0, cape: 1, epaulet: true, bottom: 1, shoe: 0, headAcc: 0, faceAcc: 0, earAcc: 0, bgPat: 2,
       colors: { skin: "#f6e2d8", hair: "#1f1c24", streak: "#f4f2f6", eye: "#6b4636", top: "#f7f5f9", point: "#1d1b22",
         outer: "#1d1b22", cape: "#26222c", bottom: "#34303a", shoe: "#1d1b22", acc: "#c8323f", bg: "#f6d3d8" } },
-    orion: { front: 1, back: 1, streak: false, eyes: 4, brow: 0, mouth: 3, blush: true, dark: true, nose: false,
+    orion: { front: 1, back: 1, streak: false, eyes: 4, brow: 0, mouth: 0, blush: true, dark: false, nose: false,
       top: 4, outer: 2, cape: 1, epaulet: true, bottom: 1, shoe: 3, headAcc: 0, faceAcc: 0, earAcc: 1, bgPat: 3,
       colors: { skin: "#fdeee6", hair: "#1c1b22", streak: "#f4f2f6", eye: "#2fa36f", top: "#1d1b22", point: "#1d1b22",
         outer: "#f7f5f9", cape: "#f7f5f9", bottom: "#f1eef4", shoe: "#ffffff", acc: "#e04a5f", bg: "#d3f0e6" } }
@@ -210,6 +210,7 @@
     if (s.outer) stamp(g, P8(21, at(OUTERS, s.outer).r), cm);
     at(CAPES, s.cape).p.forEach((p) => stamp(g, p, cm));
     if (s.epaulet) stamp(g, EPAULET, cm);
+    EARS.forEach((p) => stamp(g, p, cm));
     stamp(g, HEAD, cm);
     if (s.dark) DARK.forEach((p) => stamp(g, p, cm));
     if (s.blush) BLUSH.forEach((p) => stamp(g, p, cm));
@@ -241,19 +242,51 @@
   function drawBg(ctx, s, size, scale) {
     const pat = s.bgPat, c = s.colors.bg;
     if (!pat) return;
-    const c2 = PX.shade(c, 0.07), c3 = PX.tint(c, 0.5);
-    ctx.fillStyle = c; ctx.fillRect(0, 0, size * scale, size * scale);
-    const HEARTS = [[5, 6], [24, 4], [27, 20], [4, 22], [16, 1], [14, 27]];
-    for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+    const T = (k) => PX.tint(c, k);
+    const [hh, ss, vv] = PX.ui.rgb2hsv(...PX.hexToRgb(c));
+    const D = (k) => PX.rgbToHex(...PX.ui.hsv2rgb(hh, Math.min(1, ss + k * 1.1), Math.max(0, vv - k * 0.55)));
+    const px = (x, y, col) => { ctx.fillStyle = col; ctx.fillRect(x * scale, y * scale, scale, scale); };
+    const W = size, dark = PX.hexToRgb(c).reduce((a, b) => a + b, 0) < 260;
+    // 위가 밝은 계단식 그라데이션
+    for (let y = 0; y < W; y++) { let col; if (pat === 7) col = D(0.34 - Math.floor(y / 4) * 0.035); else { const k = Math.max(0, 0.3 - Math.floor(y / 4) * 0.05); col = k ? T(k) : c; } ctx.fillStyle = col; ctx.fillRect(0, y * scale, W * scale, scale); }
+    const HEART = [".#.#.", "#####", "#####", ".###.", "..#.."];
+    for (let y = 0; y < W; y++) for (let x = 0; x < W; x++) {
       let col = null;
-      if (pat === 2 && ((x >> 2) + (y >> 2)) % 2) col = c2;
-      if (pat === 3 && x % 4 === 1 && y % 4 === 1 && ((x >> 2) + (y >> 2)) % 2 === 0) col = c3;
-      if (pat === 4 && (x + y) % 6 < 2) col = c2;
-      if (pat === 5) [[4, 5], [26, 4], [6, 25], [27, 22], [16, 2], [2, 15], [29, 13]].forEach(([sx, sy]) => { if ((x === sx && Math.abs(y - sy) <= 1) || (y === sy && Math.abs(x - sx) <= 1)) col = c3; });
-      if (pat === 6) HEARTS.forEach(([hx, hy]) => { const dx = x - hx, dy = y - hy; if ((dy === 0 && (dx === 0 || dx === 2)) || (dy === 1 && dx >= 0 && dx <= 2) || (dy === 2 && dx === 1)) col = c2; });
-      if (pat === 7 && ((x * 7 + y * 13) % 23 === 0 || (x * 11 + y * 5) % 31 === 0)) col = "#ffffff";
-      if (col) { ctx.fillStyle = col; ctx.fillRect(x * scale, y * scale, scale, scale); }
+      if (pat === 2) { const a = (x >> 2) % 2, b = (y >> 2) % 2; if (a && b) col = D(0.22); else if (a || b) col = D(0.1); }
+      if (pat === 3) { const ox = (Math.floor(y / 8) % 2) * 4, lx = (x + ox) % 8, ly = y % 8; if (lx >= 2 && lx <= 3 && ly >= 2 && ly <= 3) col = lx === 2 && ly === 2 ? "#ffffff" : D(0.16); }
+      if (pat === 4) { const k = (x + y) % 8; if (k < 3) col = D(0.12); else if (k === 3) col = D(0.06); }
+      if (pat === 6) { const ox = (Math.floor(y / 8) % 2) * 4, lx = (x + ox) % 8, ly = y % 8; if (lx < 5 && ly < 5 && HEART[ly][lx] === "#") col = lx === 1 && ly === 1 ? T(0.5) : D(0.18); }
+      if (pat === 9) { const r = Math.hypot(x - 30, y - 1) / 34, cell = (x % 3 === 1 && y % 3 === 1); if (cell && r < 0.95) col = r < 0.5 ? D(0.26) : D(0.14); if (r < 0.35 && (x % 3 === 2 && y % 3 === 1)) col = D(0.26); }
+      if (col) px(x, y, col);
     }
+    if (pat === 5) {
+      [[4, 5, 2], [26, 4, 2], [7, 24, 1], [27, 19, 2], [16, 2, 1], [2, 14, 1], [29, 11, 1], [21, 8, 1], [11, 9, 1]].forEach(([sx, sy, r]) => {
+        px(sx, sy, "#ffffff");
+        for (let i = 1; i <= r; i++) { const cc = i === r ? D(0.2) : "#ffffff"; px(sx + i, sy, cc); px(sx - i, sy, cc); px(sx, sy + i, cc); px(sx, sy - i, cc); }
+      });
+      [[9, 3], [20, 13], [3, 28], [24, 26], [13, 18]].forEach(([sx, sy]) => px(sx, sy, D(0.2)));
+    }
+    if (pat === 7) {
+      for (let i = 0; i < 26; i++) { const x = (i * 11 + 3) % W, y = (i * 7 + (i % 3) * 5) % 26; px(x, y, i % 4 ? "#ffffff" : T(0.6)); if (i % 6 === 0) { px(x + 1, y, "#ffffff"); px(x - 1, y, "#ffffff"); px(x, y + 1, "#ffffff"); px(x, y - 1, "#ffffff"); } }
+      for (let x = 0; x < W; x++) { const top = 27 + Math.round(Math.sin(x / 3.2) * 1.2); for (let y = top; y < W; y++) px(x, y, y === top ? "#ffffff" : "#eef1f8"); }
+    }
+    if (pat === 8) {
+      const L = "#ffffff", LS = D(0.22);
+      for (let i = 0; i < W; i++) {
+        const sc = i % 4;
+        [0, 1].forEach((d) => { px(i, d, L); px(i, W - 1 - d, L); px(d, i, L); px(W - 1 - d, i, L); });
+        if (sc === 1 || sc === 2) { px(i, 2, L); px(i, W - 3, L); px(2, i, L); px(W - 3, i, L); }
+        if (sc === 0) { px(i, 1, LS); px(i, W - 2, LS); px(1, i, LS); px(W - 2, i, LS); }
+        if (sc === 3) { px(i, 3, LS); px(i, W - 4, LS); px(3, i, LS); px(W - 4, i, LS); }
+      }
+    }
+    // 바닥 그림자
+    if (pat !== 7) {
+      const sh = dark ? T(0.12) : D(0.12);
+      for (let x = 9; x <= 22; x++) px(x, 30, sh);
+      for (let x = 11; x <= 20; x++) px(x, 31, sh);
+      for (let x = 7; x <= 24; x++) if (x < 9 || x > 22) px(x, 30, D(0.06));
+    } else { for (let x = 10; x <= 21; x++) px(x, 30, "#d6dcea"); }
   }
   function drawGrid(ctx, grid, ox, oy, scale, flip) {
     for (let i = 0; i < grid.length; i++) {
