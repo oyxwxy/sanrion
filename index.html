@@ -1,64 +1,49 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>1st Anniversary</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/quiple/galmuri@latest/dist/galmuri.css">
-<link rel="stylesheet" href="style.css">
-</head>
+<link rel="stylesheet" href="style.css"></head>
 <body>
-<header class="hero">
-  <p class="badge">1UP</p>
-  <h1>HAPPY<br>1ST ANNIVERSARY</h1>
-  <p class="days">우리가 함께한 지 <b id="days">0</b>일째</p>
-  <a class="btn" href="#game">▶ PRESS START</a>
-</header>
-
-<main>
-<section id="game">
-  <h2>STAGE 1 · 코인 러너</h2>
-  <p class="hint">스페이스 / 클릭 / 터치로 점프! 코인을 모으고 장애물을 피하세요.</p>
-  <div class="screen"><canvas id="cv" width="640" height="220"></canvas></div>
-  <p class="score">SCORE <b id="sc">0</b> &nbsp; BEST <b id="best">0</b></p>
-</section>
-
-<section id="maker">
-  <h2>STAGE 2 · 캐릭터 만들기</h2>
-  <p class="hint">16×16 도트를 찍어 나만의 캐릭터를 만들고 PNG로 저장하세요.</p>
-  <div class="maker">
-    <canvas id="ed" width="320" height="320"></canvas>
-    <div class="tools">
-      <div id="pal" class="pal"></div>
-      <div class="row">
-        <button data-t="pen" class="on">✏️ 펜</button>
-        <button data-t="erase">🧽 지우개</button>
-        <button data-t="fill">🪣 채우기</button>
-      </div>
-      <div class="row">
-        <button id="clr">전체 지우기</button>
-        <button id="save" class="btn">💾 PNG 저장</button>
-      </div>
-    </div>
+<div class="console">
+  <div class="jc l">
+    <button class="k sm" data-k="none">−</button>
+    <div class="stick"></div>
+    <div class="pad"><button class="k u" data-k="up">▲</button><button class="k l" data-k="left">◀</button><button class="k r" data-k="right">▶</button><button class="k d" data-k="down">▼</button></div>
+    <i class="cap"></i>
   </div>
-</section>
+  <div class="mid"><div class="screen" id="scr"><div id="inner">
 
-<section id="guest">
-  <h2>FINAL STAGE · 방명록</h2>
-  <form id="gf">
-    <input id="gn" maxlength="12" placeholder="이름" required>
-    <textarea id="gm" maxlength="120" placeholder="축하 메시지를 남겨주세요" required></textarea>
-    <button class="btn">✉ 남기기</button>
-  </form>
-  <p id="gstat" class="hint"></p>
-  <ul id="gl"></ul>
-</section>
-</main>
+    <section id="boot" class="v on"><div class="logo"><b>1</b><span>ST ANNIVERSARY</span></div><p class="blink">PRESS A</p></section>
 
-<footer>© 1st Anniversary · THANK YOU FOR PLAYING</footer>
+    <section id="home" class="v">
+      <div class="top"><div class="me"><canvas id="ava" width="48" height="48"></canvas><span>1주년 플레이어</span></div><div class="st"><span id="dd"></span><span id="clk"></span><span>▮▮▮▯</span></div></div>
+      <div class="tiles" id="tiles"></div><div class="ttl" id="ttl"></div>
+      <div class="bot"><span><i class="ic">A</i>시작</span><span><i class="ic">◀▶</i>선택</span></div>
+    </section>
 
+    <section id="game" class="v"><canvas id="cv" width="960" height="540"></canvas></section>
+
+    <section id="maker" class="v"><div class="bar">DOT MAKER</div>
+      <div class="mk"><canvas id="ed" width="400" height="400"></canvas>
+        <div class="tl"><div id="pal" class="pal"></div>
+          <div class="row"><button class="pb on" data-t="pen">펜</button><button class="pb" data-t="erase">지우개</button><button class="pb" data-t="fill">채우기</button><button class="pb" id="clr">초기화</button></div>
+          <div class="row"><canvas id="pv" width="16" height="16"></canvas><div class="col"><button class="pb" id="save">PNG 저장</button><button class="pb" id="setava">프로필로 설정</button></div></div>
+          <p id="mt" class="note"></p></div></div>
+      <div class="bot dk"><span><i class="ic">B</i>홈으로</span></div></section>
+
+    <section id="guest" class="v"><div class="bar">GUESTBOOK</div>
+      <div class="gb"><form id="gf"><input id="gn" maxlength="12" placeholder="이름" required><textarea id="gm" maxlength="120" placeholder="축하 메시지를 남겨주세요" required></textarea><button class="pb">남기기</button><p id="gstat" class="note"></p></form><ul id="gl"></ul></div>
+      <div class="bot dk"><span><i class="ic">B</i>홈으로</span></div></section>
+
+  </div><div class="glare"></div></div></div>
+  <div class="jc r">
+    <button class="k sm" data-k="none">+</button>
+    <div class="pad"><button class="k u" data-k="none">X</button><button class="k l" data-k="none">Y</button><button class="k r" data-k="a">A</button><button class="k d" data-k="b">B</button></div>
+    <div class="stick"></div>
+    <button class="k sm home" data-k="home">⌂</button>
+  </div>
+</div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="app.js"></script>
-</body>
-</html>
+</body></html>
