@@ -4,6 +4,9 @@
 &lt;meta charset=&quot;UTF-8&quot;&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
 &lt;title&gt;SANTA ♥ ORION · 1ST ANNIVERSARY&lt;/title&gt;
+&lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABDElEQVR42u2aMQ6CMBiFwXANruABSLwHMZ7FwdVrGC9iZNfJFXsQ3TR2oKnvbzv0exuh0PDlvQcUmgYhhBBCtaoNDRj69UuZYHL3Vjk+9fyr2h0AADogkLnr87Z4gnk8Lu7fTqeoTPrzn4eddIGh+YkAAGrvAOvMqxlVM+/r4eaf7YO74AAAAOCrLjTAOvO+rDOPAwAAAK0DUmc+tfz7Pg4AAAAAAAAAAOD/NcHSz+rqfd9//2dNkAgAQPs2WLoT1MzjAAAAIK4DcndC7Pt8bOZxAAAAoHWAdSfkzjwOAAAAbDtA7QTrZ3scAAAAlO2AUCfs+03RzOMAAAAgbwfE/v+fOvM4AAAAQAihj95ncmtHOphp6gAAAABJRU5ErkJggg==&quot;&gt;
+&lt;link rel=&quot;apple-touch-icon&quot; href=&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAACT0lEQVR42u3dMUoDQRiG4W/Fa+QKdmkCyTlEPIuFrdcQD5JFm1R2tjFNylwgxFasMrAbM7PPU4vI8vKz8I+z3XF/OAUaceMRIGgQNAgaBI2gQdAgaBA0CBpBg6BB0CBoEDSCBkGDoEHQIGgEDbW5HesXL+erKh9Iv1lX9zfX+KzHes4mNF45QNAgaBA0ggZBg6BB0CBoBA2Z0FmOkjMD79+fo/3R2/uXXMO5iLHOI5SezXhbPKbl8yclz9mExisHCBoEDYJG0CBoEDQIGgTNFHWL2d2p9XX2NXj4eE3Lq+xSX7vt2T/7vOtNaLxygKBB0CBoEDSCBkGDoEHQkH+4wb/1VXapKayzTWgQNAgaQYOgQdAgaBA0ggZBg6AhFz3L4XwGGeBaAhMaBI2gQdAgaBA0CBpBg6BB0CBoEDSCBkGDoEHQIGgEDYIGQYOg4ZfuuD+c/fH65XwVN9bHf3IPoOSD9P1mbULjlQMEDYIGQYOgETQIGgQNgoYMtPouUbImT6zKU/k6u2SVnZSts01ovHKAoEHQIGgQNIIGQYOgQdAgaOIsx8W5IiFX9yH4sa4aMKFB0AgaBA2CBkGDoBE0CBoEDWlz9Z3G1+TW2SY0CBpBg6BB0CBoEDSCBkGDoCFW36n6SwI1fgjehAZBg6BB0AgaBA2CBkGDoBE0xOo7ja/Kn2bLtPwheBMaBA2CBkEjaBA0CBoEDYJG0CBoiLMcafeKhDibYUKDoBE0CBoEDYIGQSNoEDQIGmL1DSY0ggZBg6BB0CBoBA2CBkGDoOGPHy8CgZdQta2ZAAAAAElFTkSuQmCC&quot;&gt;
+&lt;meta name=&quot;theme-color&quot; content=&quot;#e0578a&quot;&gt;
 &lt;style&gt;html,body{margin:0;padding:0;background:#fbe6ef}
 ::-webkit-scrollbar{width:14px;height:14px}::-webkit-scrollbar-track{background:#fdf1f6;background-image:linear-gradient(90deg,transparent 5px,#f8bfd3 5px 9px,transparent 9px)}
 ::-webkit-scrollbar-thumb{background:#e0578a;box-shadow:inset 0 0 0 2px #3a1d2e,inset 0 -4px 0 2px #b83a6b,inset 0 3px 0 2px #f08cb0;border:2px solid #fdf1f6}::-webkit-scrollbar-button{display:none}
@@ -2684,50 +2687,93 @@ window.SITE_CONFIG = {
     }
   };
 
-  /* ---------- 4. 벽돌 깨기 ---------- */
+  /* ---------- 4. 벽돌 깨기 (쉬움 + 아이템) ---------- */
   const LEVELS = [
     [&quot;..##..##..&quot;, &quot;.########.&quot;, &quot;.########.&quot;, &quot;..######..&quot;, &quot;...####...&quot;, &quot;....##....&quot;],
     [&quot;....##....&quot;, &quot;...###....&quot;, &quot;..####....&quot;, &quot;....##....&quot;, &quot;....##....&quot;, &quot;....##....&quot;, &quot;..######..&quot;],
     [&quot;##########&quot;, &quot;#.#.#.#.#.&quot;, &quot;##########&quot;, &quot;.#.#.#.#.#&quot;, &quot;##########&quot;],
     [&quot;#........#&quot;, &quot;##......##&quot;, &quot;###....###&quot;, &quot;####..####&quot;, &quot;##########&quot;]
   ];
-  const BW = 22, BS = 25, BX0 = (W - BS * 10 + 3) / 2;
+  const BW = 22, BS = 25, BX0 = (W - BS * 10 + 3) / 2, PY = 130;
+  // 아이템: W 넓게 · M 공 3개 · S 느리게 · * 목숨+1 · = 바닥 보호막
+  const POWERS = [
+    { k: &quot;W&quot;, name: &quot;WIDE PADDLE&quot;, w: 30 }, { k: &quot;M&quot;, name: &quot;MULTI BALL&quot;, w: 22 }, { k: &quot;S&quot;, name: &quot;SLOW BALL&quot;, w: 22 },
+    { k: &quot;=&quot;, name: &quot;SHIELD&quot;, w: 16 }, { k: &quot;*&quot;, name: &quot;1UP&quot;, w: 10 }
+  ];
+  const pickPower = () =&gt; { let r = Math.random() * POWERS.reduce((a, p) =&gt; a + p.w, 0); for (const p of POWERS) { if ((r -= p.w) &lt; 0) return p; } return POWERS[0]; };
   const brick = {
-    enter() { Object.assign(this, { level: 0, score: 0, lives: 3, t: 0, over: false, overT: 0, win: 0, newBest: false, parts: [] }); this.load(); },
+    enter() { Object.assign(this, { level: 0, score: 0, lives: 5, t: 0, over: false, overT: 0, win: 0, newBest: false, parts: [], caps: [], wideT: 0, slowT: 0, shield: 0, msg: null }); this.load(); },
     load() {
       this.bricks = [];
-      LEVELS[this.level % LEVELS.length].forEach((row, r) =&gt; row.split(&quot;&quot;).forEach((c, i) =&gt; { if (c === &quot;#&quot;) this.bricks.push({ x: BX0 + i * BS, y: 18 + r * 8, w: BW, h: 6, hp: r === 0 &amp;&amp; this.level &gt;= 2 ? 2 : 1 }); }));
-      this.pad = { x: W / 2 - 16, w: 32 }; this.ball = { x: 0, y: 0, vx: 0, vy: 0, stuck: true }; this.baseSpeed = 2 + Math.min(1.4, this.level * 0.3);
+      LEVELS[this.level % LEVELS.length].forEach((row, r) =&gt; row.split(&quot;&quot;).forEach((c, i) =&gt; { if (c === &quot;#&quot;) this.bricks.push({ x: BX0 + i * BS, y: 18 + r * 8, w: BW, h: 6, hp: 1 }); }));
+      this.pad = { x: W / 2 - 22, w: 44 };
+      this.balls = [{ x: 0, y: 0, vx: 0, vy: 0, stuck: true }];
+      this.caps = []; this.baseSpeed = 1.45 + this.level * 0.15;
+    },
+    speed() { return this.slowT &gt; 0 ? this.baseSpeed * 0.65 : this.baseSpeed; },
+    launch(b) { const a = PX.rand(-0.45, 0.45), sp = this.speed(); Object.assign(b, { vx: Math.sin(a) * sp, vy: -Math.cos(a) * sp, stuck: false }); PX.sfx(&quot;paddle&quot;); },
+    power(p) {
+      PX.sfx(&quot;coin&quot;); this.msg = { s: p.name, t: 0 }; this.score += 20;
+      if (p.k === &quot;W&quot;) this.wideT = 60 * 15;
+      if (p.k === &quot;S&quot;) { this.slowT = 60 * 12; this.balls.forEach((b) =&gt; { const sp = Math.hypot(b.vx, b.vy) || 1; b.vx *= this.speed() / sp; b.vy *= this.speed() / sp; }); }
+      if (p.k === &quot;=&quot;) this.shield = 1;
+      if (p.k === &quot;*&quot;) this.lives = Math.min(9, this.lives + 1);
+      if (p.k === &quot;M&quot;) {
+        const src = this.balls.find((b) =&gt; !b.stuck) || this.balls[0];
+        if (src.stuck) this.launch(src);
+        [-0.6, 0.6].forEach((da) =&gt; { const sp = this.speed(), a = Math.atan2(src.vx, -src.vy) + da; this.balls.push({ x: src.x, y: src.y, vx: Math.sin(a) * sp, vy: -Math.abs(Math.cos(a) * sp), stuck: false }); });
+      }
     },
     update() {
       this.t++;
       this.parts.forEach((p) =&gt; { p.x += p.vx; p.y += p.vy; p.vy += 0.1; p.t++; }); this.parts = this.parts.filter((p) =&gt; p.t &lt; 30);
+      if (this.msg &amp;&amp; ++this.msg.t &gt; 70) this.msg = null;
       if (this.over) { this.overT++; if (this.overT &gt; 40 &amp;&amp; (I.pressed.a || I.pressed.start)) { PX.sfx(&quot;select&quot;); this.enter(); } return; }
       if (this.win) { if (--this.win === 0) { if (this.level &gt;= LEVELS.length - 1) { setBest(&quot;brick&quot;, this.score); toEnding(&quot;brick&quot;, this.score); return; } this.level++; this.load(); } return; }
-      const p = this.pad, b = this.ball;
-      if (I.down.left) p.x -= 3.4; if (I.down.right) p.x += 3.4; p.x = PX.clamp(p.x, 0, W - p.w);
-      if (b.stuck) { b.x = p.x + p.w / 2 - 1; b.y = 128; if (I.pressed.a || I.pressed.up) { const a = PX.rand(-0.5, 0.5); Object.assign(b, { vx: Math.sin(a) * this.baseSpeed, vy: -Math.cos(a) * this.baseSpeed, stuck: false }); PX.sfx(&quot;paddle&quot;); } return; }
-      for (let s = 0; s &lt; 3; s++) {
-        b.x += b.vx / 3;
-        if (b.x &lt; 0) { b.x = 0; b.vx = Math.abs(b.vx); PX.sfx(&quot;paddle&quot;); } if (b.x &gt; W - 3) { b.x = W - 3; b.vx = -Math.abs(b.vx); PX.sfx(&quot;paddle&quot;); }
-        if (this.hit()) b.vx = -b.vx;
-        b.y += b.vy / 3;
-        if (b.y &lt; 14) { b.y = 14; b.vy = Math.abs(b.vy); PX.sfx(&quot;paddle&quot;); }
-        if (this.hit()) b.vy = -b.vy;
-        if (b.vy &gt; 0 &amp;&amp; b.y + 3 &gt;= 132 &amp;&amp; b.y + 3 &lt;= 136 &amp;&amp; b.x + 3 &gt; p.x &amp;&amp; b.x &lt; p.x + p.w) {
-          const h = ((b.x + 1.5) - (p.x + p.w / 2)) / (p.w / 2), sp = Math.min(4, Math.hypot(b.vx, b.vy) + 0.02), a = PX.clamp(h, -1, 1) * 1.05;
-          b.vx = Math.sin(a) * sp; b.vy = -Math.cos(a) * sp; b.y = 129; PX.sfx(&quot;paddle&quot;);
+      if (this.wideT &gt; 0) this.wideT--; if (this.slowT &gt; 0 &amp;&amp; --this.slowT === 0) this.balls.forEach((b) =&gt; { const sp = Math.hypot(b.vx, b.vy) || 1; b.vx *= this.baseSpeed / sp; b.vy *= this.baseSpeed / sp; });
+      const p = this.pad, targetW = this.wideT &gt; 0 ? 72 : 44;
+      if (p.w !== targetW) { const cx = p.x + p.w / 2; p.w += Math.sign(targetW - p.w) * 2; p.x = cx - p.w / 2; }
+      if (I.down.left) p.x -= 4; if (I.down.right) p.x += 4; p.x = PX.clamp(p.x, 0, W - p.w);
+      // 아이템 캡슐
+      this.caps.forEach((c) =&gt; { c.y += 0.9; if (!c.got &amp;&amp; c.y + 6 &gt;= PY &amp;&amp; c.y &lt;= PY + 4 &amp;&amp; c.x + 12 &gt; p.x &amp;&amp; c.x &lt; p.x + p.w) { c.got = true; this.power(c.p); } });
+      this.caps = this.caps.filter((c) =&gt; !c.got &amp;&amp; c.y &lt; H);
+      let launched = false;
+      this.balls.forEach((b) =&gt; {
+        if (b.stuck) { b.x = p.x + p.w / 2 - 1; b.y = PY - 3; if ((I.pressed.a || I.pressed.up) &amp;&amp; !launched) { this.launch(b); launched = true; } return; }
+        for (let s = 0; s &lt; 3; s++) {
+          b.x += b.vx / 3;
+          if (b.x &lt; 0) { b.x = 0; b.vx = Math.abs(b.vx); } if (b.x &gt; W - 3) { b.x = W - 3; b.vx = -Math.abs(b.vx); }
+          if (this.hit(b)) b.vx = -b.vx;
+          b.y += b.vy / 3;
+          if (b.y &lt; 14) { b.y = 14; b.vy = Math.abs(b.vy); }
+          if (this.hit(b)) b.vy = -b.vy;
+          if (b.vy &gt; 0 &amp;&amp; b.y + 3 &gt;= PY &amp;&amp; b.y + 3 &lt;= PY + 5 &amp;&amp; b.x + 3 &gt; p.x - 2 &amp;&amp; b.x &lt; p.x + p.w + 2) {
+            const h = ((b.x + 1.5) - (p.x + p.w / 2)) / (p.w / 2), sp = Math.min(this.speed() * 1.35, Math.hypot(b.vx, b.vy) + 0.01), a = PX.clamp(h, -1, 1) * 0.95;
+            b.vx = Math.sin(a) * sp; b.vy = -Math.cos(a) * sp; b.y = PY - 3; PX.sfx(&quot;paddle&quot;);
+          }
+          if (this.shield &amp;&amp; b.vy &gt; 0 &amp;&amp; b.y + 3 &gt;= H - 4) { b.vy = -Math.abs(b.vy); b.y = H - 7; this.shield = 0; PX.sfx(&quot;perfect&quot;); }
+        }
+      });
+      const alive = this.balls.filter((b) =&gt; b.y &lt;= H);
+      if (alive.length !== this.balls.length) {
+        this.balls = alive;
+        if (!alive.length) {
+          this.lives--; PX.sfx(&quot;hit&quot;);
+          if (this.lives &lt;= 0) { this.over = true; this.overT = 0; this.newBest = setBest(&quot;brick&quot;, this.score); setTimeout(() =&gt; PX.sfx(&quot;lose&quot;), 300); }
+          else { this.balls = [{ x: 0, y: 0, vx: 0, vy: 0, stuck: true }]; this.slowT = 0; }
         }
       }
-      if (b.y &gt; H) { this.lives--; PX.sfx(&quot;hit&quot;); if (this.lives &lt;= 0) { this.over = true; this.overT = 0; this.newBest = setBest(&quot;brick&quot;, this.score); setTimeout(() =&gt; PX.sfx(&quot;lose&quot;), 300); } else this.ball = { x: 0, y: 0, vx: 0, vy: 0, stuck: true }; }
-      if (!this.bricks.length) { this.win = 90; this.score += 100; PX.sfx(&quot;clear&quot;); }
+      if (!this.bricks.length) { this.win = 90; this.score += 100; this.caps = []; PX.sfx(&quot;clear&quot;); }
     },
-    hit() {
-      const b = this.ball;
+    hit(b) {
       for (let i = 0; i &lt; this.bricks.length; i++) {
         const k = this.bricks[i];
         if (b.x &lt; k.x + k.w &amp;&amp; b.x + 3 &gt; k.x &amp;&amp; b.y &lt; k.y + k.h &amp;&amp; b.y + 3 &gt; k.y) {
-          if (--k.hp &lt;= 0) { this.bricks.splice(i, 1); this.score += 10; for (let j = 0; j &lt; 5; j++) this.parts.push({ x: k.x + 11, y: k.y + 3, vx: PX.rand(-1, 1), vy: PX.rand(-1.5, 0), t: 0 }); }
+          if (--k.hp &lt;= 0) {
+            this.bricks.splice(i, 1); this.score += 10;
+            for (let j = 0; j &lt; 5; j++) this.parts.push({ x: k.x + 11, y: k.y + 3, vx: PX.rand(-1, 1), vy: PX.rand(-1.5, 0), t: 0 });
+            if (Math.random() &lt; 0.26 &amp;&amp; this.bricks.length &gt; 0) this.caps.push({ x: k.x + 5, y: k.y, p: pickPower() });
+          }
           PX.sfx(&quot;brick&quot;); return true;
         }
       }
@@ -2738,11 +2784,20 @@ window.SITE_CONFIG = {
       for (let y = 14; y &lt; H; y += 2) for (let x = (y / 2) % 2 ? 1 : 0; x &lt; W; x += 8) rect(x, y, 1, 1, 1);
       rect(0, 0, W, 12, 3); txt(&quot;SCORE &quot; + pad(this.score), 4, 4, 0); txt(&quot;LV &quot; + (this.level + 1) + &quot;/&quot; + LEVELS.length, W / 2, 4, 1, 1, &quot;center&quot;);
       for (let i = 0; i &lt; this.lives; i++) txt(&quot;*&quot;, W - 8 - i * 6, 4, 0);
-      this.bricks.forEach((k) =&gt; { rect(k.x, k.y, k.w, k.h, 3); rect(k.x + 1, k.y + 1, k.w - 2, k.h - 2, k.hp &gt; 1 ? 1 : 2); rect(k.x + 1, k.y + 1, k.w - 2, 1, k.hp &gt; 1 ? 0 : 1); });
-      this.parts.forEach((p) =&gt; rect(p.x, p.y, 1, 1, 3));
-      rect(this.pad.x, 132, this.pad.w, 4, 3); rect(this.pad.x + 1, 133, this.pad.w - 2, 1, 1);
-      if (!this.over) { rect(this.ball.x, this.ball.y, 3, 3, 3); }
-      if (this.ball.stuck &amp;&amp; !this.over) txt(&quot;A: LAUNCH&quot;, W / 2, 110, 2, 1, &quot;center&quot;);
+      this.bricks.forEach((k) =&gt; { rect(k.x, k.y, k.w, k.h, 3); rect(k.x + 1, k.y + 1, k.w - 2, k.h - 2, 2); rect(k.x + 1, k.y + 1, k.w - 2, 1, 1); });
+      this.parts.forEach((q) =&gt; rect(q.x, q.y, 1, 1, 3));
+      // 캡슐
+      this.caps.forEach((c) =&gt; { const bl = Math.floor((this.t + c.x) / 8) % 2; rect(c.x, c.y, 13, 7, 3); rect(c.x + 1, c.y + 1, 11, 5, bl ? 0 : 1); txt(c.p.k, c.x + 5, c.y + 1, 3); });
+      // 보호막
+      if (this.shield) for (let x = 0; x &lt; W; x += 4) rect(x, H - 3, 3, 2, Math.floor(this.t / 10) % 2 ? 3 : 2);
+      const p = this.pad;
+      rect(p.x, PY, p.w, 4, 3); rect(p.x + 1, PY + 1, p.w - 2, 1, this.wideT &gt; 0 ? 0 : 1);
+      if (!this.over) this.balls.forEach((b) =&gt; rect(b.x, b.y, 3, 3, 3));
+      // 효과 남은 시간
+      let ix = 4; const tag = (s) =&gt; { txt(s, ix, 16, 2); ix += PX.textWidth(s) + 6; };
+      if (this.wideT &gt; 0) tag(&quot;W&quot; + Math.ceil(this.wideT / 60)); if (this.slowT &gt; 0) tag(&quot;S&quot; + Math.ceil(this.slowT / 60)); if (this.shield) tag(&quot;=&quot;);
+      if (this.msg) txt(this.msg.s + &quot;!&quot;, W / 2, 100 - Math.min(6, this.msg.t / 6), 3, 1, &quot;center&quot;);
+      if (this.balls.some((b) =&gt; b.stuck) &amp;&amp; !this.over) txt(&quot;A: LAUNCH&quot;, W / 2, 110, 2, 1, &quot;center&quot;);
       if (this.win) { panel(W / 2 - 44, 56, 88, 22); txt(&quot;STAGE CLEAR!&quot;, W / 2, 64, 3, 1, &quot;center&quot;); }
       if (this.over &amp;&amp; this.overT &gt; 20) overBox(&quot;GAME OVER&quot;, [&quot;SCORE &quot; + pad(this.score)], this.overT, this.newBest, &quot;brick&quot;);
     }
@@ -3758,7 +3813,7 @@ window.SITE_CONFIG = {
     runner: { t: &quot;1 · JUMP RUN&quot;, d: &quot;시작 전 ←→로 산타·오리온을 골라요. 블록을 넘으며 끝까지 달리면 상대가 기다리고 있어요. A를 길게 누르면 더 높이, 공중에서 ↓를 누르면 빨리 내려와요.&quot; },
     catch: { t: &quot;2 · SWEET CATCH&quot;, d: &quot;60초 동안 핫초코와 케이크(+10), 하트(+30)를 받아요. 산타가 못 마시는 쓴 커피와 산타가 태운 토스트는 피하세요! 목숨 3개로 버티면 엔딩.&quot; },
     stack: { t: &quot;3 · CAKE STACK&quot;, d: &quot;움직이는 케이크 층을 A로 떨어뜨려 15층 웨딩 케이크를 완성해요. PERFECT 3연속이면 층이 다시 넓어져요.&quot; },
-    brick: { t: &quot;4 · BRICK BREAK&quot;, d: &quot;←→로 받침대, A로 발사. 하트 → 1 → 격자 → 마지막 판까지 4판을 모두 깨면 엔딩이에요.&quot; }
+    brick: { t: &quot;4 · BRICK BREAK&quot;, d: &quot;←→로 받침대, A로 발사. 목숨 5개, 벽돌을 깨면 가끔 아이템 캡슐이 떨어져요 — W 받침대 넓게 · M 공 3개 · S 공 느리게 · = 바닥 보호막 · * 목숨 +1. 4판을 다 깨면 엔딩!&quot; }
   };
 
 

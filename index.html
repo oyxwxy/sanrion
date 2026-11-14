@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SANTA ♥ ORION · 1ST ANNIVERSARY</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABDElEQVR42u2aMQ6CMBiFwXANruABSLwHMZ7FwdVrGC9iZNfJFXsQ3TR2oKnvbzv0exuh0PDlvQcUmgYhhBBCtaoNDRj69UuZYHL3Vjk+9fyr2h0AADogkLnr87Z4gnk8Lu7fTqeoTPrzn4eddIGh+YkAAGrvAOvMqxlVM+/r4eaf7YO74AAAAOCrLjTAOvO+rDOPAwAAAK0DUmc+tfz7Pg4AAAAAAAAAAOD/NcHSz+rqfd9//2dNkAgAQPs2WLoT1MzjAAAAIK4DcndC7Pt8bOZxAAAAoHWAdSfkzjwOAAAAbDtA7QTrZ3scAAAAlO2AUCfs+03RzOMAAAAgbwfE/v+fOvM4AAAAQAihj95ncmtHOphp6gAAAABJRU5ErkJggg==">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAACT0lEQVR42u3dMUoDQRiG4W/Fa+QKdmkCyTlEPIuFrdcQD5JFm1R2tjFNylwgxFasMrAbM7PPU4vI8vKz8I+z3XF/OAUaceMRIGgQNAgaBI2gQdAgaBA0CBpBg6BB0CBoEDSCBkGDoEHQIGgEDbW5HesXL+erKh9Iv1lX9zfX+KzHes4mNF45QNAgaBA0ggZBg6BB0CBoBA2Z0FmOkjMD79+fo/3R2/uXXMO5iLHOI5SezXhbPKbl8yclz9mExisHCBoEDYJG0CBoEDQIGgTNFHWL2d2p9XX2NXj4eE3Lq+xSX7vt2T/7vOtNaLxygKBB0CBoEDSCBkGDoEHQkH+4wb/1VXapKayzTWgQNAgaQYOgQdAgaBA0ggZBg6AhFz3L4XwGGeBaAhMaBI2gQdAgaBA0CBpBg6BB0CBoEDSCBkGDoEHQIGgEDYIGQYOg4ZfuuD+c/fH65XwVN9bHf3IPoOSD9P1mbULjlQMEDYIGQYOgETQIGgQNgoYMtPouUbImT6zKU/k6u2SVnZSts01ovHKAoEHQIGgQNIIGQYOgQdAgaOIsx8W5IiFX9yH4sa4aMKFB0AgaBA2CBkGDoBE0CBoEDWlz9Z3G1+TW2SY0CBpBg6BB0CBoEDSCBkGDoCFW36n6SwI1fgjehAZBg6BB0AgaBA2CBkGDoBE0xOo7ja/Kn2bLtPwheBMaBA2CBkEjaBA0CBoEDYJG0CBoiLMcafeKhDibYUKDoBE0CBoEDYIGQSNoEDQIGmL1DSY0ggZBg6BB0CBoBA2CBkGDoOGPHy8CgZdQta2ZAAAAAElFTkSuQmCC">
+<meta name="theme-color" content="#e0578a">
 <style>html,body{margin:0;padding:0;background:#fbe6ef}
 ::-webkit-scrollbar{width:14px;height:14px}::-webkit-scrollbar-track{background:#fdf1f6;background-image:linear-gradient(90deg,transparent 5px,#f8bfd3 5px 9px,transparent 9px)}
 ::-webkit-scrollbar-thumb{background:#e0578a;box-shadow:inset 0 0 0 2px #3a1d2e,inset 0 -4px 0 2px #b83a6b,inset 0 3px 0 2px #f08cb0;border:2px solid #fdf1f6}::-webkit-scrollbar-button{display:none}
@@ -2684,50 +2687,93 @@ window.SITE_CONFIG = {
     }
   };
 
-  /* ---------- 4. 벽돌 깨기 ---------- */
+  /* ---------- 4. 벽돌 깨기 (쉬움 + 아이템) ---------- */
   const LEVELS = [
     ["..##..##..", ".########.", ".########.", "..######..", "...####...", "....##...."],
     ["....##....", "...###....", "..####....", "....##....", "....##....", "....##....", "..######.."],
     ["##########", "#.#.#.#.#.", "##########", ".#.#.#.#.#", "##########"],
     ["#........#", "##......##", "###....###", "####..####", "##########"]
   ];
-  const BW = 22, BS = 25, BX0 = (W - BS * 10 + 3) / 2;
+  const BW = 22, BS = 25, BX0 = (W - BS * 10 + 3) / 2, PY = 130;
+  // 아이템: W 넓게 · M 공 3개 · S 느리게 · * 목숨+1 · = 바닥 보호막
+  const POWERS = [
+    { k: "W", name: "WIDE PADDLE", w: 30 }, { k: "M", name: "MULTI BALL", w: 22 }, { k: "S", name: "SLOW BALL", w: 22 },
+    { k: "=", name: "SHIELD", w: 16 }, { k: "*", name: "1UP", w: 10 }
+  ];
+  const pickPower = () => { let r = Math.random() * POWERS.reduce((a, p) => a + p.w, 0); for (const p of POWERS) { if ((r -= p.w) < 0) return p; } return POWERS[0]; };
   const brick = {
-    enter() { Object.assign(this, { level: 0, score: 0, lives: 3, t: 0, over: false, overT: 0, win: 0, newBest: false, parts: [] }); this.load(); },
+    enter() { Object.assign(this, { level: 0, score: 0, lives: 5, t: 0, over: false, overT: 0, win: 0, newBest: false, parts: [], caps: [], wideT: 0, slowT: 0, shield: 0, msg: null }); this.load(); },
     load() {
       this.bricks = [];
-      LEVELS[this.level % LEVELS.length].forEach((row, r) => row.split("").forEach((c, i) => { if (c === "#") this.bricks.push({ x: BX0 + i * BS, y: 18 + r * 8, w: BW, h: 6, hp: r === 0 && this.level >= 2 ? 2 : 1 }); }));
-      this.pad = { x: W / 2 - 16, w: 32 }; this.ball = { x: 0, y: 0, vx: 0, vy: 0, stuck: true }; this.baseSpeed = 2 + Math.min(1.4, this.level * 0.3);
+      LEVELS[this.level % LEVELS.length].forEach((row, r) => row.split("").forEach((c, i) => { if (c === "#") this.bricks.push({ x: BX0 + i * BS, y: 18 + r * 8, w: BW, h: 6, hp: 1 }); }));
+      this.pad = { x: W / 2 - 22, w: 44 };
+      this.balls = [{ x: 0, y: 0, vx: 0, vy: 0, stuck: true }];
+      this.caps = []; this.baseSpeed = 1.45 + this.level * 0.15;
+    },
+    speed() { return this.slowT > 0 ? this.baseSpeed * 0.65 : this.baseSpeed; },
+    launch(b) { const a = PX.rand(-0.45, 0.45), sp = this.speed(); Object.assign(b, { vx: Math.sin(a) * sp, vy: -Math.cos(a) * sp, stuck: false }); PX.sfx("paddle"); },
+    power(p) {
+      PX.sfx("coin"); this.msg = { s: p.name, t: 0 }; this.score += 20;
+      if (p.k === "W") this.wideT = 60 * 15;
+      if (p.k === "S") { this.slowT = 60 * 12; this.balls.forEach((b) => { const sp = Math.hypot(b.vx, b.vy) || 1; b.vx *= this.speed() / sp; b.vy *= this.speed() / sp; }); }
+      if (p.k === "=") this.shield = 1;
+      if (p.k === "*") this.lives = Math.min(9, this.lives + 1);
+      if (p.k === "M") {
+        const src = this.balls.find((b) => !b.stuck) || this.balls[0];
+        if (src.stuck) this.launch(src);
+        [-0.6, 0.6].forEach((da) => { const sp = this.speed(), a = Math.atan2(src.vx, -src.vy) + da; this.balls.push({ x: src.x, y: src.y, vx: Math.sin(a) * sp, vy: -Math.abs(Math.cos(a) * sp), stuck: false }); });
+      }
     },
     update() {
       this.t++;
       this.parts.forEach((p) => { p.x += p.vx; p.y += p.vy; p.vy += 0.1; p.t++; }); this.parts = this.parts.filter((p) => p.t < 30);
+      if (this.msg && ++this.msg.t > 70) this.msg = null;
       if (this.over) { this.overT++; if (this.overT > 40 && (I.pressed.a || I.pressed.start)) { PX.sfx("select"); this.enter(); } return; }
       if (this.win) { if (--this.win === 0) { if (this.level >= LEVELS.length - 1) { setBest("brick", this.score); toEnding("brick", this.score); return; } this.level++; this.load(); } return; }
-      const p = this.pad, b = this.ball;
-      if (I.down.left) p.x -= 3.4; if (I.down.right) p.x += 3.4; p.x = PX.clamp(p.x, 0, W - p.w);
-      if (b.stuck) { b.x = p.x + p.w / 2 - 1; b.y = 128; if (I.pressed.a || I.pressed.up) { const a = PX.rand(-0.5, 0.5); Object.assign(b, { vx: Math.sin(a) * this.baseSpeed, vy: -Math.cos(a) * this.baseSpeed, stuck: false }); PX.sfx("paddle"); } return; }
-      for (let s = 0; s < 3; s++) {
-        b.x += b.vx / 3;
-        if (b.x < 0) { b.x = 0; b.vx = Math.abs(b.vx); PX.sfx("paddle"); } if (b.x > W - 3) { b.x = W - 3; b.vx = -Math.abs(b.vx); PX.sfx("paddle"); }
-        if (this.hit()) b.vx = -b.vx;
-        b.y += b.vy / 3;
-        if (b.y < 14) { b.y = 14; b.vy = Math.abs(b.vy); PX.sfx("paddle"); }
-        if (this.hit()) b.vy = -b.vy;
-        if (b.vy > 0 && b.y + 3 >= 132 && b.y + 3 <= 136 && b.x + 3 > p.x && b.x < p.x + p.w) {
-          const h = ((b.x + 1.5) - (p.x + p.w / 2)) / (p.w / 2), sp = Math.min(4, Math.hypot(b.vx, b.vy) + 0.02), a = PX.clamp(h, -1, 1) * 1.05;
-          b.vx = Math.sin(a) * sp; b.vy = -Math.cos(a) * sp; b.y = 129; PX.sfx("paddle");
+      if (this.wideT > 0) this.wideT--; if (this.slowT > 0 && --this.slowT === 0) this.balls.forEach((b) => { const sp = Math.hypot(b.vx, b.vy) || 1; b.vx *= this.baseSpeed / sp; b.vy *= this.baseSpeed / sp; });
+      const p = this.pad, targetW = this.wideT > 0 ? 72 : 44;
+      if (p.w !== targetW) { const cx = p.x + p.w / 2; p.w += Math.sign(targetW - p.w) * 2; p.x = cx - p.w / 2; }
+      if (I.down.left) p.x -= 4; if (I.down.right) p.x += 4; p.x = PX.clamp(p.x, 0, W - p.w);
+      // 아이템 캡슐
+      this.caps.forEach((c) => { c.y += 0.9; if (!c.got && c.y + 6 >= PY && c.y <= PY + 4 && c.x + 12 > p.x && c.x < p.x + p.w) { c.got = true; this.power(c.p); } });
+      this.caps = this.caps.filter((c) => !c.got && c.y < H);
+      let launched = false;
+      this.balls.forEach((b) => {
+        if (b.stuck) { b.x = p.x + p.w / 2 - 1; b.y = PY - 3; if ((I.pressed.a || I.pressed.up) && !launched) { this.launch(b); launched = true; } return; }
+        for (let s = 0; s < 3; s++) {
+          b.x += b.vx / 3;
+          if (b.x < 0) { b.x = 0; b.vx = Math.abs(b.vx); } if (b.x > W - 3) { b.x = W - 3; b.vx = -Math.abs(b.vx); }
+          if (this.hit(b)) b.vx = -b.vx;
+          b.y += b.vy / 3;
+          if (b.y < 14) { b.y = 14; b.vy = Math.abs(b.vy); }
+          if (this.hit(b)) b.vy = -b.vy;
+          if (b.vy > 0 && b.y + 3 >= PY && b.y + 3 <= PY + 5 && b.x + 3 > p.x - 2 && b.x < p.x + p.w + 2) {
+            const h = ((b.x + 1.5) - (p.x + p.w / 2)) / (p.w / 2), sp = Math.min(this.speed() * 1.35, Math.hypot(b.vx, b.vy) + 0.01), a = PX.clamp(h, -1, 1) * 0.95;
+            b.vx = Math.sin(a) * sp; b.vy = -Math.cos(a) * sp; b.y = PY - 3; PX.sfx("paddle");
+          }
+          if (this.shield && b.vy > 0 && b.y + 3 >= H - 4) { b.vy = -Math.abs(b.vy); b.y = H - 7; this.shield = 0; PX.sfx("perfect"); }
+        }
+      });
+      const alive = this.balls.filter((b) => b.y <= H);
+      if (alive.length !== this.balls.length) {
+        this.balls = alive;
+        if (!alive.length) {
+          this.lives--; PX.sfx("hit");
+          if (this.lives <= 0) { this.over = true; this.overT = 0; this.newBest = setBest("brick", this.score); setTimeout(() => PX.sfx("lose"), 300); }
+          else { this.balls = [{ x: 0, y: 0, vx: 0, vy: 0, stuck: true }]; this.slowT = 0; }
         }
       }
-      if (b.y > H) { this.lives--; PX.sfx("hit"); if (this.lives <= 0) { this.over = true; this.overT = 0; this.newBest = setBest("brick", this.score); setTimeout(() => PX.sfx("lose"), 300); } else this.ball = { x: 0, y: 0, vx: 0, vy: 0, stuck: true }; }
-      if (!this.bricks.length) { this.win = 90; this.score += 100; PX.sfx("clear"); }
+      if (!this.bricks.length) { this.win = 90; this.score += 100; this.caps = []; PX.sfx("clear"); }
     },
-    hit() {
-      const b = this.ball;
+    hit(b) {
       for (let i = 0; i < this.bricks.length; i++) {
         const k = this.bricks[i];
         if (b.x < k.x + k.w && b.x + 3 > k.x && b.y < k.y + k.h && b.y + 3 > k.y) {
-          if (--k.hp <= 0) { this.bricks.splice(i, 1); this.score += 10; for (let j = 0; j < 5; j++) this.parts.push({ x: k.x + 11, y: k.y + 3, vx: PX.rand(-1, 1), vy: PX.rand(-1.5, 0), t: 0 }); }
+          if (--k.hp <= 0) {
+            this.bricks.splice(i, 1); this.score += 10;
+            for (let j = 0; j < 5; j++) this.parts.push({ x: k.x + 11, y: k.y + 3, vx: PX.rand(-1, 1), vy: PX.rand(-1.5, 0), t: 0 });
+            if (Math.random() < 0.26 && this.bricks.length > 0) this.caps.push({ x: k.x + 5, y: k.y, p: pickPower() });
+          }
           PX.sfx("brick"); return true;
         }
       }
@@ -2738,11 +2784,20 @@ window.SITE_CONFIG = {
       for (let y = 14; y < H; y += 2) for (let x = (y / 2) % 2 ? 1 : 0; x < W; x += 8) rect(x, y, 1, 1, 1);
       rect(0, 0, W, 12, 3); txt("SCORE " + pad(this.score), 4, 4, 0); txt("LV " + (this.level + 1) + "/" + LEVELS.length, W / 2, 4, 1, 1, "center");
       for (let i = 0; i < this.lives; i++) txt("*", W - 8 - i * 6, 4, 0);
-      this.bricks.forEach((k) => { rect(k.x, k.y, k.w, k.h, 3); rect(k.x + 1, k.y + 1, k.w - 2, k.h - 2, k.hp > 1 ? 1 : 2); rect(k.x + 1, k.y + 1, k.w - 2, 1, k.hp > 1 ? 0 : 1); });
-      this.parts.forEach((p) => rect(p.x, p.y, 1, 1, 3));
-      rect(this.pad.x, 132, this.pad.w, 4, 3); rect(this.pad.x + 1, 133, this.pad.w - 2, 1, 1);
-      if (!this.over) { rect(this.ball.x, this.ball.y, 3, 3, 3); }
-      if (this.ball.stuck && !this.over) txt("A: LAUNCH", W / 2, 110, 2, 1, "center");
+      this.bricks.forEach((k) => { rect(k.x, k.y, k.w, k.h, 3); rect(k.x + 1, k.y + 1, k.w - 2, k.h - 2, 2); rect(k.x + 1, k.y + 1, k.w - 2, 1, 1); });
+      this.parts.forEach((q) => rect(q.x, q.y, 1, 1, 3));
+      // 캡슐
+      this.caps.forEach((c) => { const bl = Math.floor((this.t + c.x) / 8) % 2; rect(c.x, c.y, 13, 7, 3); rect(c.x + 1, c.y + 1, 11, 5, bl ? 0 : 1); txt(c.p.k, c.x + 5, c.y + 1, 3); });
+      // 보호막
+      if (this.shield) for (let x = 0; x < W; x += 4) rect(x, H - 3, 3, 2, Math.floor(this.t / 10) % 2 ? 3 : 2);
+      const p = this.pad;
+      rect(p.x, PY, p.w, 4, 3); rect(p.x + 1, PY + 1, p.w - 2, 1, this.wideT > 0 ? 0 : 1);
+      if (!this.over) this.balls.forEach((b) => rect(b.x, b.y, 3, 3, 3));
+      // 효과 남은 시간
+      let ix = 4; const tag = (s) => { txt(s, ix, 16, 2); ix += PX.textWidth(s) + 6; };
+      if (this.wideT > 0) tag("W" + Math.ceil(this.wideT / 60)); if (this.slowT > 0) tag("S" + Math.ceil(this.slowT / 60)); if (this.shield) tag("=");
+      if (this.msg) txt(this.msg.s + "!", W / 2, 100 - Math.min(6, this.msg.t / 6), 3, 1, "center");
+      if (this.balls.some((b) => b.stuck) && !this.over) txt("A: LAUNCH", W / 2, 110, 2, 1, "center");
       if (this.win) { panel(W / 2 - 44, 56, 88, 22); txt("STAGE CLEAR!", W / 2, 64, 3, 1, "center"); }
       if (this.over && this.overT > 20) overBox("GAME OVER", ["SCORE " + pad(this.score)], this.overT, this.newBest, "brick");
     }
@@ -3758,7 +3813,7 @@ window.SITE_CONFIG = {
     runner: { t: "1 · JUMP RUN", d: "시작 전 ←→로 산타·오리온을 골라요. 블록을 넘으며 끝까지 달리면 상대가 기다리고 있어요. A를 길게 누르면 더 높이, 공중에서 ↓를 누르면 빨리 내려와요." },
     catch: { t: "2 · SWEET CATCH", d: "60초 동안 핫초코와 케이크(+10), 하트(+30)를 받아요. 산타가 못 마시는 쓴 커피와 산타가 태운 토스트는 피하세요! 목숨 3개로 버티면 엔딩." },
     stack: { t: "3 · CAKE STACK", d: "움직이는 케이크 층을 A로 떨어뜨려 15층 웨딩 케이크를 완성해요. PERFECT 3연속이면 층이 다시 넓어져요." },
-    brick: { t: "4 · BRICK BREAK", d: "←→로 받침대, A로 발사. 하트 → 1 → 격자 → 마지막 판까지 4판을 모두 깨면 엔딩이에요." }
+    brick: { t: "4 · BRICK BREAK", d: "←→로 받침대, A로 발사. 목숨 5개, 벽돌을 깨면 가끔 아이템 캡슐이 떨어져요 — W 받침대 넓게 · M 공 3개 · S 공 느리게 · = 바닥 보호막 · * 목숨 +1. 4판을 다 깨면 엔딩!" }
   };
 
 
