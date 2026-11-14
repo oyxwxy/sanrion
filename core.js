@@ -18,7 +18,7 @@
   PX.daysSinceStart = function () {
     const s = new Date(CFG.startDate + "T00:00:00");
     const n = new Date(); n.setHours(0, 0, 0, 0);
-    return Math.max(0, Math.round((n - s) / 86400000));
+    return Math.max(1, Math.round((n - s) / 86400000) + 1); // 처음 만난 날 = DAY 1
   };
 
   /* ---------- 사운드 (WebAudio 칩튠 효과음) ---------- */
@@ -72,6 +72,8 @@
     clear: () => [523, 659, 784, 1046].forEach((f, i) => tone(f, i * 0.08, 0.12)),
     boot: () => { tone(1046, 0, 0.09, "square", 0.05); tone(2093, 0.09, 0.5, "square", 0.04); },
     paint: () => tone(1400, 0, 0.02, "square", 0.015),
+    step: () => tone(170, 0, 0.035, "triangle", 0.05),
+    twinkle: () => { tone(1568, 0, 0.05, "triangle", 0.04); tone(2093, 0.05, 0.08, "triangle", 0.03); },
     send: () => [659, 784, 988, 1318].forEach((f, i) => tone(f, i * 0.07, 0.1))
   };
   let unlocked = false;
@@ -223,6 +225,44 @@
     } catch (e) {}
     return { top: Math.max(0, top), h };
   };
+  /* 이미지 저장 — 데스크톱은 바로 다운로드, 아이폰/안드로이드는 공유시트 → 실패하면 '길게 눌러 저장' 창 */
+  function dataURLtoBlob(u) {
+    const [h, b] = u.split(","), bin = atob(b), arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: (h.match(/:(.*?);/) || [])[1] || "image/png" });
+  }
+  const IS_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const IS_MOBILE = IS_IOS || /Android/i.test(navigator.userAgent);
+  function showSave(url, name) {
+    const body = document.createElement("div"); body.className = "save-view";
+    body.innerHTML = `<p class="save-tip"></p><img class="save-img" alt=""><div class="save-btns"><a class="px-btn sm" target="_blank" rel="noopener">새 창에서 열기</a></div>`;
+    body.querySelector(".save-tip").textContent = IS_IOS ? "이미지를 길게 누른 뒤 ‘사진 앱에 저장’을 눌러 주세요." : IS_MOBILE ? "이미지를 길게 눌러 ‘이미지 다운로드’를 눌러 주세요." : "이미지를 우클릭해서 저장하거나, 새 창에서 열어 저장해 주세요.";
+    body.querySelector(".save-img").src = url;
+    const a = body.querySelector("a"); a.href = url; a.download = name;
+    PX.ui.modal({ title: "SAVE.PNG — " + name, body, cls: "save-modal" });
+  }
+  PX.saveImage = function (canvas, name) {
+    let url;
+    try { url = canvas.toDataURL("image/png"); } catch (e) { return PX.toast("이미지를 만들지 못했어요"); }
+    const blob = dataURLtoBlob(url);
+    if (IS_MOBILE) {
+      let file = null;
+      try { file = new File([blob], name, { type: "image/png" }); } catch (e) {}
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        navigator.share({ files: [file], title: name }).catch((e) => { if (e && e.name !== "AbortError") showSave(url, name); });
+        return;
+      }
+      return showSave(url, name);
+    }
+    try {
+      const href = URL.createObjectURL(blob), a = document.createElement("a");
+      a.href = href; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(href), 4000);
+      PX.toast("이미지를 저장했어요");
+    } catch (e) { showSave(url, name); }
+  };
+  PX.isMobile = IS_MOBILE;
+
   PX.toast = function (msg) {
     let t = PX.$(".px-toast");
     if (!t) { t = document.createElement("div"); t.className = "px-toast"; PX.$(".px-app").appendChild(t); }

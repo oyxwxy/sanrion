@@ -1,4 +1,4 @@
-<iframe title="SANTA ORION 1st anniversary" style="display:block;width:100%;max-width:860px;height:1500px;margin:0 auto;border:0" allow="clipboard-write" srcdoc="&lt;!DOCTYPE html&gt;
+<iframe title="SANTA ORION 1st anniversary" style="display:block;width:100%;max-width:860px;height:1500px;margin:0 auto;border:0" allow="clipboard-write; web-share" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;ko&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;UTF-8&quot;&gt;
@@ -243,7 +243,7 @@
 .doc-title::after { content: &quot;&quot;; display: block; width: 60px; height: 4px; margin: 14px auto 0; background: repeating-linear-gradient(90deg, var(--pc) 0 4px, transparent 4px 8px); }
 .doc-pers p { margin: 0 0 10px; font: 15px/1.85 var(--font-read); word-break: keep-all; }
 .doc-letter { position: relative; padding: 16px 18px; background: #fff;
-  background-image: repeating-linear-gradient(transparent 0 31px, var(--line) 31px 32px); box-shadow: var(--ring2), 5px 7px 0 0 var(--pink-l); margin: 4px; }
+  background-image: repeating-linear-gradient(transparent 0 31px, #fbe9f0 31px 32px); box-shadow: var(--ring2), 5px 7px 0 0 var(--pink-l); margin: 4px; }
 .doc-letter p { margin: 0 0 8px; font: 21px/32px var(--font-hand); word-break: keep-all; }
 .doc-nav { display: flex; justify-content: flex-end; margin-top: 18px; }
 
@@ -523,10 +523,47 @@ kbd { font: 10px var(--font); padding: 1px 6px 2px; margin: 2px; background: var
 .cert-modal .xm-win { width: min(820px, 100%); }
 .cert-msg { margin: 0 0 12px; font: 15px var(--font-read); }
 .cert-msg b { color: var(--pink-d); font-weight: 400; }
-.cert-cv { width: 100%; height: auto; aspect-ratio: 760/540; box-shadow: 0 0 0 2px var(--ink); image-rendering: auto; }
+.cert-cv { width: 100%; height: auto; aspect-ratio: 800/570; box-shadow: 0 0 0 2px var(--ink); image-rendering: auto; }
 .cert-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; margin-top: 14px; }
 .cert-row .mk-label { padding: 0; }
-@media (max-width: 640px) { .shelf { grid-template-columns: repeat(2, 1fr); } .bgm-btn { max-width: 120px; } .bgm-title { font-size: 9px; } }
+@media (max-width: 640px) { .shelf { grid-template-columns: repeat(2, 1fr); } .bgm-btn { max-width: 120px; } .bgm-title { font-size: 9px; } .brand-text small { display: none; } .brand { gap: 8px; } }
+
+/* ---------- 인트로 (게이트 · 하단) ---------- */
+.px-app.intro-on { min-height: 0; padding-bottom: 0; }
+.px-app.intro-on &gt; :not(.intro):not(.decor) { display: none; }
+.px-app.intro-on::after { display: none; }
+.px-app.intro-on .intro { position: relative; inset: auto; margin: 0 -24px; min-height: 640px; padding: 56px 20px 40px; }
+.intro .intro-skip { visibility: hidden; }
+.intro.started .intro-skip { visibility: visible; }
+.intro-under { width: min(760px, 100%); display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 8px; }
+.iu-cards { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: center; }
+.iu-card { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: #4a2639; box-shadow: inset 0 0 0 2px #6e3d58, inset 4px 0 0 0 var(--pc); }
+.iu-card canvas { width: 56px; height: 56px; box-shadow: 0 0 0 2px #fff; }
+.iu-card div { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; }
+.iu-slot { align-self: flex-start; font: 10px var(--font-h); color: #fff; background: var(--pc); padding: 0 6px; }
+.iu-card b { font: 400 20px var(--font-h); color: #fff; letter-spacing: .04em; }
+.iu-card small { font-size: 11px; color: var(--pink-l); }
+.iu-vs { display: flex; flex-direction: column; align-items: center; gap: 2px; color: #fff; }
+.iu-vs .hrt { width: 20px; height: 18px; color: var(--pink); animation: hop 1s steps(2) infinite; }
+.iu-vs b { font: 400 18px var(--font-h); letter-spacing: .06em; }
+.iu-vs small { font: 9px var(--font-h); color: var(--mute); letter-spacing: .1em; }
+.iu-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.iu-sound { display: flex; align-items: center; gap: 8px; border: 0; padding: 6px 12px; background: var(--pink); color: #fff; font: 12px var(--font-h); letter-spacing: .06em; box-shadow: inset 0 -3px 0 0 var(--pink-d), 0 0 0 2px #fff; }
+.iu-sound .bgm-ico { animation: hop .5s steps(2) infinite; }
+.iu-sound.off { background: #6e3d58; } .iu-sound.off .bgm-ico { animation: none; opacity: .5; }
+
+/* ---------- 카드 미리보기 · 저장 창 ---------- */
+.mk-cardprev { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 14px 0 4px; }
+.mk-cardprev canvas { width: 210px; height: auto; aspect-ratio: 600/800; box-shadow: 0 0 0 2px var(--ink), 5px 8px 0 0 var(--pink-l); transform: rotate(-1.5deg); }
+.mk-cardprev span { font: 11px var(--font-h); color: var(--mute); letter-spacing: .06em; margin-top: 6px; }
+.save-view { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.save-tip { margin: 0; font: 15px var(--font-read); color: var(--pink-d); text-align: center; word-break: keep-all; }
+.save-img { max-width: 100%; max-height: 60vh; height: auto; box-shadow: 0 0 0 2px var(--ink); -webkit-touch-callout: default; user-select: auto; }
+@media (max-width: 640px) {
+  .px-app.intro-on .intro { margin: 0 -12px; padding: 50px 12px 30px; min-height: 560px; }
+  .iu-cards { grid-template-columns: 1fr; }
+  .iu-vs { flex-direction: row; gap: 10px; }
+}
 
 &lt;/style&gt;
 &lt;/head&gt;
@@ -546,7 +583,13 @@ kbd { font: 10px var(--font); padding: 1px 6px 2px; margin: 2px; background: var
       &lt;p class=&quot;intro-start&quot;&gt;PRESS START&lt;/p&gt;
     &lt;/div&gt;
     &lt;button type=&quot;button&quot; class=&quot;intro-skip&quot;&gt;SKIP ▶▶&lt;/button&gt;
-    &lt;p class=&quot;intro-hint&quot;&gt;클릭하거나 ENTER를 눌러 입장&lt;/p&gt;
+    &lt;div class=&quot;intro-under&quot;&gt;
+      &lt;div class=&quot;iu-cards&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;iu-row&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;iu-sound&quot;&gt;&lt;i class=&quot;bgm-ico&quot;&gt;&lt;/i&gt;&lt;span&gt;소리 ON&lt;/span&gt;&lt;/button&gt;
+        &lt;p class=&quot;intro-hint&quot;&gt;화면을 누르거나 ENTER를 눌러 시작&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;div class=&quot;marquee&quot; aria-hidden=&quot;true&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;
@@ -784,7 +827,7 @@ window.SITE_CONFIG = {
   PX.daysSinceStart = function () {
     const s = new Date(CFG.startDate + &quot;T00:00:00&quot;);
     const n = new Date(); n.setHours(0, 0, 0, 0);
-    return Math.max(0, Math.round((n - s) / 86400000));
+    return Math.max(1, Math.round((n - s) / 86400000) + 1); // 처음 만난 날 = DAY 1
   };
 
   /* ---------- 사운드 (WebAudio 칩튠 효과음) ---------- */
@@ -838,6 +881,8 @@ window.SITE_CONFIG = {
     clear: () =&gt; [523, 659, 784, 1046].forEach((f, i) =&gt; tone(f, i * 0.08, 0.12)),
     boot: () =&gt; { tone(1046, 0, 0.09, &quot;square&quot;, 0.05); tone(2093, 0.09, 0.5, &quot;square&quot;, 0.04); },
     paint: () =&gt; tone(1400, 0, 0.02, &quot;square&quot;, 0.015),
+    step: () =&gt; tone(170, 0, 0.035, &quot;triangle&quot;, 0.05),
+    twinkle: () =&gt; { tone(1568, 0, 0.05, &quot;triangle&quot;, 0.04); tone(2093, 0.05, 0.08, &quot;triangle&quot;, 0.03); },
     send: () =&gt; [659, 784, 988, 1318].forEach((f, i) =&gt; tone(f, i * 0.07, 0.1))
   };
   let unlocked = false;
@@ -989,6 +1034,44 @@ window.SITE_CONFIG = {
     } catch (e) {}
     return { top: Math.max(0, top), h };
   };
+  /* 이미지 저장 — 데스크톱은 바로 다운로드, 아이폰/안드로이드는 공유시트 → 실패하면 &#x27;길게 눌러 저장&#x27; 창 */
+  function dataURLtoBlob(u) {
+    const [h, b] = u.split(&quot;,&quot;), bin = atob(b), arr = new Uint8Array(bin.length);
+    for (let i = 0; i &lt; bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: (h.match(/:(.*?);/) || [])[1] || &quot;image/png&quot; });
+  }
+  const IS_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === &quot;MacIntel&quot; &amp;&amp; navigator.maxTouchPoints &gt; 1);
+  const IS_MOBILE = IS_IOS || /Android/i.test(navigator.userAgent);
+  function showSave(url, name) {
+    const body = document.createElement(&quot;div&quot;); body.className = &quot;save-view&quot;;
+    body.innerHTML = `&lt;p class=&quot;save-tip&quot;&gt;&lt;/p&gt;&lt;img class=&quot;save-img&quot; alt=&quot;&quot;&gt;&lt;div class=&quot;save-btns&quot;&gt;&lt;a class=&quot;px-btn sm&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;새 창에서 열기&lt;/a&gt;&lt;/div&gt;`;
+    body.querySelector(&quot;.save-tip&quot;).textContent = IS_IOS ? &quot;이미지를 길게 누른 뒤 ‘사진 앱에 저장’을 눌러 주세요.&quot; : IS_MOBILE ? &quot;이미지를 길게 눌러 ‘이미지 다운로드’를 눌러 주세요.&quot; : &quot;이미지를 우클릭해서 저장하거나, 새 창에서 열어 저장해 주세요.&quot;;
+    body.querySelector(&quot;.save-img&quot;).src = url;
+    const a = body.querySelector(&quot;a&quot;); a.href = url; a.download = name;
+    PX.ui.modal({ title: &quot;SAVE.PNG — &quot; + name, body, cls: &quot;save-modal&quot; });
+  }
+  PX.saveImage = function (canvas, name) {
+    let url;
+    try { url = canvas.toDataURL(&quot;image/png&quot;); } catch (e) { return PX.toast(&quot;이미지를 만들지 못했어요&quot;); }
+    const blob = dataURLtoBlob(url);
+    if (IS_MOBILE) {
+      let file = null;
+      try { file = new File([blob], name, { type: &quot;image/png&quot; }); } catch (e) {}
+      if (file &amp;&amp; navigator.canShare &amp;&amp; navigator.canShare({ files: [file] })) {
+        navigator.share({ files: [file], title: name }).catch((e) =&gt; { if (e &amp;&amp; e.name !== &quot;AbortError&quot;) showSave(url, name); });
+        return;
+      }
+      return showSave(url, name);
+    }
+    try {
+      const href = URL.createObjectURL(blob), a = document.createElement(&quot;a&quot;);
+      a.href = href; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() =&gt; URL.revokeObjectURL(href), 4000);
+      PX.toast(&quot;이미지를 저장했어요&quot;);
+    } catch (e) { showSave(url, name); }
+  };
+  PX.isMobile = IS_MOBILE;
+
   PX.toast = function (msg) {
     let t = PX.$(&quot;.px-toast&quot;);
     if (!t) { t = document.createElement(&quot;div&quot;); t.className = &quot;px-toast&quot;; PX.$(&quot;.px-app&quot;).appendChild(t); }
@@ -1527,7 +1610,7 @@ window.SITE_CONFIG = {
       outer: &quot;#f7f5f9&quot;, cape: &quot;#e0578a&quot;, bottom: &quot;#4a6a9a&quot;, shoe: &quot;#f7f5f9&quot;, acc: &quot;#e0578a&quot;, bg: &quot;#fde8f0&quot; }
   };
   const PRESETS = {
-    santa: { front: 2, back: 3, streak: true, eyes: 7, brow: 2, mouth: 7, blush: false, dark: false, nose: false,
+    santa: { front: 2, back: 3, streak: true, eyes: 7, brow: 2, mouth: 7, blush: true, dark: false, nose: false,
       top: 3, outer: 0, cape: 1, epaulet: true, bottom: 1, shoe: 0, headAcc: 0, faceAcc: 0, earAcc: 0, bgPat: 2,
       colors: { skin: &quot;#f6e2d8&quot;, hair: &quot;#1f1c24&quot;, streak: &quot;#f4f2f6&quot;, eye: &quot;#6b4636&quot;, top: &quot;#f7f5f9&quot;, point: &quot;#1d1b22&quot;,
         outer: &quot;#1d1b22&quot;, cape: &quot;#26222c&quot;, bottom: &quot;#34303a&quot;, shoe: &quot;#1d1b22&quot;, acc: &quot;#c8323f&quot;, bg: &quot;#f6d3d8&quot; } },
@@ -1703,7 +1786,7 @@ window.SITE_CONFIG = {
   let root, cv, ctx, tool = null, paintColor = &quot;#3a1d2e&quot;, gridOn = true, curTab = &quot;face&quot;;
   function changed(rebuild) {
     PX.store.set(&quot;maker3&quot;, state);
-    render(); if (rebuild) buildPanel();
+    render(); if (rebuild) buildPanel(); else if (curTab === &quot;save&quot;) refreshCard();
     listeners.forEach((fn) =&gt; fn());
   }
   function live() { PX.store.set(&quot;maker3&quot;, state); render(); listeners.forEach((fn) =&gt; fn()); }
@@ -1790,11 +1873,13 @@ window.SITE_CONFIG = {
           &lt;button type=&quot;button&quot; class=&quot;px-btn sm ghost&quot; data-save=&quot;copyimg&quot;&gt;이미지 복사&lt;/button&gt;
           &lt;button type=&quot;button&quot; class=&quot;px-btn sm ghost&quot; data-save=&quot;copycode&quot;&gt;캐릭터 코드 복사&lt;/button&gt;
           &lt;button type=&quot;button&quot; class=&quot;px-btn sm ghost&quot; data-save=&quot;pastecode&quot;&gt;코드 붙여넣기&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;mk-cardprev&quot;&gt;&lt;canvas width=&quot;600&quot; height=&quot;800&quot;&gt;&lt;/canvas&gt;&lt;span&gt;플레이어 카드 미리보기&lt;/span&gt;&lt;/div&gt;
         &lt;p class=&quot;mk-note&quot;&gt;캐릭터만 저장은 512×512 PNG예요. 배경을 ‘투명’으로 두면 배경 없이 저장돼요. 만든 캐릭터는 폴라로이드와 방명록 쪽지에도 쓰여요.&lt;/p&gt;`;
       panel.appendChild(box);
       const nameIn = PX.$(&quot;.mk-name&quot;, box);
       nameIn.value = PX.store.get(&quot;cardName&quot;, &quot;&quot;);
-      nameIn.oninput = () =&gt; PX.store.set(&quot;cardName&quot;, nameIn.value);
+      let nt; nameIn.oninput = () =&gt; { PX.store.set(&quot;cardName&quot;, nameIn.value); clearTimeout(nt); nt = setTimeout(refreshCard, 150); };
+      refreshCard();
       box.querySelectorAll(&quot;[data-save]&quot;).forEach((b) =&gt; (b.onclick = () =&gt; saveAction(b.dataset.save)));
     }
     panel.scrollTop = keep;
@@ -1861,8 +1946,14 @@ window.SITE_CONFIG = {
     PX.text(x, &quot;P1&quot;, W / 2 - 60, 724, &quot;#c8323f&quot;, 3, &quot;center&quot;); PX.text(x, &quot;* * *&quot;, W / 2, 724, pink, 3, &quot;center&quot;); PX.text(x, &quot;P2&quot;, W / 2 + 60, 724, &quot;#1f8f63&quot;, 3, &quot;center&quot;);
     return c;
   }
-  function download(canvas, name) {
-    canvas.toBlob((b) =&gt; { const a = document.createElement(&quot;a&quot;); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() =&gt; URL.revokeObjectURL(a.href), 2000); }, &quot;image/png&quot;);
+  function download(canvas, name) { PX.saveImage(canvas, name); }
+  let cardCache = null, cardSeq = 0;
+  async function refreshCard() {
+    const my = ++cardSeq, c = await cardCanvas();
+    if (my !== cardSeq) return;
+    cardCache = c;
+    const pv = root &amp;&amp; PX.$(&quot;.mk-cardprev canvas&quot;, root);
+    if (pv) { const x = pv.getContext(&quot;2d&quot;); x.clearRect(0, 0, 600, 800); x.drawImage(c, 0, 0); }
   }
   PX.download = download;
   const codeString = () =&gt; &quot;PXCHAR3:&quot; + btoa(unescape(encodeURIComponent(JSON.stringify(state))));
@@ -1880,7 +1971,7 @@ window.SITE_CONFIG = {
   async function saveAction(kind) {
     PX.sfx(&quot;select&quot;);
     if (kind === &quot;char&quot;) download(charCanvas(16, state.bgPat !== 0), &quot;pixel-character.png&quot;);
-    else if (kind === &quot;card&quot;) download(await cardCanvas(), &quot;player-card.png&quot;);
+    else if (kind === &quot;card&quot;) download(cardCache || (await cardCanvas()), &quot;player-card.png&quot;);
     else if (kind === &quot;copyimg&quot;) {
       try { const blob = await new Promise((r) =&gt; charCanvas(16, state.bgPat !== 0).toBlob(r, &quot;image/png&quot;)); await navigator.clipboard.write([new ClipboardItem({ &quot;image/png&quot;: blob })]); PX.toast(&quot;이미지를 복사했어요&quot;); }
       catch (e) { PX.toast(&quot;이 환경에선 이미지 복사가 막혀 있어요. PNG 저장을 써 주세요&quot;); }
@@ -2018,100 +2109,127 @@ window.SITE_CONFIG = {
   PX.entryIntro = function (overlay, onDone) {
     const cv = PX.$(&quot;.intro-cv&quot;, overlay), x = cv.getContext(&quot;2d&quot;);
     const W = 256, H = 144, GY = 118;
-    let t = 0, done = false, raf, blocks = 0;
-    const END = 400;
+    let t = 0, g = 0, gate = true, done = false, raf, blocks = 0;
     const flakes = Array.from({ length: 70 }, () =&gt; ({ x: PX.rand(0, W), y: PX.rand(-H, H), vy: PX.rand(0.25, 0.7), o: PX.rand(0, 100), s: PX.pick([1, 1, 2]) }));
     const lerp = (a, b, k) =&gt; PX.rgbToHex(...PX.hexToRgb(a).map((v, i) =&gt; v + (PX.hexToRgb(b)[i] - v) * k));
     const [p1, p2] = CFG.players;
     const HEART = [&quot;.##.##.&quot;, &quot;#######&quot;, &quot;#######&quot;, &quot;.#####.&quot;, &quot;..###..&quot;, &quot;...#...&quot;];
     function heart(cx, cy, s, c) { x.fillStyle = c; HEART.forEach((r, j) =&gt; r.split(&quot;&quot;).forEach((ch, i) =&gt; ch === &quot;#&quot; &amp;&amp; x.fillRect(cx + i * s, cy + j * s, s, s))); }
-    function frame() {
-      t++;
-      if (t &lt;= 95) {
-        // 로딩
-        x.fillStyle = INK; x.fillRect(0, 0, W, H);
-        for (let yy = 0; yy &lt; H; yy += 6) for (let xx = (yy / 6) % 2 ? 3 : 0; xx &lt; W; xx += 6) { x.fillStyle = &quot;#4a2639&quot;; x.fillRect(xx, yy, 1, 1); }
-        PX.text(x, &quot;LOADING SAVE DATA&quot;, W / 2, 52, &quot;#f8bfd3&quot;, 1, &quot;center&quot;);
-        PX.text(x, CFG.siteName, W / 2, 62, &quot;#ffffff&quot;, 2, &quot;center&quot;);
-        x.fillStyle = &quot;#f8bfd3&quot;; x.fillRect(68, 82, 120, 10); x.fillStyle = INK; x.fillRect(70, 84, 116, 6);
-        const n = Math.min(14, Math.floor(t / 6));
-        if (n &gt; blocks) { blocks = n; PX.sfx(&quot;blip&quot;); }
-        for (let i = 0; i &lt; n; i++) { x.fillStyle = i % 2 ? PINK : &quot;#f28fb3&quot;; x.fillRect(71 + i * 8 + 1, 85, 7, 4); }
-        PX.text(x, Math.min(100, Math.floor((t / 84) * 100)) + &quot;%&quot;, W / 2, 98, &quot;#b07c93&quot;, 1, &quot;center&quot;);
-        if (t === 95) PX.sfx(&quot;boot&quot;);
-      } else {
-        const k = PX.clamp((t - 200) / 120, 0, 1); // 겨울 → 봄
-        // 하늘
-        const top = lerp(&quot;#2a2340&quot;, &quot;#f9c6da&quot;, k), bot = lerp(&quot;#5b4f7a&quot;, &quot;#fde8f0&quot;, k);
-        for (let yy = 0; yy &lt; GY; yy += 4) { x.fillStyle = lerp(top, bot, yy / GY); x.fillRect(0, yy, W, 4); }
-        // 별 (겨울에만)
-        if (k &lt; 1) { x.globalAlpha = 1 - k; [[20, 14], [60, 30], [110, 10], [170, 24], [220, 16], [240, 40], [90, 44], [30, 60]].forEach(([sx, sy], i) =&gt; { if ((t + i * 13) % 50 &gt; 10) { x.fillStyle = &quot;#fff&quot;; x.fillRect(sx, sy, 1, 1); } }); x.globalAlpha = 1; }
-        // 해 뜨는 중 (새벽)
-        const sunY = Math.round(GY + 20 - k * 50);
-        x.fillStyle = lerp(&quot;#5b4f7a&quot;, &quot;#ffe1a8&quot;, k);
-        for (let r = 18; r &gt; 0; r -= 2) { const w = Math.round(Math.sqrt(18 * 18 - r * r) * 2); x.fillRect(W / 2 - w / 2, sunY - r, w, 2); }
-        // 언덕
-        for (let xx = 0; xx &lt; W; xx++) {
-          const h1 = Math.round(16 + 6 * Math.sin(xx / 22) + 3 * Math.sin(xx / 7));
-          x.fillStyle = lerp(&quot;#463d63&quot;, &quot;#f4bfd3&quot;, k); x.fillRect(xx, GY - h1, 1, h1);
-          const h2 = Math.round(8 + 4 * Math.sin(xx / 13 + 2));
-          x.fillStyle = lerp(&quot;#5f5584&quot;, &quot;#eda2bf&quot;, k); x.fillRect(xx, GY - h2, 1, h2);
-        }
-        // 땅 (눈 → 체크 타일)
-        x.fillStyle = lerp(&quot;#e8ecf6&quot;, PINK, k); x.fillRect(0, GY, W, 2);
-        for (let yy = GY + 2; yy &lt; H; yy += 4) for (let xx = 0; xx &lt; W; xx += 4) {
-          x.fillStyle = (((xx + yy) / 4) | 0) % 2 ? lerp(&quot;#ffffff&quot;, &quot;#fff4f8&quot;, k) : lerp(&quot;#d9deec&quot;, &quot;#f7d4e2&quot;, k); x.fillRect(xx, yy, 4, 4);
-        }
-        // 두 사람 걷기
-        const walk = PX.clamp((t - 110) / 140, 0, 1);
-        const ease = 1 - Math.pow(1 - walk, 2);
-        const sx = Math.round(-36 + (W / 2 - 46 + 36) * ease), ox = Math.round(W + 4 - (W + 4 - (W / 2 + 14)) * ease);
-        const bob = (o) =&gt; (walk &lt; 1 ? (Math.floor((t + o) / 8) % 2) : (Math.floor((t + o) / 30) % 2));
-        x.fillStyle = lerp(&quot;#c3c9dc&quot;, &quot;#e8a6c0&quot;, k);
-        x.fillRect(sx + 10, GY, 12, 1); x.fillRect(ox + 10, GY, 12, 1);
-        if (grids[0]) PX.maker.drawGrid(x, grids[0], sx, GY - 31 + bob(0), 1);
-        if (grids[1]) PX.maker.drawGrid(x, grids[1], ox, GY - 31 + bob(4), 1);
-        // 눈송이 → 꽃잎
-        flakes.forEach((f) =&gt; {
-          f.y += f.vy; f.x += Math.sin((t + f.o) / 24) * 0.35;
-          if (f.y &gt; GY) { f.y = -4; f.x = PX.rand(0, W); }
-          x.fillStyle = k &lt; 0.5 ? (f.o &gt; 50 ? &quot;#ffffff&quot; : &quot;#e3e9f8&quot;) : (f.o &gt; 50 ? &quot;#f8bfd3&quot; : &quot;#ffffff&quot;);
-          if (k &gt; 0.5 &amp;&amp; f.o &gt; 70) x.fillStyle = &quot;#f28fb3&quot;;
-          x.fillRect(Math.round(f.x), Math.round(f.y), f.s + (k &gt; 0.5 ? 1 : 0), f.s);
-        });
-        // 하트
-        if (t &gt; 262) {
-          const hp = Math.min(1, (t - 262) / 18), s = hp &lt; 1 ? 1 + Math.round(hp * 2) : 2 + (Math.floor(t / 20) % 2 ? 0 : 0);
-          heart(W / 2 - 7 * s / 2, GY - 52 - Math.round(hp * 6), s, PINK);
-          if (t === 263) PX.sfx(&quot;perfect&quot;);
-          if (t &lt; 300) for (let i = 0; i &lt; 8; i++) { const a = (i / 8) * Math.PI * 2, d = (t - 262) * 1.2; x.fillStyle = i % 2 ? &quot;#fff&quot; : &quot;#f28fb3&quot;; x.fillRect(Math.round(W / 2 + Math.cos(a) * d), Math.round(GY - 46 + Math.sin(a) * d), 2, 2); }
-        }
-        // 이름표
-        if (walk &gt;= 1) {
-          const tg = (tx, label, bg) =&gt; { const w = PX.textWidth(label) + 6, lx = Math.round(tx - w / 2); x.fillStyle = bg; x.fillRect(lx, GY + 6, w, 9); PX.text(x, label, lx + 3, GY + 8, &quot;#fff&quot;); };
-          tg(sx + 16, p1.code, RED); tg(ox + 16, p2.code, GREEN);
-        }
-        if (t &gt; 120 &amp;&amp; t &lt; 240) PX.text(x, k &lt; 0.2 ? &quot;WINTER&quot; : &quot;&quot;, 6, 6, &quot;#c3c9dc&quot;);
-        PX.text(x, &quot;2025.11.28&quot;, 6, H - 9, lerp(&quot;#8a83a8&quot;, &quot;#b8486f&quot;, k));
-        if (t &gt; 300) PX.text(x, &quot;2026.11.28&quot;, W - 6, H - 9, &quot;#b8486f&quot;, 1, &quot;right&quot;);
+
+    // 아래쪽 플레이어 카드
+    const cards = PX.$(&quot;.iu-cards&quot;, overlay);
+    CFG.players.forEach((p, k) =&gt; {
+      const c = document.createElement(&quot;div&quot;); c.className = &quot;iu-card&quot;; c.style.setProperty(&quot;--pc&quot;, p.color);
+      const av = document.createElement(&quot;canvas&quot;); av.width = av.height = 32;
+      const ax = av.getContext(&quot;2d&quot;); PX.maker.drawBg(ax, PX.maker.presetState(p.preset), 32, 1); PX.maker.drawGrid(ax, grids[k], 0, 0, 1);
+      c.appendChild(av);
+      const info = document.createElement(&quot;div&quot;); info.innerHTML = `&lt;span class=&quot;iu-slot&quot;&gt;&lt;/span&gt;&lt;b&gt;&lt;/b&gt;&lt;small&gt;&lt;/small&gt;`;
+      info.querySelector(&quot;.iu-slot&quot;).textContent = p.slot; info.querySelector(&quot;b&quot;).textContent = p.code; info.querySelector(&quot;small&quot;).textContent = p.codeKo + &quot; · &quot; + p.name;
+      c.appendChild(info); cards.appendChild(c);
+      if (k === 0) { const v = document.createElement(&quot;div&quot;); v.className = &quot;iu-vs&quot;; v.innerHTML = `&lt;i class=&quot;hrt&quot;&gt;&lt;/i&gt;&lt;b&gt;DAY ${PX.daysSinceStart()}&lt;/b&gt;&lt;small&gt;SINCE 2025.11.28&lt;/small&gt;`; cards.appendChild(v); }
+    });
+    const sbtn = PX.$(&quot;.iu-sound&quot;, overlay);
+    const paintS = () =&gt; { const on = !PX.muted &amp;&amp; PX.music.enabled(); sbtn.classList.toggle(&quot;off&quot;, !on); sbtn.querySelector(&quot;span&quot;).textContent = on ? &quot;소리 ON&quot; : &quot;소리 OFF&quot;; };
+    sbtn.addEventListener(&quot;click&quot;, (e) =&gt; {
+      e.stopPropagation();
+      const on = !(!PX.muted &amp;&amp; PX.music.enabled());
+      PX.muted = !on; PX.store.set(&quot;muted&quot;, PX.muted); PX.unlockAudio();
+      PX.music.setEnabled(on);
+      paintS(); PX.sfx(&quot;blip&quot;);
+    });
+    paintS();
+
+    function drawWinter(k, tt) {
+      const top = lerp(&quot;#2a2340&quot;, &quot;#f9c6da&quot;, k), bot = lerp(&quot;#5b4f7a&quot;, &quot;#fde8f0&quot;, k);
+      for (let yy = 0; yy &lt; GY; yy += 4) { x.fillStyle = lerp(top, bot, yy / GY); x.fillRect(0, yy, W, 4); }
+      if (k &lt; 1) { x.globalAlpha = 1 - k; [[20, 14], [60, 30], [110, 10], [170, 24], [220, 16], [240, 40], [90, 44], [30, 60]].forEach(([sx, sy], i) =&gt; { if ((tt + i * 13) % 50 &gt; 10) { x.fillStyle = &quot;#fff&quot;; x.fillRect(sx, sy, 1, 1); } }); x.globalAlpha = 1; }
+      const sunY = Math.round(GY + 20 - k * 50);
+      x.fillStyle = lerp(&quot;#5b4f7a&quot;, &quot;#ffe1a8&quot;, k);
+      for (let r = 18; r &gt; 0; r -= 2) { const w = Math.round(Math.sqrt(18 * 18 - r * r) * 2); x.fillRect(W / 2 - w / 2, sunY - r, w, 2); }
+      for (let xx = 0; xx &lt; W; xx++) {
+        const h1 = Math.round(16 + 6 * Math.sin(xx / 22) + 3 * Math.sin(xx / 7)); x.fillStyle = lerp(&quot;#463d63&quot;, &quot;#f4bfd3&quot;, k); x.fillRect(xx, GY - h1, 1, h1);
+        const h2 = Math.round(8 + 4 * Math.sin(xx / 13 + 2)); x.fillStyle = lerp(&quot;#5f5584&quot;, &quot;#eda2bf&quot;, k); x.fillRect(xx, GY - h2, 1, h2);
       }
-      if (t === 330) overlay.classList.add(&quot;show-title&quot;);
-      if (t === 380) overlay.classList.add(&quot;show-start&quot;);
+      x.fillStyle = lerp(&quot;#e8ecf6&quot;, PINK, k); x.fillRect(0, GY, W, 2);
+      for (let yy = GY + 2; yy &lt; H; yy += 4) for (let xx = 0; xx &lt; W; xx += 4) { x.fillStyle = (((xx + yy) / 4) | 0) % 2 ? lerp(&quot;#ffffff&quot;, &quot;#fff4f8&quot;, k) : lerp(&quot;#d9deec&quot;, &quot;#f7d4e2&quot;, k); x.fillRect(xx, yy, 4, 4); }
+    }
+    function snow(k, tt) {
+      flakes.forEach((f) =&gt; {
+        f.y += f.vy; f.x += Math.sin((tt + f.o) / 24) * 0.35;
+        if (f.y &gt; GY) { f.y = -4; f.x = PX.rand(0, W); }
+        x.fillStyle = k &lt; 0.5 ? (f.o &gt; 50 ? &quot;#ffffff&quot; : &quot;#e3e9f8&quot;) : (f.o &gt; 70 ? &quot;#f28fb3&quot; : f.o &gt; 50 ? &quot;#f8bfd3&quot; : &quot;#ffffff&quot;);
+        x.fillRect(Math.round(f.x), Math.round(f.y), f.s + (k &gt; 0.5 ? 1 : 0), f.s);
+      });
+    }
+    function frame() {
+      if (gate) {
+        g++;
+        drawWinter(0, g); snow(0, g);
+        PX.text(x, CFG.siteName, W / 2, 34, &quot;#ffffff&quot;, 3, &quot;center&quot;);
+        PX.text(x, &quot;SANTA * ORION&quot;, W / 2, 58, &quot;#f8bfd3&quot;, 1, &quot;center&quot;);
+        if (Math.floor(g / 30) % 2 === 0) { x.fillStyle = &quot;#3a1d2e&quot;; x.fillRect(W / 2 - 46, 76, 92, 15); PX.text(x, &quot;PRESS START&quot;, W / 2, 81, &quot;#ffffff&quot;, 1, &quot;center&quot;); }
+        PX.text(x, &quot;SOUND ON  *  CLICK&quot;, W / 2, 128, &quot;#8a83a8&quot;, 1, &quot;center&quot;);
+      } else {
+        t++;
+        if (t &lt;= 95) {
+          x.fillStyle = INK; x.fillRect(0, 0, W, H);
+          for (let yy = 0; yy &lt; H; yy += 6) for (let xx = (yy / 6) % 2 ? 3 : 0; xx &lt; W; xx += 6) { x.fillStyle = &quot;#4a2639&quot;; x.fillRect(xx, yy, 1, 1); }
+          PX.text(x, &quot;LOADING SAVE DATA&quot;, W / 2, 52, &quot;#f8bfd3&quot;, 1, &quot;center&quot;);
+          PX.text(x, CFG.siteName, W / 2, 62, &quot;#ffffff&quot;, 2, &quot;center&quot;);
+          x.fillStyle = &quot;#f8bfd3&quot;; x.fillRect(68, 82, 120, 10); x.fillStyle = INK; x.fillRect(70, 84, 116, 6);
+          const n = Math.min(14, Math.floor(t / 6));
+          if (n &gt; blocks) { blocks = n; PX.sfx(&quot;blip&quot;); }
+          for (let i = 0; i &lt; n; i++) { x.fillStyle = i % 2 ? PINK : &quot;#f28fb3&quot;; x.fillRect(72 + i * 8, 85, 7, 4); }
+          PX.text(x, Math.min(100, Math.floor((t / 84) * 100)) + &quot;%&quot;, W / 2, 98, &quot;#b07c93&quot;, 1, &quot;center&quot;);
+          if (t === 95) PX.sfx(&quot;boot&quot;);
+        } else {
+          const k = PX.clamp((t - 200) / 120, 0, 1);
+          drawWinter(k, t);
+          const walk = PX.clamp((t - 110) / 140, 0, 1), ease = 1 - Math.pow(1 - walk, 2);
+          const sx = Math.round(-36 + (W / 2 - 46 + 36) * ease), ox = Math.round(W + 4 - (W + 4 - (W / 2 + 14)) * ease);
+          if (walk &gt; 0 &amp;&amp; walk &lt; 1 &amp;&amp; t % 14 === 0) PX.sfx(&quot;step&quot;);
+          const bob = (o) =&gt; (walk &lt; 1 ? Math.floor((t + o) / 8) % 2 : Math.floor((t + o) / 30) % 2);
+          x.fillStyle = lerp(&quot;#c3c9dc&quot;, &quot;#e8a6c0&quot;, k); x.fillRect(sx + 10, GY, 12, 1); x.fillRect(ox + 10, GY, 12, 1);
+          if (grids[0]) PX.maker.drawGrid(x, grids[0], sx, GY - 31 + bob(0), 1);
+          if (grids[1]) PX.maker.drawGrid(x, grids[1], ox, GY - 31 + bob(4), 1);
+          snow(k, t);
+          if (t === 230) PX.sfx(&quot;twinkle&quot;);
+          if (t &gt; 262) {
+            const hp = Math.min(1, (t - 262) / 18), s = hp &lt; 1 ? 1 + Math.round(hp * 2) : 2;
+            heart(W / 2 - (7 * s) / 2, GY - 52 - Math.round(hp * 6), s, PINK);
+            if (t === 263) PX.sfx(&quot;perfect&quot;);
+            if (t &lt; 300) for (let i = 0; i &lt; 8; i++) { const a = (i / 8) * Math.PI * 2, d = (t - 262) * 1.2; x.fillStyle = i % 2 ? &quot;#fff&quot; : &quot;#f28fb3&quot;; x.fillRect(Math.round(W / 2 + Math.cos(a) * d), Math.round(GY - 46 + Math.sin(a) * d), 2, 2); }
+          }
+          if (walk &gt;= 1) {
+            const tg = (tx, label, bg) =&gt; { const w = PX.textWidth(label) + 6, lx = Math.round(tx - w / 2); x.fillStyle = bg; x.fillRect(lx, GY + 6, w, 9); PX.text(x, label, lx + 3, GY + 8, &quot;#fff&quot;); };
+            tg(sx + 16, p1.code, RED); tg(ox + 16, p2.code, GREEN);
+          }
+          PX.text(x, &quot;2025.11.28&quot;, 6, H - 9, lerp(&quot;#8a83a8&quot;, &quot;#b8486f&quot;, k));
+          if (t &gt; 300) PX.text(x, &quot;2026.11.28&quot;, W - 6, H - 9, &quot;#b8486f&quot;, 1, &quot;right&quot;);
+        }
+        if (t === 330) { overlay.classList.add(&quot;show-title&quot;); PX.sfx(&quot;clear&quot;); }
+        if (t === 380) overlay.classList.add(&quot;show-start&quot;);
+      }
       if (!done) raf = requestAnimationFrame(frame);
     }
     frame();
-    const skip = () =&gt; { if (t &lt; 330) { t = 330; blocks = 14; } };
+    const begin = () =&gt; {
+      gate = false; PX.unlockAudio(); overlay.classList.add(&quot;started&quot;);
+      if (!PX.muted &amp;&amp; PX.music.enabled() &amp;&amp; !PX.music.isPlaying()) PX.music.playTrack(3);
+      PX.sfx(&quot;select&quot;);
+    };
     const finish = () =&gt; {
       if (done) return;
-      if (t &lt; 380) { PX.unlockAudio(); skip(); t = Math.max(t, 380); overlay.classList.add(&quot;show-title&quot;, &quot;show-start&quot;); return; }
-      done = true; PX.unlockAudio(); PX.sfx(&quot;select&quot;);
+      if (gate) return begin();
+      if (t &lt; 380) { t = Math.max(t, 380); blocks = 14; overlay.classList.add(&quot;show-title&quot;, &quot;show-start&quot;); return; }
+      done = true; PX.sfx(&quot;select&quot;);
       cancelAnimationFrame(raf); overlay.classList.add(&quot;is-off&quot;);
       setTimeout(() =&gt; { overlay.remove(); onDone &amp;&amp; onDone(); }, 500);
       window.removeEventListener(&quot;keydown&quot;, key);
     };
-    const key = (e) =&gt; { if ([&quot;Enter&quot;, &quot;Space&quot;, &quot;KeyZ&quot;, &quot;Escape&quot;].includes(e.code)) { e.preventDefault(); finish(); } };
-    PX.$(&quot;.intro-skip&quot;, overlay).addEventListener(&quot;click&quot;, (e) =&gt; { e.stopPropagation(); PX.unlockAudio(); t = Math.max(t, 380); overlay.classList.add(&quot;show-title&quot;, &quot;show-start&quot;); });
-    overlay.addEventListener(&quot;click&quot;, () =&gt; { PX.unlockAudio(); finish(); });
+    const key = (e) =&gt; { if ([&quot;Enter&quot;, &quot;Space&quot;, &quot;KeyZ&quot;].includes(e.code)) { e.preventDefault(); finish(); } };
+    PX.$(&quot;.intro-skip&quot;, overlay).addEventListener(&quot;click&quot;, (e) =&gt; { e.stopPropagation(); if (gate) begin(); t = Math.max(t, 380); overlay.classList.add(&quot;show-title&quot;, &quot;show-start&quot;); });
+    overlay.addEventListener(&quot;click&quot;, finish);
     window.addEventListener(&quot;keydown&quot;, key);
   };
 
@@ -2731,67 +2849,95 @@ window.SITE_CONFIG = {
   }
 
   /* ---------- 상장 그리기 ---------- */
-  const INK = &quot;#3a1d2e&quot;, PINK = &quot;#e0578a&quot;, GOLD = &quot;#d9a441&quot;;
+  const INK = &quot;#3a1d2e&quot;, PINK = &quot;#e0578a&quot;, PINK_D = &quot;#b83a6b&quot;, PINK_L = &quot;#f8bfd3&quot;, GOLD = &quot;#d9a441&quot;, GOLD_D = &quot;#a8742a&quot;;
+  const W = 800, H = 570;
   function seal(x, cx, cy, color, label) {
-    // 픽셀 원형 도장
-    const R = 34;
+    const R = 36;
     for (let y = -R; y &lt;= R; y += 2) for (let xx = -R; xx &lt;= R; xx += 2) {
-      const d = Math.hypot(xx, y);
-      if (d &lt;= R &amp;&amp; (d &gt; R - 5 || d &lt; R - 9)) { x.fillStyle = d &gt; R - 5 ? color : color + &quot;22&quot;; x.fillRect(cx + xx, cy + y, 2, 2); }
+      const d = Math.hypot(xx + 1, y + 1);
+      if (d &lt;= R) { x.fillStyle = d &gt; R - 4 ? color : d &gt; R - 7 ? &quot;#ffffff&quot; : d &gt; R - 9 ? color : color + &quot;1f&quot;; x.fillRect(cx + xx, cy + y, 2, 2); }
     }
+    x.save(); x.translate(cx, cy); x.rotate(-0.12);
     x.fillStyle = color; x.textAlign = &quot;center&quot;; x.textBaseline = &quot;middle&quot;;
-    x.font = (label.length &gt; 2 ? &#x27;17px&#x27; : &#x27;22px&#x27;) + &#x27; &quot;NeoDunggeunmo&quot;, &quot;Galmuri11&quot;, monospace&#x27;; x.fillText(label, cx, cy + 1);
+    x.font = (label.length &gt; 2 ? &quot;17px&quot; : &quot;21px&quot;) + &#x27; &quot;NeoDunggeunmo&quot;, &quot;Galmuri11&quot;, monospace&#x27;; x.fillText(label, 0, 1);
+    x.restore();
   }
-  function medal(x, cx, cy) {
-    const R = [&quot;....oooo....&quot;, &quot;..oowwggoo..&quot;, &quot;.owwggggggo.&quot;, &quot;.owgggg1ggo.&quot;, &quot;oggggg11gggo&quot;, &quot;ogggggg1gggo&quot;, &quot;ogggggg1gggo&quot;, &quot;oggggg111ggo&quot;, &quot;.oggggggggo.&quot;, &quot;..oooooooo..&quot;];
-    const ribbon = [&quot;..rr....RR..&quot;, &quot;.rrrr..RRRR.&quot;, &quot;.rrrr..RRRR.&quot;, &quot;..rrr..RRR..&quot;, &quot;...rr..RR...&quot;, &quot;...r....R...&quot;];
-    PX.drawRows(x, ribbon, { r: &quot;#c8323f&quot;, R: &quot;#1f8f63&quot; }, cx - 24, cy + 36, 4);
-    PX.drawRows(x, R, { o: &quot;#a8742a&quot;, g: GOLD, w: &quot;#fff2c4&quot;, 1: &quot;#a8742a&quot; }, cx - 24, cy, 4);
+  function banner(x, cx, cy, w, text) {
+    const h = 46, l = cx - w / 2;
+    // 꼬리
+    [[-1, l - 26], [1, cx + w / 2 - 4]].forEach(([d, tx]) =&gt; {
+      x.fillStyle = PINK_D; x.fillRect(tx, cy - h / 2 + 10, 30, h);
+      x.fillStyle = PINK_L;
+      for (let i = 0; i &lt; h / 2; i += 2) { const cut = d &lt; 0 ? tx : tx + 30; x.fillRect(d &lt; 0 ? cut : cut - (h / 2 - i) / 2.2, cy - h / 2 + 10 + i, (h / 2 - i) / 2.2, 2); x.fillRect(d &lt; 0 ? cut : cut - (h / 2 - i) / 2.2, cy + h / 2 + 8 - i, (h / 2 - i) / 2.2, 2); }
+    });
+    x.fillStyle = INK; x.fillRect(l - 3, cy - h / 2 - 3, w + 6, h + 6);
+    x.fillStyle = PINK; x.fillRect(l, cy - h / 2, w, h);
+    x.fillStyle = &quot;#f08cb0&quot;; x.fillRect(l, cy - h / 2, w, 4);
+    x.fillStyle = PINK_D; x.fillRect(l, cy + h / 2 - 4, w, 4);
+    x.fillStyle = &quot;#fff&quot;; x.textAlign = &quot;center&quot;; x.textBaseline = &quot;middle&quot;;
+    x.font = &#x27;27px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillText(text, cx, cy + 1);
+  }
+  function rosette(x, cx, cy) {
+    const s = 3;
+    const ribbon = [&quot;rr......RR&quot;, &quot;rrr....RRR&quot;, &quot;.rrr..RRR.&quot;, &quot;.rrr..RRR.&quot;, &quot;..rr..RR..&quot;, &quot;..r....R..&quot;];
+    PX.drawRows(x, ribbon, { r: &quot;#c8323f&quot;, R: &quot;#1f8f63&quot; }, cx - 15, cy + 18, s);
+    const R = [&quot;...pppppp...&quot;, &quot;.ppPPPPPPpp.&quot;, &quot;.pPoooooooPp&quot;, &quot;pPooggggooPp&quot;, &quot;pPoggwgggoPp&quot;, &quot;pPogggg1goPp&quot;, &quot;pPoggg11goPp&quot;, &quot;pPogggg1goPp&quot;, &quot;pPoogg111oPp&quot;, &quot;.pPooooooPp.&quot;, &quot;.ppPPPPPPpp.&quot;, &quot;...pppppp...&quot;];
+    PX.drawRows(x, R, { p: PINK_L, P: PINK, o: GOLD_D, g: GOLD, w: &quot;#fff2c4&quot;, 1: GOLD_D }, cx - 18, cy - 18, s);
   }
   async function draw(canvas, award, score, name, hero) {
     try { await Promise.all([&#x27;30px &quot;MaruBuri-Regular&quot;&#x27;, &#x27;20px &quot;NeoDunggeunmo&quot;&#x27;, &#x27;20px &quot;Galmuri11&quot;&#x27;, &#x27;30px &quot;Handletter&quot;&#x27;].map((f) =&gt; document.fonts.load(f))); } catch (e) {}
-    const W = 760, H = 540, x = canvas.getContext(&quot;2d&quot;);
-    canvas.width = W; canvas.height = H; x.imageSmoothingEnabled = false;
-    x.fillStyle = &quot;#fdf1f6&quot;; x.fillRect(0, 0, W, H);
-    x.fillStyle = &quot;#f6d3df&quot;;
-    for (let yy = 0; yy &lt; H; yy += 8) for (let xx = (yy / 8) % 2 ? 4 : 0; xx &lt; W; xx += 8) x.fillRect(xx, yy, 2, 2);
-    // 테두리 (분홍 · 흰 · 잉크 · 금)
-    const frame = (m, c, w) =&gt; { x.fillStyle = c; x.fillRect(m, m, W - 2 * m, w); x.fillRect(m, H - m - w, W - 2 * m, w); x.fillRect(m, m, w, H - 2 * m); x.fillRect(W - m - w, m, w, H - 2 * m); };
-    x.fillStyle = &quot;#ffffff&quot;; x.fillRect(18, 18, W - 36, H - 36);
-    frame(18, PINK, 8); frame(30, GOLD, 3); frame(36, INK, 2);
-    // 모서리 하트
-    const HRT = [&quot;.oo.oo.&quot;, &quot;oaaoaao&quot;, &quot;oaaaaao&quot;, &quot;.oaaao.&quot;, &quot;..oao..&quot;, &quot;...o...&quot;];
-    [[44, 44], [W - 44 - 21, 44], [44, H - 44 - 18], [W - 44 - 21, H - 44 - 18]].forEach(([hx, hy]) =&gt; PX.drawRows(x, HRT, { o: INK, a: PINK }, hx, hy, 3));
-    // 레이스 상단
-    for (let i = 0; i &lt; W - 120; i += 16) { x.fillStyle = &quot;#f8bfd3&quot;; x.fillRect(60 + i, 48, 10, 4); x.fillRect(62 + i, 52, 6, 2); }
-    medal(x, 108, 70);
+    canvas.width = W; canvas.height = H;
+    const x = canvas.getContext(&quot;2d&quot;); x.imageSmoothingEnabled = false;
+    // 바깥 분홍 + 도트
+    x.fillStyle = &quot;#f6c6d8&quot;; x.fillRect(0, 0, W, H);
+    x.fillStyle = &quot;#efb0c6&quot;;
+    for (let yy = 2; yy &lt; H; yy += 10) for (let xx = (yy / 10) % 2 ? 7 : 2; xx &lt; W; xx += 10) x.fillRect(xx, yy, 3, 3);
+    // 레이스 가장자리 (종이 바깥)
+    const P0 = 34;
+    x.fillStyle = &quot;#ffffff&quot;;
+    for (let i = P0; i &lt; W - P0; i += 14) { x.fillRect(i + 2, P0 - 8, 10, 8); x.fillRect(i + 4, P0 - 12, 6, 4); x.fillRect(i + 2, H - P0, 10, 8); x.fillRect(i + 4, H - P0 + 8, 6, 4); }
+    for (let i = P0; i &lt; H - P0; i += 14) { x.fillRect(P0 - 8, i + 2, 8, 10); x.fillRect(P0 - 12, i + 4, 4, 6); x.fillRect(W - P0, i + 2, 8, 10); x.fillRect(W - P0 + 8, i + 4, 4, 6); }
+    // 종이
+    x.fillStyle = INK; x.fillRect(P0 - 2, P0 - 2, W - 2 * P0 + 4, H - 2 * P0 + 4);
+    x.fillStyle = &quot;#fffafc&quot;; x.fillRect(P0, P0, W - 2 * P0, H - 2 * P0);
+    x.fillStyle = &quot;#fbeaf1&quot;;
+    for (let yy = P0 + 6; yy &lt; H - P0; yy += 8) for (let xx = P0 + ((yy / 8) % 2 ? 6 : 2); xx &lt; W - P0; xx += 8) x.fillRect(xx, yy, 2, 2);
+    // 금색 이중선
+    const line = (m, c, w) =&gt; { x.fillStyle = c; x.fillRect(m, m, W - 2 * m, w); x.fillRect(m, H - m - w, W - 2 * m, w); x.fillRect(m, m, w, H - 2 * m); x.fillRect(W - m - w, m, w, H - 2 * m); };
+    line(P0 + 10, GOLD, 4); line(P0 + 18, GOLD, 2);
+    // 모서리 리본
+    const BOW = [&quot;oo.....oo&quot;, &quot;oaoo.ooao&quot;, &quot;oaaaoaaao&quot;, &quot;oaaAAAaao&quot;, &quot;oaaoAoaao&quot;, &quot;oo.oAo.oo&quot;, &quot;..oAoAo..&quot;, &quot;.oAo.oAo.&quot;];
+    [[P0 + 4, P0 + 4], [W - P0 - 31, P0 + 4], [P0 + 4, H - P0 - 28], [W - P0 - 31, H - P0 - 28]].forEach(([bx, by]) =&gt; PX.drawRows(x, BOW, { o: INK, a: PINK, A: PINK_D }, bx, by, 3));
+    // 캐릭터 양옆
+    const S = PX.maker.composePreset(&quot;santa&quot;), O = PX.maker.composePreset(&quot;orion&quot;);
+    [[S, 96, &quot;#c8323f&quot;, &quot;P1&quot;], [O, W - 96 - 96, &quot;#1f8f63&quot;, &quot;P2&quot;]].forEach(([g, gx, col, slot]) =&gt; {
+      x.fillStyle = col + &quot;22&quot;; x.fillRect(gx + 8, 70, 80, 88);
+      PX.maker.drawGrid(x, g, gx, 62, 3);
+      x.fillStyle = col; x.fillRect(gx + 30, 160, 36, 16); PX.text(x, slot, gx + 48, 164, &quot;#fff&quot;, 2, &quot;center&quot;);
+    });
     // 제목
     x.textAlign = &quot;center&quot;; x.textBaseline = &quot;alphabetic&quot;;
-    x.fillStyle = INK; x.font = &#x27;62px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillText(&quot;상    장&quot;, W / 2, 136);
-    x.fillStyle = PINK; x.font = &#x27;22px &quot;NeoDunggeunmo&quot;, monospace&#x27;; x.fillText(&quot;SANRION 1ST ANNIVERSARY AWARD&quot;, W / 2, 170);
-    // 상 이름
-    x.fillStyle = INK; x.font = &#x27;30px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillText(award.name, W / 2, 228);
-    x.fillStyle = &quot;#f8bfd3&quot;; x.fillRect(W / 2 - 150, 240, 300, 3);
+    x.fillStyle = PINK_L; x.font = &#x27;68px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillText(&quot;상   장&quot;, W / 2 + 3, 133);
+    x.fillStyle = INK; x.fillText(&quot;상   장&quot;, W / 2, 130);
+    PX.text(x, &quot;SANRION 1ST ANNIVERSARY AWARD&quot;, W / 2, 148, PINK, 2, &quot;center&quot;);
+    rosette(x, W / 2, 182);
+    // 상 이름 리본
+    banner(x, W / 2, 252, 330, award.name);
     // 수상자
-    x.font = &#x27;22px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = &quot;#6e3d58&quot;; x.fillText(&quot;성명&quot;, W / 2 - 110, 290);
-    x.font = &#x27;40px &quot;Handletter&quot;, &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = INK; x.fillText(name || &quot;PLAYER&quot;, W / 2 + 20, 292);
-    x.fillStyle = INK; x.fillRect(W / 2 - 70, 300, 200, 2);
+    x.textBaseline = &quot;alphabetic&quot;; x.textAlign = &quot;right&quot;;
+    x.font = &#x27;20px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = &quot;#8a5a74&quot;; x.fillText(&quot;성명&quot;, W / 2 - 92, 322);
+    x.textAlign = &quot;center&quot;; x.font = &#x27;44px &quot;Handletter&quot;, &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = INK; x.fillText(name || &quot;PLAYER&quot;, W / 2 + 30, 324);
+    x.fillStyle = INK; x.fillRect(W / 2 - 70, 334, 200, 2);
     // 본문
-    x.font = &#x27;19px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = INK;
-    const lines = [
-      `위 사람은 산타와 오리온의 1주년 보너스 스테이지 「${award.game}」에서`,
-      `${award.line}`,
-      `SCORE ${score}점을 기록하고 ${hero} 플레이어로 엔딩을 보았으므로`,
-      &quot;그 다정함을 기려 이 상장을 수여합니다.&quot;
-    ];
-    lines.forEach((l, i) =&gt; x.fillText(l, W / 2, 346 + i * 30));
-    // 날짜 + 도장
+    x.font = &#x27;18px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = INK;
+    [`위 사람은 산타와 오리온의 1주년 보너스 스테이지 「${award.game}」에서`, award.line, `SCORE ${score}점, ${hero} 플레이어로 엔딩을 보았으므로`, &quot;그 다정함을 기려 이 상장을 수여합니다.&quot;].forEach((l, i) =&gt; x.fillText(l, W / 2, 374 + i * 28));
+    // 날짜 · 도장
     const d = new Date();
-    x.font = &#x27;20px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = &quot;#6e3d58&quot;;
-    x.fillText(`${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`, W / 2, 484);
-    x.font = &#x27;16px &quot;Galmuri11&quot;, monospace&#x27;; x.fillStyle = PINK; x.fillText(&quot;SANRION 1주년 운영위원회&quot;, W / 2, 506);
-    seal(x, W / 2 - 230, 478, &quot;#c8323f&quot;, &quot;산타&quot;);
-    seal(x, W / 2 + 230, 478, &quot;#1f8f63&quot;, &quot;오리온&quot;);
+    x.font = &#x27;19px &quot;MaruBuri-Regular&quot;, serif&#x27;; x.fillStyle = &quot;#6e3d58&quot;;
+    x.fillText(`${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`, W / 2, 492);
+    x.font = &#x27;15px &quot;Galmuri11&quot;, monospace&#x27;; x.fillStyle = PINK_D; x.fillText(&quot;SANRION 1주년 기념 운영위원회&quot;, W / 2, 514);
+    seal(x, W / 2 - 205, 478, &quot;#c8323f&quot;, &quot;산타&quot;);
+    seal(x, W / 2 + 205, 478, &quot;#1f8f63&quot;, &quot;오리온&quot;);
   }
 
   function open(game, score, hero) {
@@ -2801,7 +2947,7 @@ window.SITE_CONFIG = {
     const body = document.createElement(&quot;div&quot;); body.className = &quot;cert&quot;;
     body.innerHTML = `
       &lt;p class=&quot;cert-msg&quot;&gt;축하해요! &lt;b&gt;&lt;/b&gt;을(를) 받았어요.&lt;/p&gt;
-      &lt;canvas class=&quot;cert-cv&quot; width=&quot;760&quot; height=&quot;540&quot;&gt;&lt;/canvas&gt;
+      &lt;canvas class=&quot;cert-cv&quot; width=&quot;800&quot; height=&quot;570&quot;&gt;&lt;/canvas&gt;
       &lt;div class=&quot;cert-row&quot;&gt;&lt;span class=&quot;mk-label&quot;&gt;이름&lt;/span&gt;&lt;input class=&quot;px-input cert-name&quot; maxlength=&quot;12&quot; placeholder=&quot;상장에 들어갈 이름&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;px-btn sm cert-save&quot;&gt;PNG 저장&lt;/button&gt;&lt;/div&gt;`;
     body.querySelector(&quot;.cert-msg b&quot;).textContent = &quot;‘&quot; + award.name + &quot;’&quot;;
     const cv = body.querySelector(&quot;.cert-cv&quot;), inp = body.querySelector(&quot;.cert-name&quot;);
@@ -2809,7 +2955,7 @@ window.SITE_CONFIG = {
     const redraw = () =&gt; draw(cv, award, score, inp.value.trim() || &quot;PLAYER&quot;, hero);
     let tm; inp.oninput = () =&gt; { PX.store.set(&quot;certName&quot;, inp.value); clearTimeout(tm); tm = setTimeout(redraw, 150); };
     inp.onkeydown = (e) =&gt; e.stopPropagation();
-    body.querySelector(&quot;.cert-save&quot;).onclick = () =&gt; { redraw().then(() =&gt; PX.download(cv, `sanrion-award-${game}.png`)); PX.sfx(&quot;select&quot;); };
+    body.querySelector(&quot;.cert-save&quot;).onclick = () =&gt; { PX.saveImage(cv, `sanrion-award-${game}.png`); PX.sfx(&quot;select&quot;); };
     PX.ui.modal({ title: &quot;AWARD.PNG — 상장 수여&quot;, body, cls: &quot;cert-modal&quot; });
     redraw();
   }
@@ -2941,6 +3087,7 @@ window.SITE_CONFIG = {
 
   PX.music = {
     play, stop, next,
+    playTrack(i) { idx = i % SONGS.length; if (playing) { stop(); } play(); },
     title: () =&gt; SONGS[idx].title,
     isPlaying: () =&gt; playing,
     enabled: () =&gt; enabled,
@@ -3144,11 +3291,8 @@ window.SITE_CONFIG = {
   function nudge(dx, dy) { const it = find(sel); if (!it) return; commit(); it.x += dx; it.y += dy; save(false); syncProps(); }
   function exportPNG() {
     const c = document.createElement(&quot;canvas&quot;); c.width = CW; c.height = CH;
-    const fontsNeeded = [state.caption.font, ...state.items.filter((i) =&gt; i.type === &quot;text&quot;).map((i) =&gt; i.font)];
-    Promise.all(fontsNeeded.map((f) =&gt; document.fonts.load(`40px &quot;${f}&quot;`).catch(() =&gt; {}))).then(() =&gt; {
-      drawAll(c.getContext(&quot;2d&quot;), false);
-      PX.download(c, &quot;sanrion-polaroid.png&quot;); PX.sfx(&quot;select&quot;); PX.toast(&quot;폴라로이드를 저장했어요&quot;);
-    });
+    drawAll(c.getContext(&quot;2d&quot;), false);
+    PX.saveImage(c, &quot;sanrion-polaroid.png&quot;); PX.sfx(&quot;select&quot;);
   }
 
   /* ---------- 사이드 패널 ---------- */
@@ -3700,7 +3844,8 @@ window.SITE_CONFIG = {
     autoHeight();
     PX.intro.show();
     const shelf = PX.$(&quot;.awards&quot;); PX.cert.renderShelf(shelf); PX.cert.onChange(() =&gt; PX.cert.renderShelf(shelf));
-    PX.entryIntro(PX.$(&quot;.intro&quot;), () =&gt; { PX.intro.start(); PX.music.startIfEnabled(); });
+    const appEl = PX.$(&quot;.px-app&quot;); appEl.classList.add(&quot;intro-on&quot;);
+    PX.entryIntro(PX.$(&quot;.intro&quot;), () =&gt; { appEl.classList.remove(&quot;intro-on&quot;); PX.intro.start(); PX.music.startIfEnabled(); paintSnd(); paintBgm(); });
   }
   if (document.readyState === &quot;loading&quot;) document.addEventListener(&quot;DOMContentLoaded&quot;, init); else init();
 })();

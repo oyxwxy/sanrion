@@ -105,6 +105,7 @@
 
   PX.music = {
     play, stop, next,
+    playTrack(i) { idx = i % SONGS.length; if (playing) { stop(); } play(); },
     title: () => SONGS[idx].title,
     isPlaying: () => playing,
     enabled: () => enabled,

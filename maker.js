@@ -155,7 +155,7 @@
       outer: "#f7f5f9", cape: "#e0578a", bottom: "#4a6a9a", shoe: "#f7f5f9", acc: "#e0578a", bg: "#fde8f0" }
   };
   const PRESETS = {
-    santa: { front: 2, back: 3, streak: true, eyes: 7, brow: 2, mouth: 7, blush: false, dark: false, nose: false,
+    santa: { front: 2, back: 3, streak: true, eyes: 7, brow: 2, mouth: 7, blush: true, dark: false, nose: false,
       top: 3, outer: 0, cape: 1, epaulet: true, bottom: 1, shoe: 0, headAcc: 0, faceAcc: 0, earAcc: 0, bgPat: 2,
       colors: { skin: "#f6e2d8", hair: "#1f1c24", streak: "#f4f2f6", eye: "#6b4636", top: "#f7f5f9", point: "#1d1b22",
         outer: "#1d1b22", cape: "#26222c", bottom: "#34303a", shoe: "#1d1b22", acc: "#c8323f", bg: "#f6d3d8" } },
@@ -331,7 +331,7 @@
   let root, cv, ctx, tool = null, paintColor = "#3a1d2e", gridOn = true, curTab = "face";
   function changed(rebuild) {
     PX.store.set("maker3", state);
-    render(); if (rebuild) buildPanel();
+    render(); if (rebuild) buildPanel(); else if (curTab === "save") refreshCard();
     listeners.forEach((fn) => fn());
   }
   function live() { PX.store.set("maker3", state); render(); listeners.forEach((fn) => fn()); }
@@ -418,11 +418,13 @@
           <button type="button" class="px-btn sm ghost" data-save="copyimg">이미지 복사</button>
           <button type="button" class="px-btn sm ghost" data-save="copycode">캐릭터 코드 복사</button>
           <button type="button" class="px-btn sm ghost" data-save="pastecode">코드 붙여넣기</button></div></div>
+        <div class="mk-cardprev"><canvas width="600" height="800"></canvas><span>플레이어 카드 미리보기</span></div>
         <p class="mk-note">캐릭터만 저장은 512×512 PNG예요. 배경을 ‘투명’으로 두면 배경 없이 저장돼요. 만든 캐릭터는 폴라로이드와 방명록 쪽지에도 쓰여요.</p>`;
       panel.appendChild(box);
       const nameIn = PX.$(".mk-name", box);
       nameIn.value = PX.store.get("cardName", "");
-      nameIn.oninput = () => PX.store.set("cardName", nameIn.value);
+      let nt; nameIn.oninput = () => { PX.store.set("cardName", nameIn.value); clearTimeout(nt); nt = setTimeout(refreshCard, 150); };
+      refreshCard();
       box.querySelectorAll("[data-save]").forEach((b) => (b.onclick = () => saveAction(b.dataset.save)));
     }
     panel.scrollTop = keep;
@@ -489,8 +491,14 @@
     PX.text(x, "P1", W / 2 - 60, 724, "#c8323f", 3, "center"); PX.text(x, "* * *", W / 2, 724, pink, 3, "center"); PX.text(x, "P2", W / 2 + 60, 724, "#1f8f63", 3, "center");
     return c;
   }
-  function download(canvas, name) {
-    canvas.toBlob((b) => { const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }, "image/png");
+  function download(canvas, name) { PX.saveImage(canvas, name); }
+  let cardCache = null, cardSeq = 0;
+  async function refreshCard() {
+    const my = ++cardSeq, c = await cardCanvas();
+    if (my !== cardSeq) return;
+    cardCache = c;
+    const pv = root && PX.$(".mk-cardprev canvas", root);
+    if (pv) { const x = pv.getContext("2d"); x.clearRect(0, 0, 600, 800); x.drawImage(c, 0, 0); }
   }
   PX.download = download;
   const codeString = () => "PXCHAR3:" + btoa(unescape(encodeURIComponent(JSON.stringify(state))));
@@ -508,7 +516,7 @@
   async function saveAction(kind) {
     PX.sfx("select");
     if (kind === "char") download(charCanvas(16, state.bgPat !== 0), "pixel-character.png");
-    else if (kind === "card") download(await cardCanvas(), "player-card.png");
+    else if (kind === "card") download(cardCache || (await cardCanvas()), "player-card.png");
     else if (kind === "copyimg") {
       try { const blob = await new Promise((r) => charCanvas(16, state.bgPat !== 0).toBlob(r, "image/png")); await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]); PX.toast("이미지를 복사했어요"); }
       catch (e) { PX.toast("이 환경에선 이미지 복사가 막혀 있어요. PNG 저장을 써 주세요"); }

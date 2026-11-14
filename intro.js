@@ -12,100 +12,127 @@
   PX.entryIntro = function (overlay, onDone) {
     const cv = PX.$(".intro-cv", overlay), x = cv.getContext("2d");
     const W = 256, H = 144, GY = 118;
-    let t = 0, done = false, raf, blocks = 0;
-    const END = 400;
+    let t = 0, g = 0, gate = true, done = false, raf, blocks = 0;
     const flakes = Array.from({ length: 70 }, () => ({ x: PX.rand(0, W), y: PX.rand(-H, H), vy: PX.rand(0.25, 0.7), o: PX.rand(0, 100), s: PX.pick([1, 1, 2]) }));
     const lerp = (a, b, k) => PX.rgbToHex(...PX.hexToRgb(a).map((v, i) => v + (PX.hexToRgb(b)[i] - v) * k));
     const [p1, p2] = CFG.players;
     const HEART = [".##.##.", "#######", "#######", ".#####.", "..###..", "...#..."];
     function heart(cx, cy, s, c) { x.fillStyle = c; HEART.forEach((r, j) => r.split("").forEach((ch, i) => ch === "#" && x.fillRect(cx + i * s, cy + j * s, s, s))); }
-    function frame() {
-      t++;
-      if (t <= 95) {
-        // 로딩
-        x.fillStyle = INK; x.fillRect(0, 0, W, H);
-        for (let yy = 0; yy < H; yy += 6) for (let xx = (yy / 6) % 2 ? 3 : 0; xx < W; xx += 6) { x.fillStyle = "#4a2639"; x.fillRect(xx, yy, 1, 1); }
-        PX.text(x, "LOADING SAVE DATA", W / 2, 52, "#f8bfd3", 1, "center");
-        PX.text(x, CFG.siteName, W / 2, 62, "#ffffff", 2, "center");
-        x.fillStyle = "#f8bfd3"; x.fillRect(68, 82, 120, 10); x.fillStyle = INK; x.fillRect(70, 84, 116, 6);
-        const n = Math.min(14, Math.floor(t / 6));
-        if (n > blocks) { blocks = n; PX.sfx("blip"); }
-        for (let i = 0; i < n; i++) { x.fillStyle = i % 2 ? PINK : "#f28fb3"; x.fillRect(71 + i * 8 + 1, 85, 7, 4); }
-        PX.text(x, Math.min(100, Math.floor((t / 84) * 100)) + "%", W / 2, 98, "#b07c93", 1, "center");
-        if (t === 95) PX.sfx("boot");
-      } else {
-        const k = PX.clamp((t - 200) / 120, 0, 1); // 겨울 → 봄
-        // 하늘
-        const top = lerp("#2a2340", "#f9c6da", k), bot = lerp("#5b4f7a", "#fde8f0", k);
-        for (let yy = 0; yy < GY; yy += 4) { x.fillStyle = lerp(top, bot, yy / GY); x.fillRect(0, yy, W, 4); }
-        // 별 (겨울에만)
-        if (k < 1) { x.globalAlpha = 1 - k; [[20, 14], [60, 30], [110, 10], [170, 24], [220, 16], [240, 40], [90, 44], [30, 60]].forEach(([sx, sy], i) => { if ((t + i * 13) % 50 > 10) { x.fillStyle = "#fff"; x.fillRect(sx, sy, 1, 1); } }); x.globalAlpha = 1; }
-        // 해 뜨는 중 (새벽)
-        const sunY = Math.round(GY + 20 - k * 50);
-        x.fillStyle = lerp("#5b4f7a", "#ffe1a8", k);
-        for (let r = 18; r > 0; r -= 2) { const w = Math.round(Math.sqrt(18 * 18 - r * r) * 2); x.fillRect(W / 2 - w / 2, sunY - r, w, 2); }
-        // 언덕
-        for (let xx = 0; xx < W; xx++) {
-          const h1 = Math.round(16 + 6 * Math.sin(xx / 22) + 3 * Math.sin(xx / 7));
-          x.fillStyle = lerp("#463d63", "#f4bfd3", k); x.fillRect(xx, GY - h1, 1, h1);
-          const h2 = Math.round(8 + 4 * Math.sin(xx / 13 + 2));
-          x.fillStyle = lerp("#5f5584", "#eda2bf", k); x.fillRect(xx, GY - h2, 1, h2);
-        }
-        // 땅 (눈 → 체크 타일)
-        x.fillStyle = lerp("#e8ecf6", PINK, k); x.fillRect(0, GY, W, 2);
-        for (let yy = GY + 2; yy < H; yy += 4) for (let xx = 0; xx < W; xx += 4) {
-          x.fillStyle = (((xx + yy) / 4) | 0) % 2 ? lerp("#ffffff", "#fff4f8", k) : lerp("#d9deec", "#f7d4e2", k); x.fillRect(xx, yy, 4, 4);
-        }
-        // 두 사람 걷기
-        const walk = PX.clamp((t - 110) / 140, 0, 1);
-        const ease = 1 - Math.pow(1 - walk, 2);
-        const sx = Math.round(-36 + (W / 2 - 46 + 36) * ease), ox = Math.round(W + 4 - (W + 4 - (W / 2 + 14)) * ease);
-        const bob = (o) => (walk < 1 ? (Math.floor((t + o) / 8) % 2) : (Math.floor((t + o) / 30) % 2));
-        x.fillStyle = lerp("#c3c9dc", "#e8a6c0", k);
-        x.fillRect(sx + 10, GY, 12, 1); x.fillRect(ox + 10, GY, 12, 1);
-        if (grids[0]) PX.maker.drawGrid(x, grids[0], sx, GY - 31 + bob(0), 1);
-        if (grids[1]) PX.maker.drawGrid(x, grids[1], ox, GY - 31 + bob(4), 1);
-        // 눈송이 → 꽃잎
-        flakes.forEach((f) => {
-          f.y += f.vy; f.x += Math.sin((t + f.o) / 24) * 0.35;
-          if (f.y > GY) { f.y = -4; f.x = PX.rand(0, W); }
-          x.fillStyle = k < 0.5 ? (f.o > 50 ? "#ffffff" : "#e3e9f8") : (f.o > 50 ? "#f8bfd3" : "#ffffff");
-          if (k > 0.5 && f.o > 70) x.fillStyle = "#f28fb3";
-          x.fillRect(Math.round(f.x), Math.round(f.y), f.s + (k > 0.5 ? 1 : 0), f.s);
-        });
-        // 하트
-        if (t > 262) {
-          const hp = Math.min(1, (t - 262) / 18), s = hp < 1 ? 1 + Math.round(hp * 2) : 2 + (Math.floor(t / 20) % 2 ? 0 : 0);
-          heart(W / 2 - 7 * s / 2, GY - 52 - Math.round(hp * 6), s, PINK);
-          if (t === 263) PX.sfx("perfect");
-          if (t < 300) for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2, d = (t - 262) * 1.2; x.fillStyle = i % 2 ? "#fff" : "#f28fb3"; x.fillRect(Math.round(W / 2 + Math.cos(a) * d), Math.round(GY - 46 + Math.sin(a) * d), 2, 2); }
-        }
-        // 이름표
-        if (walk >= 1) {
-          const tg = (tx, label, bg) => { const w = PX.textWidth(label) + 6, lx = Math.round(tx - w / 2); x.fillStyle = bg; x.fillRect(lx, GY + 6, w, 9); PX.text(x, label, lx + 3, GY + 8, "#fff"); };
-          tg(sx + 16, p1.code, RED); tg(ox + 16, p2.code, GREEN);
-        }
-        if (t > 120 && t < 240) PX.text(x, k < 0.2 ? "WINTER" : "", 6, 6, "#c3c9dc");
-        PX.text(x, "2025.11.28", 6, H - 9, lerp("#8a83a8", "#b8486f", k));
-        if (t > 300) PX.text(x, "2026.11.28", W - 6, H - 9, "#b8486f", 1, "right");
+
+    // 아래쪽 플레이어 카드
+    const cards = PX.$(".iu-cards", overlay);
+    CFG.players.forEach((p, k) => {
+      const c = document.createElement("div"); c.className = "iu-card"; c.style.setProperty("--pc", p.color);
+      const av = document.createElement("canvas"); av.width = av.height = 32;
+      const ax = av.getContext("2d"); PX.maker.drawBg(ax, PX.maker.presetState(p.preset), 32, 1); PX.maker.drawGrid(ax, grids[k], 0, 0, 1);
+      c.appendChild(av);
+      const info = document.createElement("div"); info.innerHTML = `<span class="iu-slot"></span><b></b><small></small>`;
+      info.querySelector(".iu-slot").textContent = p.slot; info.querySelector("b").textContent = p.code; info.querySelector("small").textContent = p.codeKo + " · " + p.name;
+      c.appendChild(info); cards.appendChild(c);
+      if (k === 0) { const v = document.createElement("div"); v.className = "iu-vs"; v.innerHTML = `<i class="hrt"></i><b>DAY ${PX.daysSinceStart()}</b><small>SINCE 2025.11.28</small>`; cards.appendChild(v); }
+    });
+    const sbtn = PX.$(".iu-sound", overlay);
+    const paintS = () => { const on = !PX.muted && PX.music.enabled(); sbtn.classList.toggle("off", !on); sbtn.querySelector("span").textContent = on ? "소리 ON" : "소리 OFF"; };
+    sbtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const on = !(!PX.muted && PX.music.enabled());
+      PX.muted = !on; PX.store.set("muted", PX.muted); PX.unlockAudio();
+      PX.music.setEnabled(on);
+      paintS(); PX.sfx("blip");
+    });
+    paintS();
+
+    function drawWinter(k, tt) {
+      const top = lerp("#2a2340", "#f9c6da", k), bot = lerp("#5b4f7a", "#fde8f0", k);
+      for (let yy = 0; yy < GY; yy += 4) { x.fillStyle = lerp(top, bot, yy / GY); x.fillRect(0, yy, W, 4); }
+      if (k < 1) { x.globalAlpha = 1 - k; [[20, 14], [60, 30], [110, 10], [170, 24], [220, 16], [240, 40], [90, 44], [30, 60]].forEach(([sx, sy], i) => { if ((tt + i * 13) % 50 > 10) { x.fillStyle = "#fff"; x.fillRect(sx, sy, 1, 1); } }); x.globalAlpha = 1; }
+      const sunY = Math.round(GY + 20 - k * 50);
+      x.fillStyle = lerp("#5b4f7a", "#ffe1a8", k);
+      for (let r = 18; r > 0; r -= 2) { const w = Math.round(Math.sqrt(18 * 18 - r * r) * 2); x.fillRect(W / 2 - w / 2, sunY - r, w, 2); }
+      for (let xx = 0; xx < W; xx++) {
+        const h1 = Math.round(16 + 6 * Math.sin(xx / 22) + 3 * Math.sin(xx / 7)); x.fillStyle = lerp("#463d63", "#f4bfd3", k); x.fillRect(xx, GY - h1, 1, h1);
+        const h2 = Math.round(8 + 4 * Math.sin(xx / 13 + 2)); x.fillStyle = lerp("#5f5584", "#eda2bf", k); x.fillRect(xx, GY - h2, 1, h2);
       }
-      if (t === 330) overlay.classList.add("show-title");
-      if (t === 380) overlay.classList.add("show-start");
+      x.fillStyle = lerp("#e8ecf6", PINK, k); x.fillRect(0, GY, W, 2);
+      for (let yy = GY + 2; yy < H; yy += 4) for (let xx = 0; xx < W; xx += 4) { x.fillStyle = (((xx + yy) / 4) | 0) % 2 ? lerp("#ffffff", "#fff4f8", k) : lerp("#d9deec", "#f7d4e2", k); x.fillRect(xx, yy, 4, 4); }
+    }
+    function snow(k, tt) {
+      flakes.forEach((f) => {
+        f.y += f.vy; f.x += Math.sin((tt + f.o) / 24) * 0.35;
+        if (f.y > GY) { f.y = -4; f.x = PX.rand(0, W); }
+        x.fillStyle = k < 0.5 ? (f.o > 50 ? "#ffffff" : "#e3e9f8") : (f.o > 70 ? "#f28fb3" : f.o > 50 ? "#f8bfd3" : "#ffffff");
+        x.fillRect(Math.round(f.x), Math.round(f.y), f.s + (k > 0.5 ? 1 : 0), f.s);
+      });
+    }
+    function frame() {
+      if (gate) {
+        g++;
+        drawWinter(0, g); snow(0, g);
+        PX.text(x, CFG.siteName, W / 2, 34, "#ffffff", 3, "center");
+        PX.text(x, "SANTA * ORION", W / 2, 58, "#f8bfd3", 1, "center");
+        if (Math.floor(g / 30) % 2 === 0) { x.fillStyle = "#3a1d2e"; x.fillRect(W / 2 - 46, 76, 92, 15); PX.text(x, "PRESS START", W / 2, 81, "#ffffff", 1, "center"); }
+        PX.text(x, "SOUND ON  *  CLICK", W / 2, 128, "#8a83a8", 1, "center");
+      } else {
+        t++;
+        if (t <= 95) {
+          x.fillStyle = INK; x.fillRect(0, 0, W, H);
+          for (let yy = 0; yy < H; yy += 6) for (let xx = (yy / 6) % 2 ? 3 : 0; xx < W; xx += 6) { x.fillStyle = "#4a2639"; x.fillRect(xx, yy, 1, 1); }
+          PX.text(x, "LOADING SAVE DATA", W / 2, 52, "#f8bfd3", 1, "center");
+          PX.text(x, CFG.siteName, W / 2, 62, "#ffffff", 2, "center");
+          x.fillStyle = "#f8bfd3"; x.fillRect(68, 82, 120, 10); x.fillStyle = INK; x.fillRect(70, 84, 116, 6);
+          const n = Math.min(14, Math.floor(t / 6));
+          if (n > blocks) { blocks = n; PX.sfx("blip"); }
+          for (let i = 0; i < n; i++) { x.fillStyle = i % 2 ? PINK : "#f28fb3"; x.fillRect(72 + i * 8, 85, 7, 4); }
+          PX.text(x, Math.min(100, Math.floor((t / 84) * 100)) + "%", W / 2, 98, "#b07c93", 1, "center");
+          if (t === 95) PX.sfx("boot");
+        } else {
+          const k = PX.clamp((t - 200) / 120, 0, 1);
+          drawWinter(k, t);
+          const walk = PX.clamp((t - 110) / 140, 0, 1), ease = 1 - Math.pow(1 - walk, 2);
+          const sx = Math.round(-36 + (W / 2 - 46 + 36) * ease), ox = Math.round(W + 4 - (W + 4 - (W / 2 + 14)) * ease);
+          if (walk > 0 && walk < 1 && t % 14 === 0) PX.sfx("step");
+          const bob = (o) => (walk < 1 ? Math.floor((t + o) / 8) % 2 : Math.floor((t + o) / 30) % 2);
+          x.fillStyle = lerp("#c3c9dc", "#e8a6c0", k); x.fillRect(sx + 10, GY, 12, 1); x.fillRect(ox + 10, GY, 12, 1);
+          if (grids[0]) PX.maker.drawGrid(x, grids[0], sx, GY - 31 + bob(0), 1);
+          if (grids[1]) PX.maker.drawGrid(x, grids[1], ox, GY - 31 + bob(4), 1);
+          snow(k, t);
+          if (t === 230) PX.sfx("twinkle");
+          if (t > 262) {
+            const hp = Math.min(1, (t - 262) / 18), s = hp < 1 ? 1 + Math.round(hp * 2) : 2;
+            heart(W / 2 - (7 * s) / 2, GY - 52 - Math.round(hp * 6), s, PINK);
+            if (t === 263) PX.sfx("perfect");
+            if (t < 300) for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2, d = (t - 262) * 1.2; x.fillStyle = i % 2 ? "#fff" : "#f28fb3"; x.fillRect(Math.round(W / 2 + Math.cos(a) * d), Math.round(GY - 46 + Math.sin(a) * d), 2, 2); }
+          }
+          if (walk >= 1) {
+            const tg = (tx, label, bg) => { const w = PX.textWidth(label) + 6, lx = Math.round(tx - w / 2); x.fillStyle = bg; x.fillRect(lx, GY + 6, w, 9); PX.text(x, label, lx + 3, GY + 8, "#fff"); };
+            tg(sx + 16, p1.code, RED); tg(ox + 16, p2.code, GREEN);
+          }
+          PX.text(x, "2025.11.28", 6, H - 9, lerp("#8a83a8", "#b8486f", k));
+          if (t > 300) PX.text(x, "2026.11.28", W - 6, H - 9, "#b8486f", 1, "right");
+        }
+        if (t === 330) { overlay.classList.add("show-title"); PX.sfx("clear"); }
+        if (t === 380) overlay.classList.add("show-start");
+      }
       if (!done) raf = requestAnimationFrame(frame);
     }
     frame();
-    const skip = () => { if (t < 330) { t = 330; blocks = 14; } };
+    const begin = () => {
+      gate = false; PX.unlockAudio(); overlay.classList.add("started");
+      if (!PX.muted && PX.music.enabled() && !PX.music.isPlaying()) PX.music.playTrack(3);
+      PX.sfx("select");
+    };
     const finish = () => {
       if (done) return;
-      if (t < 380) { PX.unlockAudio(); skip(); t = Math.max(t, 380); overlay.classList.add("show-title", "show-start"); return; }
-      done = true; PX.unlockAudio(); PX.sfx("select");
+      if (gate) return begin();
+      if (t < 380) { t = Math.max(t, 380); blocks = 14; overlay.classList.add("show-title", "show-start"); return; }
+      done = true; PX.sfx("select");
       cancelAnimationFrame(raf); overlay.classList.add("is-off");
       setTimeout(() => { overlay.remove(); onDone && onDone(); }, 500);
       window.removeEventListener("keydown", key);
     };
-    const key = (e) => { if (["Enter", "Space", "KeyZ", "Escape"].includes(e.code)) { e.preventDefault(); finish(); } };
-    PX.$(".intro-skip", overlay).addEventListener("click", (e) => { e.stopPropagation(); PX.unlockAudio(); t = Math.max(t, 380); overlay.classList.add("show-title", "show-start"); });
-    overlay.addEventListener("click", () => { PX.unlockAudio(); finish(); });
+    const key = (e) => { if (["Enter", "Space", "KeyZ"].includes(e.code)) { e.preventDefault(); finish(); } };
+    PX.$(".intro-skip", overlay).addEventListener("click", (e) => { e.stopPropagation(); if (gate) begin(); t = Math.max(t, 380); overlay.classList.add("show-title", "show-start"); });
+    overlay.addEventListener("click", finish);
     window.addEventListener("keydown", key);
   };
 

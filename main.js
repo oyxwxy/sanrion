@@ -93,7 +93,8 @@
     autoHeight();
     PX.intro.show();
     const shelf = PX.$(".awards"); PX.cert.renderShelf(shelf); PX.cert.onChange(() => PX.cert.renderShelf(shelf));
-    PX.entryIntro(PX.$(".intro"), () => { PX.intro.start(); PX.music.startIfEnabled(); });
+    const appEl = PX.$(".px-app"); appEl.classList.add("intro-on");
+    PX.entryIntro(PX.$(".intro"), () => { appEl.classList.remove("intro-on"); PX.intro.start(); PX.music.startIfEnabled(); paintSnd(); paintBgm(); });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

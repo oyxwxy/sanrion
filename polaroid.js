@@ -190,11 +190,8 @@
   function nudge(dx, dy) { const it = find(sel); if (!it) return; commit(); it.x += dx; it.y += dy; save(false); syncProps(); }
   function exportPNG() {
     const c = document.createElement("canvas"); c.width = CW; c.height = CH;
-    const fontsNeeded = [state.caption.font, ...state.items.filter((i) => i.type === "text").map((i) => i.font)];
-    Promise.all(fontsNeeded.map((f) => document.fonts.load(`40px "${f}"`).catch(() => {}))).then(() => {
-      drawAll(c.getContext("2d"), false);
-      PX.download(c, "sanrion-polaroid.png"); PX.sfx("select"); PX.toast("폴라로이드를 저장했어요");
-    });
+    drawAll(c.getContext("2d"), false);
+    PX.saveImage(c, "sanrion-polaroid.png"); PX.sfx("select");
   }
 
   /* ---------- 사이드 패널 ---------- */
