@@ -27,6 +27,7 @@
     PX.sfx("select");
     const app = PX.$(".px-app"), top = app.getBoundingClientRect().top;
     if (top < 0) window.scrollBy({ top: top - 8, behavior: "smooth" });
+    try { const fe = window.frameElement; if (fe && fe.getBoundingClientRect().top < 0) fe.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
   };
 
   function decorate() {
@@ -46,6 +47,18 @@
     const mq = PX.$(".marquee span");
     const unit = `SANTA ♥ ORION · 1ST ANNIVERSARY · 2025.11.28 — 2026.11.28 · DAY ${PX.daysSinceStart()} · SANRION SAVE FILE · `;
     mq.textContent = unit.repeat(6);
+  }
+
+  /* iframe에 넣었을 때 높이 자동 맞춤 (스크롤바 없이) */
+  function autoHeight() {
+    if (window.parent === window) return;
+    const send = () => {
+      const h = Math.ceil(PX.$(".px-app").getBoundingClientRect().height);
+      try { if (window.frameElement) window.frameElement.style.height = h + "px"; } catch (e) {}
+      try { window.parent.postMessage({ sanrionHeight: h }, "*"); } catch (e) {}
+    };
+    try { new ResizeObserver(send).observe(PX.$(".px-app")); } catch (e) { setInterval(send, 1000); }
+    send();
   }
 
   function init() {
@@ -70,6 +83,7 @@
     const setHelp = (id) => { const h = GAME_HELP[id]; if (h) { PX.$("b", help).textContent = h.t; PX.$("p", help).textContent = h.d; } };
     PX.games.onSelect(setHelp); setHelp("runner");
 
+    autoHeight();
     PX.intro.show();
     PX.entryIntro(PX.$(".intro"), () => PX.intro.start());
   }

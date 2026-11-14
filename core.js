@@ -213,9 +213,21 @@
   PX.on = (el, ev, fn, opt) => el && el.addEventListener(ev, fn, opt);
   PX.$ = (s, r = document) => r.querySelector(s);
   PX.$$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  /* 임베드(iframe) 안에서도 "지금 보이는 영역"을 계산 */
+  PX.viewport = function () {
+    const app = PX.$(".px-app"), r = app.getBoundingClientRect();
+    let top = -r.top, h = window.innerHeight;
+    try {
+      const fe = window.frameElement;
+      if (fe) { const fr = fe.getBoundingClientRect(); top = Math.max(top, -fr.top - r.top); h = Math.min(h, window.parent.innerHeight); }
+    } catch (e) {}
+    return { top: Math.max(0, top), h };
+  };
   PX.toast = function (msg) {
     let t = PX.$(".px-toast");
     if (!t) { t = document.createElement("div"); t.className = "px-toast"; PX.$(".px-app").appendChild(t); }
+    const v = PX.viewport(), app = PX.$(".px-app");
+    t.style.top = Math.min(app.offsetHeight - 60, v.top + v.h - 70) + "px"; t.style.bottom = "auto";
     t.textContent = msg;
     t.classList.remove("show"); void t.offsetWidth; t.classList.add("show");
     clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 2000);

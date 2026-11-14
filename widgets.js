@@ -268,9 +268,8 @@
     app.appendChild(wrap);
     // 모달이 화면 안에 보이도록
     const win = wrap.querySelector(".xm-win");
-    const r = app.getBoundingClientRect();
-    const vy = Math.max(0, -r.top) + 20;
-    win.style.marginTop = Math.min(vy, Math.max(20, r.height - win.offsetHeight - 20)) + "px";
+    const vy = PX.viewport().top + 20;
+    win.style.marginTop = Math.min(vy, Math.max(20, app.offsetHeight - win.offsetHeight - 20)) + "px";
     PX.sfx("select");
     return { el: wrap, body: bd, close };
   };
